@@ -11,7 +11,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 
 @Getter
 @Setter
@@ -31,14 +30,14 @@ public class Address {
     private int apartment;
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        Address address = (Address) o;
+        Address address = (Address) obj;
         return getId() != null
                 && Objects.equals(getId(), address.getId())
                 && Objects.equals(getRegion(), address.getRegion())
