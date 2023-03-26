@@ -1,13 +1,15 @@
 package team.project.foodsparks.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.UserRequestDto;
 import team.project.foodsparks.dto.response.UserResponseDto;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.AuthenticationService;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/")

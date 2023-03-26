@@ -1,5 +1,7 @@
 package team.project.foodsparks.controller;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,9 +11,6 @@ import team.project.foodsparks.dto.response.UserResponseDto;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/")

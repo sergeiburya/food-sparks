@@ -13,6 +13,4 @@ public class AddressServiceImpl implements AddressService {
     public AddressServiceImpl(AddressRepository addressRepository) {
         this.addressRepository = addressRepository;
     }
-
-
 }

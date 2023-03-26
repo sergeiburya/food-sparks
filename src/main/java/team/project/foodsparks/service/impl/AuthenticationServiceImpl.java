@@ -1,5 +1,7 @@
 package team.project.foodsparks.service.impl;
 
+import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -9,8 +11,6 @@ import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.AuthenticationService;
 import team.project.foodsparks.service.RoleService;
 import team.project.foodsparks.service.UserService;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {

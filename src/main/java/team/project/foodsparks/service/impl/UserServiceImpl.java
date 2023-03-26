@@ -1,13 +1,12 @@
 package team.project.foodsparks.service.impl;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.repository.UserRepository;
 import team.project.foodsparks.service.UserService;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {

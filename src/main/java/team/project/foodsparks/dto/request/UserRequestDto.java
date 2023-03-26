@@ -1,11 +1,11 @@
 package team.project.foodsparks.dto.request;
 
+import java.util.List;
+import javax.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import team.project.foodsparks.lib.FieldsValueMatch;
 import team.project.foodsparks.lib.ValidEmail;
-import javax.validation.constraints.Size;
-import java.util.List;
 
 @FieldsValueMatch(
         field = "password",

@@ -1,9 +1,8 @@
 package team.project.foodsparks.service;
 
-import team.project.foodsparks.model.User;
-
 import java.util.List;
 import java.util.Optional;
+import team.project.foodsparks.model.User;
 
 public interface UserService {
     User add(User user);
