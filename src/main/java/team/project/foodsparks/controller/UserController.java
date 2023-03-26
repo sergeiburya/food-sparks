@@ -10,8 +10,11 @@ import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/")
 public class UserController {
     private final UserService userService;
     private final ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper;
@@ -21,6 +24,11 @@ public class UserController {
                           ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper) {
         this.userService = userService;
         this.userResponseDtoMapper = userResponseDtoMapper;
+    }
+
+    @GetMapping
+    public List<UserResponseDto> getAllUsers() {
+        return new ArrayList<>();//TODO
     }
 
     @GetMapping("/by-email")
