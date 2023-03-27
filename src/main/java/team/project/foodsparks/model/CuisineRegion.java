@@ -6,7 +6,7 @@ public enum CuisineRegion {
     NORTH("North"),
     SOUTH("South");
 
-    public String value;
+    private String value;
 
     CuisineRegion(String value) {
         this.value = value;
