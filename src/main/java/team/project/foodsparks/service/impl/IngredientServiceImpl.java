@@ -5,21 +5,31 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.model.Ingredient;
+import team.project.foodsparks.model.Warehouse;
 import team.project.foodsparks.repository.IngredientRepository;
+import team.project.foodsparks.repository.WarehouseRepository;
 import team.project.foodsparks.service.IngredientService;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
+    private final WarehouseRepository warehouseRepository;
 
     @Autowired
-    public IngredientServiceImpl(IngredientRepository ingredientRepository) {
+    public IngredientServiceImpl(IngredientRepository ingredientRepository,
+                                 WarehouseRepository warehouseRepository) {
         this.ingredientRepository = ingredientRepository;
+        this.warehouseRepository = warehouseRepository;
     }
 
     @Override
     public Ingredient save(Ingredient ingredient) {
-        return ingredientRepository.save(ingredient);
+        Ingredient savedIngredient = ingredientRepository.save(ingredient);
+        Warehouse warehouse = new Warehouse();
+        warehouse.setIngredient(savedIngredient);
+        warehouse.setAmount(0d);
+        warehouseRepository.save(warehouse);
+        return savedIngredient;
     }
 
     @Override
