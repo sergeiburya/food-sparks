@@ -1,7 +1,5 @@
 package team.project.foodsparks.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import team.project.foodsparks.security.JwtConfigurer;
 import team.project.foodsparks.security.JwtTokenProvider;
@@ -17,18 +14,20 @@ import team.project.foodsparks.security.JwtTokenProvider;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
+    private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
 
-    @Autowired
     public SecurityConfig(UserDetailsService userDetailsService,
-                          JwtTokenProvider jwtTokenProvider) {
+                          PasswordEncoder passwordEncoder, JwtTokenProvider jwtTokenProvider) {
         this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(getEncoder());
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(passwordEncoder);
     }
 
     @Override
@@ -40,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/register", "/login", "/inject").permitAll()
-                .antMatchers(HttpMethod.DELETE,"/users/{id}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE,"/products/{id}", "/users/{id}").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -48,10 +47,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .headers().frameOptions().disable();
     }
-
-    @Bean
-    public PasswordEncoder getEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }
-
