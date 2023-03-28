@@ -32,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         Role role = roleService.getByName(Role.RoleName.USER.name());
         User user = new User();
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Set.of(role));
         userService.add(user);
         return user;
