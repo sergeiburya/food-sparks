@@ -1,6 +1,5 @@
 package team.project.foodsparks.dto.response;
 
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDto {
+public class RoleResponseDto {
     private Long id;
-    private String email;
-    private List<Long> roleId;
+    private String role;
 }
