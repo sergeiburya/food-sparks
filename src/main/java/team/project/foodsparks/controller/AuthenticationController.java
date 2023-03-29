@@ -6,9 +6,12 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 import team.project.foodsparks.dto.UserLoginDto;
 import team.project.foodsparks.dto.UserRegistrationDto;
 import team.project.foodsparks.dto.response.UserResponseDto;
@@ -49,6 +52,12 @@ public class AuthenticationController {
                 .map(r -> r.getRoleName().name())
                 .collect(Collectors.toList()));
         return new ResponseEntity<>(Map.of("token", token), HttpStatus.OK);
+    }
+
+    @GetMapping("/verify")
+    public ModelAndView verifyEmail(@RequestParam String token) {
+        authService.verifyEmail(token);
+        return new ModelAndView("redirect:https://www.google.com");
     }
 
 }
