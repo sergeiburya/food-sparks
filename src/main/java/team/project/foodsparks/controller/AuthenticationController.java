@@ -1,5 +1,6 @@
 package team.project.foodsparks.controller;
 
+import io.swagger.annotations.ApiOperation;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -37,6 +38,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
+    @ApiOperation(value = "Registration of a new user")
     public UserResponseDto register(@RequestBody @Valid UserRegistrationDto userRequestDto) {
         User user = authService.register(userRequestDto.getEmail(),
                 userRequestDto.getPassword());
@@ -44,6 +46,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
+    @ApiOperation(value = "User login page")
     public ResponseEntity<Object> login(@RequestBody @Valid UserLoginDto userLoginDto)
             throws AuthenticationException {
         User user = authService.login(
@@ -59,5 +62,4 @@ public class AuthenticationController {
         authService.verifyEmail(token);
         return new ModelAndView("redirect:https://www.google.com");
     }
-
 }

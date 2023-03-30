@@ -34,6 +34,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAll() {
-        return null; //TODO
+        return userRepository.findAll();
     }
 }

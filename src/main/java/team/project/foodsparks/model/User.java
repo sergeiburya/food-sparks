@@ -32,7 +32,6 @@ public class User {
     private boolean emailConfirmed;
     private String password;
     private String repeatPassword;
-    private String salt;
     @OneToOne()
     private Address address;
     @ManyToMany
@@ -71,7 +70,6 @@ public class User {
                 + "email = " + email + ", "
                 + "password = " + password + ", "
                 + "repeatPassword = " + repeatPassword + ", "
-                + "salt = " + salt + ", "
                 + "address = " + address + ")";
     }
 }
