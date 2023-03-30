@@ -1,10 +1,13 @@
 package team.project.foodsparks.service;
 
-import java.util.Optional;
 import team.project.foodsparks.model.ShoppingCart;
+import team.project.foodsparks.model.User;
 
 public interface ShoppingCartService {
-    ShoppingCart add(ShoppingCart shoppingCart);
 
-    Optional<ShoppingCart> get(Long id);
+    ShoppingCart getByUser(User user);
+
+    void registerNewShoppingCart(User user);
+
+    void clear(ShoppingCart shoppingCart);
 }

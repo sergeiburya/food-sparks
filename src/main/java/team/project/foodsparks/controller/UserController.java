@@ -25,7 +25,7 @@ public class UserController {
         this.userResponseDtoMapper = userResponseDtoMapper;
     }
 
-    @GetMapping
+    @GetMapping("/all_users")
     public List<UserResponseDto> getAllUsers() {
         return new ArrayList<>();//TODO
     }
