@@ -1,5 +1,6 @@
 package team.project.foodsparks.controller;
 
+import io.swagger.annotations.ApiOperation;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +27,13 @@ public class UserController {
     }
 
     @GetMapping("/all_users")
+    @ApiOperation(value = "Get all users")
     public List<UserResponseDto> getAllUsers() {
         return new ArrayList<>();//TODO
     }
 
     @GetMapping("/by-email")
+    @ApiOperation(value = "Get user by email")
     public UserResponseDto findByEmail(@RequestParam String email) {
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));

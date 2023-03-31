@@ -14,4 +14,5 @@ public class RecipeResponseDto {
     private Map<String, Double> ingredientList;
     private boolean spiced;
     private String instructions;
+    private String imageUrl;
 }

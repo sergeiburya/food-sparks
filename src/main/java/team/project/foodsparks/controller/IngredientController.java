@@ -1,5 +1,6 @@
 package team.project.foodsparks.controller;
 
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class IngredientController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Add new ingredient")
     public IngredientResponseDto save(@RequestBody IngredientRequestDto ingredientRequestDto) {
         Ingredient ingredient = ingredientService.save(ingredientRequestDtoMapper
                 .mapToModel(ingredientRequestDto));
@@ -42,6 +44,7 @@ public class IngredientController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Get ingredient by id")
     public IngredientResponseDto getById(@PathVariable Long id) {
         Ingredient ingredient = ingredientService.getById(id).orElseThrow(
                 () -> new RuntimeException("Ingredient with id: " + id + " not found.")
@@ -50,6 +53,7 @@ public class IngredientController {
     }
 
     @GetMapping()
+    @ApiOperation(value = "Get all ingredients")
     public List<IngredientResponseDto> getAll() {
         return ingredientService.getAll().stream()
                 .map(ingredientResponseDtoMapper::mapToDto)

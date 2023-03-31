@@ -1,5 +1,6 @@
 package team.project.foodsparks.controller;
 
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,7 @@ public class WarehouseController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Get ingredient amount from warehouse by ingredient id")
     public WarehouseResponseDto getById(@PathVariable Long id) {
         Warehouse warehouse = warehouseService.getById(id).orElseThrow(
                 () -> new RuntimeException("Warehouse for ingredient id: "
@@ -45,6 +47,7 @@ public class WarehouseController {
     }
 
     @PutMapping("/increase")
+    @ApiOperation(value = "Increase amount of ingredient in warehouse by ingredient id")
     public WarehouseResponseDto increaseAmountOfIngredient(@RequestParam Long ingredientId,
                                                            @RequestParam Double amount) {
         Warehouse warehouse = warehouseService.increaseAmountOfIngredient(ingredientId, amount);
@@ -52,6 +55,7 @@ public class WarehouseController {
     }
 
     @PutMapping("/decrease")
+    @ApiOperation(value = "Decrease amount of ingredient in warehouse by ingredient id")
     public WarehouseResponseDto decreaseAmountOfIngredient(@RequestParam Long ingredientId,
                                                            @RequestParam Double amount) {
         Warehouse warehouse = warehouseService.decreaseAmountOfIngredient(ingredientId, amount);

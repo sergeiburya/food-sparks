@@ -39,5 +39,7 @@ public class Recipe {
     @Column(name = "amount")
     private Map<Ingredient, Double> ingredientList;
     private boolean spiced;
+    @Column(length = 5000)
     private String instructions;
+    private String imageUrl;
 }

@@ -1,5 +1,6 @@
 package team.project.foodsparks.controller;
 
+import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +36,14 @@ public class RecipeController {
     }
 
     @PostMapping
+    @ApiOperation(value = "Add new recipe")
     public RecipeResponseDto save(@RequestBody RecipeRequestDto recipeRequestDto) {
         Recipe recipe = recipeRequestDtoMapper.mapToModel(recipeRequestDto);
         return recipeResponseDtoMapper.mapToDto(recipeService.save(recipe));
     }
 
     @GetMapping
+    @ApiOperation(value = "Get all recipes")
     public List<RecipeResponseDto> getAll() {
         return recipeService.getAll()
                 .stream()
@@ -49,6 +52,7 @@ public class RecipeController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value = "Get recipe by ID")
     public RecipeResponseDto getById(@PathVariable Long id) {
         Recipe recipe = recipeService.getById(id).orElseThrow(
                 () -> new RuntimeException("Recipe by id: " + id + " doesn't exist.")
@@ -57,6 +61,8 @@ public class RecipeController {
     }
 
     @GetMapping("/regions")
+    @ApiOperation(value = "Get recipes by cuisine region; "
+            + "(At this time there are 4 regions: EAST, WEST, SOUTH, NORTH")
     public List<RecipeResponseDto> getDishesByCuisineRegion(@RequestParam String cuisineRegion) {
         return recipeService.getRecipeByCuisineRegion(CuisineRegion
                 .valueOf(cuisineRegion.toUpperCase()))

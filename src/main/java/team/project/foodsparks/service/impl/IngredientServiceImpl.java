@@ -10,6 +10,8 @@ import team.project.foodsparks.repository.IngredientRepository;
 import team.project.foodsparks.repository.WarehouseRepository;
 import team.project.foodsparks.service.IngredientService;
 
+import javax.transaction.Transactional;
+
 @Service
 public class IngredientServiceImpl implements IngredientService {
     private final IngredientRepository ingredientRepository;
@@ -23,6 +25,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    @Transactional
     public Ingredient save(Ingredient ingredient) {
         Ingredient savedIngredient = ingredientRepository.save(ingredient);
         Warehouse warehouse = new Warehouse();

@@ -9,11 +9,7 @@ import team.project.foodsparks.exeption.AuthenticationException;
 import team.project.foodsparks.model.Role;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.model.VerificationToken;
-import team.project.foodsparks.service.AuthenticationService;
-import team.project.foodsparks.service.EmailService;
-import team.project.foodsparks.service.RoleService;
-import team.project.foodsparks.service.UserService;
-import team.project.foodsparks.service.VerificationTokenService;
+import team.project.foodsparks.service.*;
 import team.project.foodsparks.util.VerificationTokenGenerator;
 
 @Service
@@ -24,6 +20,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final EmailService emailService;
     private final VerificationTokenGenerator verificationTokenGenerator;
     private final VerificationTokenService verificationTokenService;
+    private final ShoppingCartService shoppingCartService;
 
     @Autowired
     public AuthenticationServiceImpl(UserService userService,
@@ -31,23 +28,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                      PasswordEncoder passwordEncoder,
                                      EmailService emailService,
                                      VerificationTokenGenerator verificationTokenGenerator,
-                                     VerificationTokenService verificationTokenService) {
+                                     VerificationTokenService verificationTokenService,
+                                     ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
         this.verificationTokenGenerator = verificationTokenGenerator;
         this.verificationTokenService = verificationTokenService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @Override
-    public User register(String email, String password) {
+    public User register(String email, String password, String firstName, String lastName) {
         Role role = roleService.getByName(Role.RoleName.USER.name());
         User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Set.of(role));
         userService.add(user);
+        shoppingCartService.registerNewShoppingCart(user);
         VerificationToken verificationToken = verificationTokenGenerator.createVerificationToken();
         verificationToken.setUser(user);
         verificationTokenService.add(verificationToken);

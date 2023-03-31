@@ -30,6 +30,7 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
                 .stream()
                 .collect(Collectors.toMap(m -> ingredientService.getById(m.getKey()).get(),
                         Map.Entry::getValue)));
+        recipe.setImageUrl(dto.getImageUrl());
         return recipe;
     }
 
@@ -44,6 +45,7 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         recipeResponseDto.setIngredientList(recipe.getIngredientList().entrySet()
                 .stream()
                 .collect(Collectors.toMap(m -> m.getKey().getName(), Map.Entry::getValue)));
+        recipeResponseDto.setImageUrl(recipe.getImageUrl());
         return recipeResponseDto;
     }
 }

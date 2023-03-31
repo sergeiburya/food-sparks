@@ -28,7 +28,7 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/shopping_card")
-    @ApiOperation(value = "User Shopping Card")
+    @ApiOperation(value = "User Shopping Card by current authenticated user")
     public ShoppingCartResponseDto getByUser(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();

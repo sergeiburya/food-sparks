@@ -13,4 +13,5 @@ public class RecipeRequestDto {
     private Map<Long, Double> ingredientList;
     private boolean spiced;
     private String instructions;
+    private String imageUrl;
 }
