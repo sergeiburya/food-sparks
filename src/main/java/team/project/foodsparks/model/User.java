@@ -1,5 +1,6 @@
 package team.project.foodsparks.model;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
@@ -31,7 +32,10 @@ public class User {
     private String email;
     private boolean emailConfirmed;
     private String password;
-    private String repeatPassword;
+    private String phone;
+    private LocalDate birthdate;
+    @OneToOne
+    private Gender gender;
     @OneToOne()
     private Address address;
     @ManyToMany
@@ -52,24 +56,29 @@ public class User {
                 && Objects.equals(getLastName(), user.getLastName())
                 && Objects.equals(getEmail(), user.getEmail())
                 && Objects.equals(getPassword(), user.getPassword())
-                && Objects.equals(getRepeatPassword(), user.getRepeatPassword())
+                && Objects.equals(getBirthdate(), user.getBirthdate())
+                && Objects.equals(getPhone(), user.getPhone())
+                && Objects.equals(getGender(), user.getGender())
                 && Objects.equals(getRoles(), user.getRoles());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName,email, password, repeatPassword, roles);
+        return Objects.hash(id, firstName, lastName,email,
+                password, phone,birthdate,gender, roles);
     }
 
     @Override
     public String toString() {
-        return getClass().getSimpleName()
-                + "(" + "id = " + id + ", "
-                + "firstName = " + firstName + ", "
-                + "lastName = " + lastName + ", "
-                + "email = " + email + ", "
-                + "password = " + password + ", "
-                + "repeatPassword = " + repeatPassword + ", "
-                + "address = " + address + ")";
+        return "User{"
+                + "id=" + id
+                + ", firstName='" + firstName + '\''
+                + ", lastName='" + lastName + '\''
+                + ", email='" + email + '\''
+                + ", phone='" + phone + '\''
+                + ", birthdate=" + birthdate
+                + ", gender=" + gender
+                + ", address=" + address
+                + ", roles=" + roles + '}';
     }
 }
