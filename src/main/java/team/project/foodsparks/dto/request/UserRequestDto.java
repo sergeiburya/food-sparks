@@ -1,5 +1,6 @@
 package team.project.foodsparks.dto.request;
 
+import java.time.LocalDate;
 import java.util.List;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -23,5 +24,12 @@ public class UserRequestDto {
     @Size(min = 8, max = 72)
     private String password;
     private String repeatPassword;
+    private String firstName;
+    private String lastName;
+    private boolean emailConfirmed;
+    private String phone;
+    private LocalDate birthdate;
+    private Long addressId;
+    private Long genderId;
     private List<Long> roleId;
 }
