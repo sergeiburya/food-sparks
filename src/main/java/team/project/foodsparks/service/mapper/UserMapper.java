@@ -27,6 +27,7 @@ public class UserMapper implements
         UserResponseDto userResponseDto = new UserResponseDto();
         userResponseDto.setId(user.getId());
         userResponseDto.setEmail(user.getEmail());
+        userResponseDto.setEmailConfirmed(user.isEmailConfirmed());
         userResponseDto.setRoleId(user.getRoles()
                 .stream()
                 .map(Role::getId)

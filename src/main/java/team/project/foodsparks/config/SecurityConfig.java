@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/register", "/login", "/inject", "/verify").permitAll()
+                .antMatchers("/register", "/login", "/inject", "/verify", "/by-email").permitAll()
                 .antMatchers(HttpMethod.DELETE,"/products/{id}", "/users/{id}").hasRole("ADMIN")
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest()
