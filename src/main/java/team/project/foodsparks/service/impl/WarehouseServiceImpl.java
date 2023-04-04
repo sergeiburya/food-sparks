@@ -18,6 +18,11 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
+    public Warehouse add(Warehouse warehouse) {
+        return warehouseRepository.save(warehouse);
+    }
+
+    @Override
     public List<Warehouse> getAll() {
         return warehouseRepository.findAll();
     }
@@ -28,21 +33,21 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public Warehouse increaseAmountOfIngredient(Long id, Double amount) {
+    public Warehouse increaseAmountOfProduct(Long id, Integer amount) {
         Warehouse warehouseById = warehouseRepository.getById(id);
         warehouseById.setAmount(warehouseById.getAmount() + amount);
         return warehouseRepository.save(warehouseById);
     }
 
     @Override
-    public Warehouse decreaseAmountOfIngredient(Long id, Double amount) {
+    public Warehouse decreaseAmountOfProduct(Long id, Integer amount) {
         Warehouse warehouseById = warehouseRepository.getById(id);
-        Double amountOfIngredient = warehouseById.getAmount();
+        Integer amountOfIngredient = warehouseById.getAmount();
         if (amountOfIngredient >= amount) {
             warehouseById.setAmount(warehouseById.getAmount() - amount);
         } else {
             throw new RuntimeException("Not enough amount of ingredient: "
-                    + warehouseById.getIngredient().getName());
+                    + warehouseById.getProduct().getName());
         }
         return warehouseRepository.save(warehouseById);
     }

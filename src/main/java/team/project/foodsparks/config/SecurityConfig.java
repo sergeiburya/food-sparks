@@ -49,14 +49,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors()
+                .and()
                 .httpBasic().disable()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/register", "/login", "/inject", "/verify", "/by-email").permitAll()
+                .antMatchers("/register", "/login", "/inject", "/verify", "/swager/*")
+                .permitAll()
+                .antMatchers("/ingredients","/recipes","/recipes/*","/recipes/quantity/{id}")
+                .permitAll()
                 .antMatchers(HttpMethod.DELETE,"/products/{id}", "/users/{id}").hasRole("ADMIN")
                 .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.OPTIONS,"/recipes","/recipes/*","/recipes/quantity/{id}")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

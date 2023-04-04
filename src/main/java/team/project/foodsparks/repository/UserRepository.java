@@ -10,5 +10,4 @@ import team.project.foodsparks.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "from User u join fetch u.roles where u.email = :email")
     Optional<User> findByEmail(String email);
-
 }

@@ -12,6 +12,7 @@ import team.project.foodsparks.model.VerificationToken;
 import team.project.foodsparks.service.AuthenticationService;
 import team.project.foodsparks.service.EmailService;
 import team.project.foodsparks.service.RoleService;
+import team.project.foodsparks.service.ShoppingCartService;
 import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.VerificationTokenService;
 import team.project.foodsparks.util.VerificationTokenGenerator;
@@ -22,39 +23,43 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
-    private final VerificationTokenGenerator verificationTokenGenerator;
     private final VerificationTokenService verificationTokenService;
+    private final ShoppingCartService shoppingCartService;
 
     @Autowired
     public AuthenticationServiceImpl(UserService userService,
                                      RoleService roleService,
                                      PasswordEncoder passwordEncoder,
                                      EmailService emailService,
-                                     VerificationTokenGenerator verificationTokenGenerator,
-                                     VerificationTokenService verificationTokenService) {
+                                     VerificationTokenService verificationTokenService,
+                                     ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
-        this.verificationTokenGenerator = verificationTokenGenerator;
         this.verificationTokenService = verificationTokenService;
+        this.shoppingCartService = shoppingCartService;
     }
 
     @Override
-    public User register(String email, String password) {
+    public User register(String email, String password, String firstName, String lastName) {
         Role role = roleService.getByName(Role.RoleName.USER.name());
         User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Set.of(role));
         userService.add(user);
-        VerificationToken verificationToken = verificationTokenGenerator.createVerificationToken();
+        shoppingCartService.registerNewShoppingCart(user);
+        VerificationToken verificationToken
+                = VerificationTokenGenerator.createVerificationToken();
         verificationToken.setUser(user);
         verificationTokenService.add(verificationToken);
         emailService.sendSimpleMessage(user.getEmail(), "Registration confirmation",
                 "Account with email: " + user.getEmail() + " has been successfully registered."
                         + "For confirm you registration use the link: "
-                        + "http://localhost:5000/verify?token=" + verificationToken.getToken());
+                        + "http://foodsparks.eu-central-1.elasticbeanstalk.com/verify?token=" + verificationToken.getToken());
         return user;
     }
 

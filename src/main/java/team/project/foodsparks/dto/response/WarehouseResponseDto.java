@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class WarehouseResponseDto {
-    private String ingredientName;
-    private Double amount;
+    private String productName;
+    private Integer amount;
 }

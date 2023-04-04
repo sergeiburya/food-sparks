@@ -27,7 +27,7 @@ public class Warehouse {
     private Long id;
     @MapsId
     @OneToOne
-    @JoinColumn(name = "ingredient_id")
-    private Ingredient ingredient;
-    private Double amount;
+    @JoinColumn(name = "product_id")
+    private Product product;
+    private Integer amount;
 }

@@ -34,10 +34,16 @@ public class Recipe {
     private String dishName;
     @Enumerated(EnumType.STRING)
     private CuisineRegion cuisineRegion;
+    @Enumerated(EnumType.STRING)
+    private DishType dishType;
     @ElementCollection
     @MapKeyJoinColumn(name = "ingredient_id")
     @Column(name = "amount")
     private Map<Ingredient, Double> ingredientList;
     private boolean spiced;
+    @Column(length = 5000)
     private String instructions;
+    private Integer cookingTime;
+    private Integer portions;
+    private String imageUrl;
 }

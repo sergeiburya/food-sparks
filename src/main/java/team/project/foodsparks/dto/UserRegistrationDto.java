@@ -16,5 +16,6 @@ public class UserRegistrationDto {
     @NotEmpty(message = "The password couldn't be empty")
     @Size(min = 8, max = 72,message = "Password must be at least 8 symbols long")
     private String password;
-    private String repeatPassword;
+    private String firstName;
+    private String lastName;
 }

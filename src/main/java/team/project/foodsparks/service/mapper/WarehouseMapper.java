@@ -9,7 +9,7 @@ public class WarehouseMapper implements ResponseDtoMapper<WarehouseResponseDto, 
     @Override
     public WarehouseResponseDto mapToDto(Warehouse warehouse) {
         WarehouseResponseDto warehouseResponseDto = new WarehouseResponseDto();
-        warehouseResponseDto.setIngredientName(warehouse.getIngredient().getName());
+        warehouseResponseDto.setProductName(warehouse.getProduct().getName());
         warehouseResponseDto.setAmount(warehouse.getAmount());
         return warehouseResponseDto;
     }

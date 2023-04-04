@@ -6,9 +6,14 @@ public enum CuisineRegion {
     NORTH("North"),
     SOUTH("South");
 
-    private String value;
+    private final String value;
 
     CuisineRegion(String value) {
         this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 }

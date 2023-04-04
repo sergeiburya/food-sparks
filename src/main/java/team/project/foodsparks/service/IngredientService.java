@@ -9,5 +9,7 @@ public interface IngredientService {
 
     Optional<Ingredient> getById(Long id);
 
+    Optional<Ingredient> getByName(String name);
+
     List<Ingredient> getAll();
 }
