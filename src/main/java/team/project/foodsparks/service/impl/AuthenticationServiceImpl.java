@@ -9,7 +9,12 @@ import team.project.foodsparks.exeption.AuthenticationException;
 import team.project.foodsparks.model.Role;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.model.VerificationToken;
-import team.project.foodsparks.service.*;
+import team.project.foodsparks.service.AuthenticationService;
+import team.project.foodsparks.service.EmailService;
+import team.project.foodsparks.service.RoleService;
+import team.project.foodsparks.service.ShoppingCartService;
+import team.project.foodsparks.service.UserService;
+import team.project.foodsparks.service.VerificationTokenService;
 import team.project.foodsparks.util.VerificationTokenGenerator;
 
 @Service
@@ -18,7 +23,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
     private final EmailService emailService;
-    private final VerificationTokenGenerator verificationTokenGenerator;
     private final VerificationTokenService verificationTokenService;
     private final ShoppingCartService shoppingCartService;
 
@@ -27,14 +31,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                                      RoleService roleService,
                                      PasswordEncoder passwordEncoder,
                                      EmailService emailService,
-                                     VerificationTokenGenerator verificationTokenGenerator,
                                      VerificationTokenService verificationTokenService,
                                      ShoppingCartService shoppingCartService) {
         this.userService = userService;
         this.roleService = roleService;
         this.passwordEncoder = passwordEncoder;
         this.emailService = emailService;
-        this.verificationTokenGenerator = verificationTokenGenerator;
         this.verificationTokenService = verificationTokenService;
         this.shoppingCartService = shoppingCartService;
     }
@@ -50,13 +52,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setRoles(Set.of(role));
         userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
-        VerificationToken verificationToken = verificationTokenGenerator.createVerificationToken();
+        VerificationToken verificationToken
+                = VerificationTokenGenerator.createVerificationToken();
         verificationToken.setUser(user);
         verificationTokenService.add(verificationToken);
         emailService.sendSimpleMessage(user.getEmail(), "Registration confirmation",
                 "Account with email: " + user.getEmail() + " has been successfully registered."
                         + "For confirm you registration use the link: "
-                        + "http://localhost:5000/verify?token=" + verificationToken.getToken());
+                        + "http://foodsparks.eu-central-1.elasticbeanstalk.com/verify?token=" + verificationToken.getToken());
         return user;
     }
 

@@ -8,6 +8,7 @@ import team.project.foodsparks.dto.request.RecipeRequestDto;
 import team.project.foodsparks.dto.response.RecipeResponseDto;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.service.IngredientService;
+import team.project.foodsparks.util.CookingTimeConverter;
 
 @Component
 public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
@@ -30,6 +31,8 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
                 .stream()
                 .collect(Collectors.toMap(m -> ingredientService.getById(m.getKey()).get(),
                         Map.Entry::getValue)));
+        recipe.setPortions(dto.getPortions());
+        recipe.setCookingTime(dto.getCookingTime());
         recipe.setImageUrl(dto.getImageUrl());
         return recipe;
     }
@@ -39,12 +42,16 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         RecipeResponseDto recipeResponseDto = new RecipeResponseDto();
         recipeResponseDto.setId(recipe.getId());
         recipeResponseDto.setDishName(recipe.getDishName());
-        recipeResponseDto.setCuisineRegion(recipe.getCuisineRegion());
+        recipeResponseDto.setCuisineRegion(recipe.getCuisineRegion().toString());
+        recipeResponseDto.setDishType(recipe.getDishType().toString());
         recipeResponseDto.setSpiced(recipe.isSpiced());
         recipeResponseDto.setInstructions(recipe.getInstructions());
         recipeResponseDto.setIngredientList(recipe.getIngredientList().entrySet()
                 .stream()
                 .collect(Collectors.toMap(m -> m.getKey().getName(), Map.Entry::getValue)));
+        recipeResponseDto.setPortions(recipe.getPortions());
+        recipeResponseDto.setCookingTime(CookingTimeConverter
+                .convertCookingTime(recipe.getCookingTime()));
         recipeResponseDto.setImageUrl(recipe.getImageUrl());
         return recipeResponseDto;
     }

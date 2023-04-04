@@ -10,4 +10,6 @@ public interface ShoppingCartService {
     void registerNewShoppingCart(User user);
 
     void clear(ShoppingCart shoppingCart);
+
+    ShoppingCart addProduct(Long productId, Integer amount, User user);
 }

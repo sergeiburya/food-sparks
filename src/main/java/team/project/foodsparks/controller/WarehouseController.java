@@ -38,27 +38,27 @@ public class WarehouseController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Get ingredient amount from warehouse by ingredient id")
+    @ApiOperation(value = "Get product amount from warehouse by ingredient id")
     public WarehouseResponseDto getById(@PathVariable Long id) {
         Warehouse warehouse = warehouseService.getById(id).orElseThrow(
-                () -> new RuntimeException("Warehouse for ingredient id: "
+                () -> new RuntimeException("Warehouse for product id: "
                         + id + "doesn't exist."));
         return warehouseResponseDtoMapper.mapToDto(warehouse);
     }
 
     @PutMapping("/increase")
-    @ApiOperation(value = "Increase amount of ingredient in warehouse by ingredient id")
-    public WarehouseResponseDto increaseAmountOfIngredient(@RequestParam Long ingredientId,
-                                                           @RequestParam Double amount) {
-        Warehouse warehouse = warehouseService.increaseAmountOfIngredient(ingredientId, amount);
+    @ApiOperation(value = "Increase amount of product in warehouse by ingredient id")
+    public WarehouseResponseDto increaseAmountOfIngredient(@RequestParam Long productId,
+                                                           @RequestParam Integer amount) {
+        Warehouse warehouse = warehouseService.increaseAmountOfProduct(productId, amount);
         return warehouseResponseDtoMapper.mapToDto(warehouse);
     }
 
     @PutMapping("/decrease")
-    @ApiOperation(value = "Decrease amount of ingredient in warehouse by ingredient id")
-    public WarehouseResponseDto decreaseAmountOfIngredient(@RequestParam Long ingredientId,
-                                                           @RequestParam Double amount) {
-        Warehouse warehouse = warehouseService.decreaseAmountOfIngredient(ingredientId, amount);
+    @ApiOperation(value = "Decrease amount of product in warehouse by ingredient id")
+    public WarehouseResponseDto decreaseAmountOfIngredient(@RequestParam Long productId,
+                                                           @RequestParam Integer amount) {
+        Warehouse warehouse = warehouseService.decreaseAmountOfProduct(productId, amount);
         return warehouseResponseDtoMapper.mapToDto(warehouse);
     }
 }

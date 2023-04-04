@@ -7,11 +7,14 @@ import team.project.foodsparks.model.Warehouse;
 
 @Service
 public interface WarehouseService {
+    Warehouse add(Warehouse warehouse);
+
     List<Warehouse> getAll();
 
     Optional<Warehouse> getById(Long id);
 
-    Warehouse increaseAmountOfIngredient(Long id, Double amount);
+    Warehouse increaseAmountOfProduct(Long id, Integer amount);
 
-    Warehouse decreaseAmountOfIngredient(Long id, Double amount);
+    Warehouse decreaseAmountOfProduct(Long id, Integer amount);
+
 }

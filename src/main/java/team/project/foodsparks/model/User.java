@@ -31,7 +31,6 @@ public class User {
     private String email;
     private boolean emailConfirmed;
     private String password;
-    private String repeatPassword;
     @OneToOne()
     private Address address;
     @ManyToMany
@@ -52,13 +51,12 @@ public class User {
                 && Objects.equals(getLastName(), user.getLastName())
                 && Objects.equals(getEmail(), user.getEmail())
                 && Objects.equals(getPassword(), user.getPassword())
-                && Objects.equals(getRepeatPassword(), user.getRepeatPassword())
                 && Objects.equals(getRoles(), user.getRoles());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName,email, password, repeatPassword, roles);
+        return Objects.hash(id, firstName, lastName,email, password, roles);
     }
 
     @Override
@@ -69,7 +67,6 @@ public class User {
                 + "lastName = " + lastName + ", "
                 + "email = " + email + ", "
                 + "password = " + password + ", "
-                + "repeatPassword = " + repeatPassword + ", "
                 + "address = " + address + ")";
     }
 }

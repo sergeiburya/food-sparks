@@ -5,18 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.response.ShoppingCartResponseDto;
+import team.project.foodsparks.model.ShoppingCart;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.ShoppingCartService;
 import team.project.foodsparks.service.UserService;
+import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 import team.project.foodsparks.service.mapper.ShoppingCartMapper;
 
 @RestController
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
     private final UserService userService;
-    private final ShoppingCartMapper shoppingCartMapper;
+    private final ResponseDtoMapper<ShoppingCartResponseDto, ShoppingCart> shoppingCartMapper;
 
     @Autowired
     public ShoppingCartController(ShoppingCartService shoppingCartService,
@@ -35,5 +39,18 @@ public class ShoppingCartController {
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));
         return shoppingCartMapper.mapToDto(shoppingCartService.getByUser(user));
+    }
+
+    @PutMapping("/add")
+    public ShoppingCartResponseDto addProduct(Authentication auth,
+                                              @RequestParam Long productId,
+                                              @RequestParam Integer quantity) {
+
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
+        User user = userService.findByEmail(email).orElseThrow(
+                () -> new RuntimeException("User with email " + email + " not found"));
+        return shoppingCartMapper
+                .mapToDto(shoppingCartService.addProduct(productId, quantity, user));
     }
 }

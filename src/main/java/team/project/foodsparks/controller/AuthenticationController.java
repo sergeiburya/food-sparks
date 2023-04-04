@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +24,7 @@ import team.project.foodsparks.service.AuthenticationService;
 import team.project.foodsparks.service.mapper.UserMapper;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class AuthenticationController {
     private final AuthenticationService authService;
     private final UserMapper userMapper;
@@ -39,7 +41,7 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @ApiOperation(value = "User registration form")
-    public UserResponseDto register(@RequestBody @Valid UserRegistrationDto userRequestDto) {
+    public UserResponseDto register(@RequestBody UserRegistrationDto userRequestDto) {
         User user = authService.register(userRequestDto.getEmail(),
                 userRequestDto.getPassword(),
                 userRequestDto.getFirstName(),

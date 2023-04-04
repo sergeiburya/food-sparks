@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,7 @@ import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 
 @RestController
 @RequestMapping("/ingredients")
+@CrossOrigin(origins = "*")
 public class IngredientController {
     private final IngredientService ingredientService;
     private final RequestDtoMapper<IngredientRequestDto, Ingredient> ingredientRequestDtoMapper;
@@ -58,5 +60,13 @@ public class IngredientController {
         return ingredientService.getAll().stream()
                 .map(ingredientResponseDtoMapper::mapToDto)
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/by-name")
+    public IngredientResponseDto getByName(String name) {
+        Ingredient ingredient = ingredientService.getByName(name).orElseThrow(
+                () -> new RuntimeException("Ingredient with name: " + name + " not found.")
+        );
+        return ingredientResponseDtoMapper.mapToDto(ingredient);
     }
 }

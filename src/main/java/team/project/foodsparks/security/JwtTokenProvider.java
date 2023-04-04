@@ -27,8 +27,7 @@ public class JwtTokenProvider {
     private long validityInMilliseconds;
     private final UserDetailsService userDetailsService;
 
-    public JwtTokenProvider(UserDetailsService userDetailsService,
-                            PasswordEncoder passwordEncoder) {
+    public JwtTokenProvider(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -73,7 +72,7 @@ public class JwtTokenProvider {
     public String resolveToken(HttpServletRequest request) {
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer")) {
-            return bearerToken.substring(10);
+            return bearerToken.substring(7);
         }
         return null;
     }
