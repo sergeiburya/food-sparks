@@ -14,7 +14,7 @@ import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user")
 public class UserController {
     private final UserService userService;
     private final ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper;

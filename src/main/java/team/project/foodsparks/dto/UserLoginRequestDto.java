@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLoginDto {
+public class UserLoginRequestDto {
     @NotBlank(message = "Login can't be null or blank!")
     private String login;
     @NotBlank(message = "Password can't be null or blank!")

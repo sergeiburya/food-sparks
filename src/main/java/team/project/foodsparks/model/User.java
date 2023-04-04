@@ -36,7 +36,7 @@ public class User {
     private LocalDate birthdate;
     @OneToOne
     private Gender gender;
-    @OneToOne()
+    @OneToOne
     private Address address;
     @ManyToMany
     private Set<Role> roles;

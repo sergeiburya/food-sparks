@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
-import team.project.foodsparks.dto.UserLoginDto;
-import team.project.foodsparks.dto.UserRegistrationDto;
-import team.project.foodsparks.dto.response.UserResponseDto;
+import team.project.foodsparks.dto.UserLoginRequestDto;
+import team.project.foodsparks.dto.UserRegistrationRequestDto;
+import team.project.foodsparks.dto.request.UserRegistrationResponseDto;
 import team.project.foodsparks.exeption.AuthenticationException;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.security.JwtTokenProvider;
@@ -41,17 +41,18 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     @ApiOperation(value = "User registration form")
-    public UserResponseDto register(@RequestBody UserRegistrationDto userRequestDto) {
+    public UserRegistrationResponseDto register(
+            @RequestBody UserRegistrationRequestDto userRequestDto) {
         User user = authService.register(userRequestDto.getEmail(),
                 userRequestDto.getPassword(),
                 userRequestDto.getFirstName(),
                 userRequestDto.getLastName());
-        return userMapper.mapToDto(user);
+        return userMapper.mapToResponseDto(user);
     }
 
     @PostMapping("/login")
     @ApiOperation(value = "User login form")
-    public ResponseEntity<Object> login(@RequestBody @Valid UserLoginDto userLoginDto)
+    public ResponseEntity<Object> login(@RequestBody @Valid UserLoginRequestDto userLoginDto)
             throws AuthenticationException {
         User user = authService.login(
                 userLoginDto.getLogin(), userLoginDto.getPassword());
