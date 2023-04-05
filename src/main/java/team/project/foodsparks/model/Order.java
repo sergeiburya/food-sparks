@@ -3,15 +3,8 @@ package team.project.foodsparks.model;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +21,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ElementCollection
+    @MapKeyJoinColumn(name = "product_id")
+    @Column(name = "amount")
     private Map<Product, Integer> productAmount;
     @Column(name = "order_time")
     private LocalDateTime orderTime;

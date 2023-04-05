@@ -10,7 +10,7 @@ import team.project.foodsparks.model.CuisineRegion;
 public class RecipeRequestDto {
     private String dishName;
     private CuisineRegion cuisineRegion;
-    private Map<Long, Double> ingredientList;
+    private Map<Long, Double> productList;
     private boolean spiced;
     private String instructions;
     private Integer cookingTime;

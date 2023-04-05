@@ -37,9 +37,9 @@ public class Recipe {
     @Enumerated(EnumType.STRING)
     private DishType dishType;
     @ElementCollection
-    @MapKeyJoinColumn(name = "ingredient_id")
+    @MapKeyJoinColumn(name = "product_id")
     @Column(name = "amount")
-    private Map<Ingredient, Double> ingredientList;
+    private Map<Product, Double> productList;
     private boolean spiced;
     @Column(length = 5000)
     private String instructions;

@@ -36,7 +36,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public void clear(ShoppingCart shoppingCart) {
-        shoppingCart.setProductAmount(Map.of());
+        shoppingCart.getProductAmount().clear();
         shoppingCartRepository.save(shoppingCart);
     }
 

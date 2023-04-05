@@ -2,22 +2,21 @@ package team.project.foodsparks.service.mapper;
 
 import java.util.Map;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import team.project.foodsparks.dto.request.RecipeRequestDto;
 import team.project.foodsparks.dto.response.RecipeResponseDto;
 import team.project.foodsparks.model.Recipe;
-import team.project.foodsparks.service.IngredientService;
+import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.util.CookingTimeConverter;
 
 @Component
 public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         ResponseDtoMapper<RecipeResponseDto, Recipe> {
-    private final IngredientService ingredientService;
 
-    @Autowired
-    public RecipeMapper(IngredientService ingredientService) {
-        this.ingredientService = ingredientService;
+    private final ProductService productService;
+
+    public RecipeMapper(ProductService productService) {
+        this.productService = productService;
     }
 
     @Override
@@ -27,9 +26,9 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         recipe.setDishName(dto.getDishName());
         recipe.setSpiced(dto.isSpiced());
         recipe.setInstructions(dto.getInstructions());
-        recipe.setIngredientList(dto.getIngredientList().entrySet()
+        recipe.setProductList(dto.getProductList().entrySet()
                 .stream()
-                .collect(Collectors.toMap(m -> ingredientService.getById(m.getKey()).get(),
+                .collect(Collectors.toMap(m -> productService.getById(m.getKey()).get(),
                         Map.Entry::getValue)));
         recipe.setPortions(dto.getPortions());
         recipe.setCookingTime(dto.getCookingTime());
@@ -46,7 +45,7 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         recipeResponseDto.setDishType(recipe.getDishType().toString());
         recipeResponseDto.setSpiced(recipe.isSpiced());
         recipeResponseDto.setInstructions(recipe.getInstructions());
-        recipeResponseDto.setIngredientList(recipe.getIngredientList().entrySet()
+        recipeResponseDto.setProductList(recipe.getProductList().entrySet()
                 .stream()
                 .collect(Collectors.toMap(m -> m.getKey().getName(), Map.Entry::getValue)));
         recipeResponseDto.setPortions(recipe.getPortions());

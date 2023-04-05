@@ -1,6 +1,7 @@
 package team.project.foodsparks.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order add(ShoppingCart shoppingCart) {
+    public Order completeOrder(ShoppingCart shoppingCart) {
         Order order = new Order();
         order.setOrderTime(LocalDateTime.now());
-        order.setProductAmount(shoppingCart.getProductAmount());
+        order.setProductAmount(new HashMap<>(shoppingCart.getProductAmount()));
         order.setUser(shoppingCart.getUser());
         orderRepository.save(order);
         shoppingCartService.clear(shoppingCart);

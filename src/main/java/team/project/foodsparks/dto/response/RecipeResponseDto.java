@@ -11,7 +11,7 @@ public class RecipeResponseDto {
     private String dishName;
     private String cuisineRegion;
     private String dishType;
-    private Map<String, Double> ingredientList;
+    private Map<String, Double> productList;
     private boolean spiced;
     private String instructions;
     private String cookingTime;

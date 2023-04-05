@@ -32,6 +32,8 @@ public class UserMapper implements
                 .stream()
                 .map(Role::getId)
                 .collect(Collectors.toList()));
+        userResponseDto.setFirstName(user.getFirstName());
+        userResponseDto.setLastName(user.getLastName());
         return userResponseDto;
     }
 }

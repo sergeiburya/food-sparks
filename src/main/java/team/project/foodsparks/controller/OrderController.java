@@ -42,7 +42,7 @@ public class OrderController {
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));
         ShoppingCart cart = shoppingCartService.getByUser(user);
-        return orderResponseDtoMapper.mapToDto(orderService.add(cart));
+        return orderResponseDtoMapper.mapToDto(orderService.completeOrder(cart));
     }
 
     @GetMapping
