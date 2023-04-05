@@ -6,4 +6,5 @@ import team.project.foodsparks.model.Gender;
 
 @Repository
 public interface GenderRepository extends JpaRepository<Gender,Long> {
+    Gender findByGenderName(Gender.GenderName genderName);
 }
