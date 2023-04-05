@@ -29,6 +29,7 @@ public class AddressMapper implements
         responseDto.setStreet(address.getStreet());
         responseDto.setBuild(address.getBuild());
         responseDto.setApartment(address.getApartment());
+        responseDto.setUserId(address.getUser().getId());
         return responseDto;
     }
 }

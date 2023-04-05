@@ -12,4 +12,5 @@ public class AddressResponseDto {
     private String street;
     private String build;
     private int apartment;
+    private Long userId;
 }

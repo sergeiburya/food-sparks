@@ -4,6 +4,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.model.Address;
+import team.project.foodsparks.model.User;
 import team.project.foodsparks.repository.AddressRepository;
 import team.project.foodsparks.service.AddressService;
 
@@ -24,6 +25,11 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Optional<Address> getById(Long id) {
         return addressRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Address> findByUser(User user) {
+        return addressRepository.findByUser(user);
     }
 
     @Override

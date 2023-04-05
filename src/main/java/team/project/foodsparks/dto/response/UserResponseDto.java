@@ -19,7 +19,6 @@ public class UserResponseDto {
     private boolean emailConfirmed;
     private String phone;
     private LocalDate birthdate;
-    private Long addressId;
     private Long genderId;
     private List<Long> roleId;
 }

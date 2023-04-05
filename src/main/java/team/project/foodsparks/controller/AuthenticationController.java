@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import team.project.foodsparks.dto.UserLoginRequestDto;
 import team.project.foodsparks.dto.UserRegistrationRequestDto;
-import team.project.foodsparks.dto.request.UserRegistrationResponseDto;
 import team.project.foodsparks.exeption.AuthenticationException;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.security.JwtTokenProvider;
@@ -27,7 +26,6 @@ import team.project.foodsparks.service.mapper.UserMapper;
 @CrossOrigin(origins = "*")
 public class AuthenticationController {
     private final AuthenticationService authService;
-    private final UserMapper userMapper;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Autowired
@@ -35,19 +33,18 @@ public class AuthenticationController {
                                     UserMapper userMapper,
                                     JwtTokenProvider jwtTokenProvider) {
         this.authService = authService;
-        this.userMapper = userMapper;
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @PostMapping("/register")
     @ApiOperation(value = "User registration form")
-    public UserRegistrationResponseDto register(
+    public String register(
             @RequestBody UserRegistrationRequestDto userRequestDto) {
-        User user = authService.register(userRequestDto.getEmail(),
+        authService.register(userRequestDto.getEmail(),
                 userRequestDto.getPassword(),
                 userRequestDto.getFirstName(),
                 userRequestDto.getLastName());
-        return userMapper.mapToResponseDto(user);
+        return "Registration is successful. Go to the mail and confirm the registration";
     }
 
     @PostMapping("/login")

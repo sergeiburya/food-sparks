@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import team.project.foodsparks.model.CuisineRegion;
 import team.project.foodsparks.model.DishType;
+import team.project.foodsparks.model.Gender;
 import team.project.foodsparks.model.Ingredient;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.model.Role;
+import team.project.foodsparks.service.GenderService;
 import team.project.foodsparks.service.IngredientService;
 import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.service.RecipeService;
@@ -27,16 +29,18 @@ public class DataInitializer {
     private final IngredientService ingredientService;
     private final List<Ingredient> savedIngredients;
     private final ProductService productService;
+    private final GenderService genderService;
 
     @Autowired
     public DataInitializer(RoleService roleService,
                            RecipeService recipeService,
                            IngredientService ingredientService,
-                           ProductService productService) {
+                           ProductService productService, GenderService genderService) {
         this.roleService = roleService;
         this.recipeService = recipeService;
         this.ingredientService = ingredientService;
         this.productService = productService;
+        this.genderService = genderService;
         savedIngredients = new ArrayList<>();
     }
 
@@ -48,6 +52,15 @@ public class DataInitializer {
         userRole.setRoleName(Role.RoleName.USER);
         roleService.add(adminRole);
         roleService.add(userRole);
+        Gender genderMale = new Gender();
+        genderMale.setGenderName(Gender.GenderName.MALE);
+        Gender genderFemale = new Gender();
+        genderFemale.setGenderName(Gender.GenderName.FEMALE);
+        Gender genderOther = new Gender();
+        genderOther.setGenderName(Gender.GenderName.OTHER);
+        genderService.add(genderFemale);
+        genderService.add(genderMale);
+        genderService.add(genderOther);
 
         List<String> ingredientNames = List.of(
                 "Картопля", "Цибуля", "Морква", "Перець", "Томат", "Капуста", "Буряк", "Яйце",

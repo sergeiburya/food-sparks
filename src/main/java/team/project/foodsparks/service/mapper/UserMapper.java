@@ -33,7 +33,6 @@ public class UserMapper implements
         userResponseDto.setEmailConfirmed(user.isEmailConfirmed());
         userResponseDto.setPhone(user.getPhone());
         userResponseDto.setBirthdate(user.getBirthdate());
-        userResponseDto.setAddressId(user.getAddress() != null ? user.getAddress().getId() : null);
         userResponseDto.setGenderId(user.getGender() != null ? user.getGender().getId() : null);
         userResponseDto.setRoleId(user.getRoles()
                 .stream()

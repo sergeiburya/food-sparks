@@ -4,17 +4,19 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.UserRequestDto;
 import team.project.foodsparks.dto.response.UserResponseDto;
 import team.project.foodsparks.model.User;
+import team.project.foodsparks.service.GenderService;
 import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 
@@ -23,12 +25,15 @@ import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 public class UserController {
     private final UserService userService;
     private final ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper;
+    private final GenderService genderService;
 
     @Autowired
     public UserController(UserService userService,
-                          ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper) {
+                          ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper,
+                          GenderService genderService) {
         this.userService = userService;
         this.userResponseDtoMapper = userResponseDtoMapper;
+        this.genderService = genderService;
     }
 
     @GetMapping("/all_users")
@@ -41,7 +46,9 @@ public class UserController {
 
     @GetMapping("/by-email")
     @ApiOperation(value = "Get user by email")
-    public UserResponseDto findByEmail(@RequestParam String email) {
+    public UserResponseDto findByEmail(Authentication auth) {
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));
         return userResponseDtoMapper.mapToDto(user);
@@ -49,12 +56,17 @@ public class UserController {
 
     @PutMapping("/update")
     @ApiOperation(value = "Update user data")
-    public UserResponseDto updateUserData(@RequestParam String email,
+    public UserResponseDto updateUserData(Authentication auth,
                                           @RequestBody UserRequestDto userRequestDto) {
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));
+        user.setFirstName(userRequestDto.getFirstName());
+        user.setLastName(userRequestDto.getLastName());
         user.setPhone(userRequestDto.getPhone());
         user.setBirthdate(userRequestDto.getBirthdate());
+        user.setGender(genderService.getById(userRequestDto.getGenderId()).get());
         userService.add(user);
         return userResponseDtoMapper.mapToDto(user);
     }
