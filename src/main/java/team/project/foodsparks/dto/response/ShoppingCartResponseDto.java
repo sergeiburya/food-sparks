@@ -1,5 +1,6 @@
 package team.project.foodsparks.dto.response;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,4 +14,5 @@ import lombok.Setter;
 public class ShoppingCartResponseDto {
     private Map<String, Integer> productAmount;
     private Long userId;
+    private BigDecimal sum;
 }

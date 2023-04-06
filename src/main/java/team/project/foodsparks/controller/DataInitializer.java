@@ -12,12 +12,10 @@ import org.springframework.stereotype.Component;
 import team.project.foodsparks.model.CuisineRegion;
 import team.project.foodsparks.model.DishType;
 import team.project.foodsparks.model.Gender;
-import team.project.foodsparks.model.Ingredient;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.model.Role;
 import team.project.foodsparks.service.GenderService;
-import team.project.foodsparks.service.IngredientService;
 import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.service.RecipeService;
 import team.project.foodsparks.service.RoleService;
@@ -26,22 +24,20 @@ import team.project.foodsparks.service.RoleService;
 public class DataInitializer {
     private final RoleService roleService;
     private final RecipeService recipeService;
-    private final IngredientService ingredientService;
-    private final List<Ingredient> savedIngredients;
+    private final List<Product> savedProducts;
     private final ProductService productService;
     private final GenderService genderService;
 
     @Autowired
     public DataInitializer(RoleService roleService,
                            RecipeService recipeService,
-                           IngredientService ingredientService,
-                           ProductService productService, GenderService genderService) {
+                           GenderService genderService,
+                           ProductService productService) {
         this.roleService = roleService;
         this.recipeService = recipeService;
-        this.ingredientService = ingredientService;
         this.productService = productService;
         this.genderService = genderService;
-        savedIngredients = new ArrayList<>();
+        savedProducts = new ArrayList<>();
     }
 
     @PostConstruct
@@ -62,7 +58,7 @@ public class DataInitializer {
         genderService.add(genderMale);
         genderService.add(genderOther);
 
-        List<String> ingredientNames = List.of(
+        List<String> productNames = List.of(
                 "Картопля", "Цибуля", "Морква", "Перець", "Томат", "Капуста", "Буряк", "Яйце",
                 "Сало", "Свинина", "Говядина", "Куряче м'ясо", "Ковбаса", "Сир", "Сметана",
                 "Фундук", "Ряжанка", "Масло", "Олія", "Часник", "Кріп", "Петрушка", "Кропива",
@@ -74,12 +70,15 @@ public class DataInitializer {
                 "Кмин", "Пажитник", "Гірчиця", "Кетчуп", "Соєвий соус", "Бальзамічний оцет",
                 "Яблучний оцет", "Винний оцет", "Цукор", "Мед", "Сироп");
 
-        Ingredient newIng;
-        for (String ingredient : ingredientNames) {
-            newIng = new Ingredient();
-            newIng.setName(ingredient);
-            ingredientService.save(newIng);
-            savedIngredients.add(newIng);
+        Random random = new Random();
+        Product newProduct;
+        for (String product : productNames) {
+            newProduct = new Product();
+            newProduct.setName(product);
+            newProduct.setPrice(BigDecimal.valueOf(random.nextInt(150) + 20));
+            newProduct.setAmountInPackage(random.nextInt(999));
+            productService.add(newProduct);
+            savedProducts.add(newProduct);
         }
 
         List<String> instructionsList = new ArrayList<>();
@@ -144,7 +143,6 @@ public class DataInitializer {
         imageUrlList.add("https://i.ibb.co/HdzhjV0/2.jpg");
         imageUrlList.add("https://i.ibb.co/VJJqdvy/1.jpg");
         imageUrlList.add("https://i.ibb.co/mqq9Sj2/1-1.jpg");
-        Random random = new Random();
 
         List<String> recipeNames = List.of(
                 "Борщ", "Вареники", "Голубці", "Сало", "Сирники", "Деруни", "Ковбаса", "Картопляк",
@@ -168,12 +166,12 @@ public class DataInitializer {
         for (String recipeName : recipeNames) {
             newRec = new Recipe();
             newRec.setDishName(recipeName);
-            Map<Ingredient, Double> ingredientList = new HashMap<>();
+            Map<Product, Double> productList = new HashMap<>();
             for (int i = 0; i <= random.nextInt(5) + 2; i++) {
-                ingredientList.put(savedIngredients.get(random.nextInt(savedIngredients.size())),
+                productList.put(savedProducts.get(random.nextInt(savedProducts.size())),
                         truncateTo(random.nextDouble() + 0.3d, 2));
             }
-            newRec.setIngredientList(ingredientList);
+            newRec.setProductList(productList);
             newRec.setSpiced(random.nextBoolean());
             newRec.setCuisineRegion(cuisineRegionList
                     .get(random.nextInt(cuisineRegionList.size())));
@@ -183,36 +181,6 @@ public class DataInitializer {
             newRec.setPortions(random.nextInt(6) + 2);
             newRec.setImageUrl(imageUrlList.get(random.nextInt(imageUrlList.size())));
             recipeService.save(newRec);
-        }
-
-        List<String> manufacturerName = List.of(
-                "Мегамолл", "Аккорд", "Житомирський маслозавод", "Бородянка-Кооп", "Артизана",
-                "Ватрушка", "ТМ Острозька Кнайпа", "Росана", "Рудь", "Інтерлейн", "Козацька рада",
-                "Квас Тернопільщини", "Хлібня України", "Макк", "Добродія", "Славутич",
-                "ТМ Молокія", "Світоч", "Козятинський м'ясокомбінат", "Світанок", "Молокія",
-                "Молочна ковбаска", "Смак", "Морозко", "Закарпатський цукор", "Харчо",
-                "Кондитерська фабрика Спартак", "Доброшлях", "Сиро-молочні продукти"
-        );
-
-        List<String> productName = List.of(
-                "Жовте Поле", "Село Моя Курочка", "Вільногірський Млин", "Гречана Хата",
-                "Рідне Поле", "Укроп", "Луків", "Шалена Картопля", "Овочевий Світ", "Світоч",
-                "Нова Картопля", "Капуста Світ", "Хлібний Дім", "Львівське", "Тарас", "Рудь",
-                "Мінеральна вода Проводи", "Богодухівський завод м'ясних виробів", "Кава Шоколадна",
-                "Макарони Ласунка", "Сир Ріо Мар", "Соковита", "Сирники Здоров'я",
-                "Консерви Принцесса", "Мармелад Шармель", "Дніпропетровський консервний завод",
-                "Масло Літовець", "Буряк Любительський", "Приправа Лавровий Лист"
-        );
-
-        Product product;
-        for (int i = 0; i < 29; i++) {
-            product = new Product();
-            product.setPrice(BigDecimal.valueOf(random.nextInt(150) + 20));
-            product.setManufacturer(manufacturerName.get(i));
-            product.setIngredientTag(List.of(savedIngredients.get(random.nextInt(30))));
-            product.setAmountInPackage(random.nextInt(999));
-            product.setName(productName.get(random.nextInt(29)));
-            productService.add(product);
         }
     }
 

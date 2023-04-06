@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ElementCollection
+    @MapKeyJoinColumn(name = "product_id")
+    @Column(name = "amount")
     private Map<Product, Integer> productAmount;
     @Column(name = "order_time")
     private LocalDateTime orderTime;

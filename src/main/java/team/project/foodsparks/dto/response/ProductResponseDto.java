@@ -9,7 +9,6 @@ import lombok.Setter;
 public class ProductResponseDto {
     private Long id;
     private String name;
-    private String manufacturer;
     private BigDecimal price;
     private Integer amountInPackage;
 }

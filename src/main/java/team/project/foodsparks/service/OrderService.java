@@ -6,7 +6,7 @@ import team.project.foodsparks.model.ShoppingCart;
 import team.project.foodsparks.model.User;
 
 public interface OrderService {
-    Order add(ShoppingCart shoppingCart);
+    Order completeOrder(ShoppingCart shoppingCart);
 
     List<Order> getOrders(User user);
 
