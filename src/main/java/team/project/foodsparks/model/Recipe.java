@@ -1,5 +1,6 @@
 package team.project.foodsparks.model;
 
+import java.util.List;
 import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -41,8 +42,8 @@ public class Recipe {
     @Column(name = "amount")
     private Map<Product, Double> productList;
     private boolean spiced;
-    @Column(length = 5000)
-    private String instructions;
+    @ElementCollection
+    private List<String> instructions;
     private Integer cookingTime;
     private Integer portions;
     private String imageUrl;
