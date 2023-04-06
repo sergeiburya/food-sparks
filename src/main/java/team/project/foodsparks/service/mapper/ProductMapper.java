@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import team.project.foodsparks.dto.request.ProductRequestDto;
 import team.project.foodsparks.dto.response.ProductResponseDto;
 import team.project.foodsparks.model.Product;
-import team.project.foodsparks.service.ProductService;
 
 @Component
 public class ProductMapper implements RequestDtoMapper<ProductRequestDto, Product>,

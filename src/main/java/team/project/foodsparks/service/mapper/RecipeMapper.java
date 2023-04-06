@@ -45,9 +45,7 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         recipeResponseDto.setDishType(recipe.getDishType().toString());
         recipeResponseDto.setSpiced(recipe.isSpiced());
         recipeResponseDto.setInstructions(recipe.getInstructions());
-        recipeResponseDto.setProductList(recipe.getProductList().entrySet()
-                .stream()
-                .collect(Collectors.toMap(m -> m.getKey().getName(), Map.Entry::getValue)));
+        recipeResponseDto.setProductsList(recipe.getProductList());
         recipeResponseDto.setPortions(recipe.getPortions());
         recipeResponseDto.setCookingTime(CookingTimeConverter
                 .convertCookingTime(recipe.getCookingTime()));
