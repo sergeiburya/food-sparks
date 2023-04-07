@@ -13,6 +13,7 @@ import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.AddressService;
 import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
+import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping("/address")
@@ -31,8 +32,8 @@ public class AddressController {
         this.addressResponseDtoMapper = addressResponseDtoMapper;
     }
 
-    @PostMapping("/add-address")
-    @ApiOperation(value = "Add new Address")
+    @PostMapping("/add")
+    @ApiOperation(value = "Add new Address has user Role")
     public AddressResponseDto addAddress(Authentication auth,
                                          @RequestBody AddressRequestDto addressRequestDto) {
         UserDetails details = (UserDetails) auth.getPrincipal();
@@ -40,6 +41,26 @@ public class AddressController {
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));
         Address address = new Address();
+        address.setRegion(addressRequestDto.getRegion());
+        address.setTown(addressRequestDto.getTown());
+        address.setStreet(addressRequestDto.getStreet());
+        address.setBuild(addressRequestDto.getBuild());
+        address.setApartment(addressRequestDto.getApartment());
+        address.setUser(user);
+        addressService.add(address);
+        return addressResponseDtoMapper.mapToDto(address);
+    }
+
+    @PutMapping("/udate-address-user")
+    @ApiOperation(value = "Update Address User has user Role ")
+    public AddressResponseDto updateAddress(Authentication auth,
+                                         @RequestBody AddressRequestDto addressRequestDto) {
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
+        User user = userService.findByEmail(email).orElseThrow(
+                () -> new RuntimeException("User with email " + email + " not found"));
+        Address address = addressService.findByUser(user).orElseThrow(
+                () -> new DataProcessingException("Address with " + user + " not found."));
         address.setRegion(addressRequestDto.getRegion());
         address.setTown(addressRequestDto.getTown());
         address.setStreet(addressRequestDto.getStreet());
@@ -61,5 +82,14 @@ public class AddressController {
                 .orElseThrow(() -> new DataProcessingException(
                         "Address by User " + user.getEmail() + " not found."));
         return addressResponseDtoMapper.mapToDto(address);
+    }
+
+    @DeleteMapping("/delete")
+    @ApiOperation(value = "Delete Address User has user Role")
+    @Transactional
+    public void deleteByEmail(Authentication auth) {
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
+        addressService.deleteByEmail(email);
     }
 }

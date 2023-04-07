@@ -32,7 +32,7 @@ public class UserController {
         this.genderService = genderService;
     }
 
-    @GetMapping("/all_users")
+    @GetMapping("/all")
     @ApiOperation(value = "Get all users")
     public List<UserResponseDto> getAllUsers() {
         return userService.findAll().stream()
@@ -67,14 +67,14 @@ public class UserController {
         return userResponseDtoMapper.mapToDto(user);
     }
 
-    @DeleteMapping("/delete-by-id")
+    @DeleteMapping("/{id}")
     @ApiOperation(value = "Delete User By Id for Admin Role")
     @Transactional
     public void deleteById(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
 
-    @DeleteMapping("/delete-by-login")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "Delete User by email for User Role")
     @Transactional
     public void deleteByEmail(Authentication auth) {

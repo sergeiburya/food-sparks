@@ -11,5 +11,7 @@ public interface AddressService {
 
     Optional<Address> findByUser(User user);
 
-    void delete(Long id);
+    void deleteById(Long id);
+
+    void deleteByEmail(String email);
 }
