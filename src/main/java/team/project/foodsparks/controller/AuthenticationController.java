@@ -20,7 +20,6 @@ import team.project.foodsparks.exeption.AuthenticationException;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.security.JwtTokenProvider;
 import team.project.foodsparks.service.AuthenticationService;
-import team.project.foodsparks.service.mapper.UserMapper;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -30,7 +29,6 @@ public class AuthenticationController {
 
     @Autowired
     public AuthenticationController(AuthenticationService authService,
-                                    UserMapper userMapper,
                                     JwtTokenProvider jwtTokenProvider) {
         this.authService = authService;
         this.jwtTokenProvider = jwtTokenProvider;

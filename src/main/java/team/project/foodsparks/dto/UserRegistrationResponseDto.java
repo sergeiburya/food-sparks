@@ -1,4 +1,4 @@
-package team.project.foodsparks.dto.request;
+package team.project.foodsparks.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

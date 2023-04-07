@@ -4,11 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team.project.foodsparks.dto.request.AddressRequestDto;
 import team.project.foodsparks.dto.response.AddressResponseDto;
 import team.project.foodsparks.exeption.DataProcessingException;
@@ -20,6 +16,7 @@ import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 
 @RestController
 @RequestMapping("/address")
+@CrossOrigin(origins = "*")
 public class AddressController {
     private final AddressService addressService;
     private final UserService userService;

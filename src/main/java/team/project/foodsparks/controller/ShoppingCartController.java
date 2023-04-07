@@ -4,10 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team.project.foodsparks.dto.response.ShoppingCartResponseDto;
 import team.project.foodsparks.model.ShoppingCart;
 import team.project.foodsparks.model.User;
@@ -17,6 +14,8 @@ import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 import team.project.foodsparks.service.mapper.ShoppingCartMapper;
 
 @RestController
+@RequestMapping("/shopping-card")
+@CrossOrigin(origins = "*")
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
     private final UserService userService;
@@ -31,7 +30,7 @@ public class ShoppingCartController {
         this.shoppingCartMapper = shoppingCartMapper;
     }
 
-    @GetMapping("/shopping_card")
+    @GetMapping
     @ApiOperation(value = "User Shopping Card by current authenticated user")
     public ShoppingCartResponseDto getByUser(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();

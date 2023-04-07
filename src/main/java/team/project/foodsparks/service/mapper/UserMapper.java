@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 import team.project.foodsparks.dto.UserRegistrationRequestDto;
-import team.project.foodsparks.dto.request.UserRegistrationResponseDto;
+import team.project.foodsparks.dto.UserRegistrationResponseDto;
 import team.project.foodsparks.dto.response.UserResponseDto;
 import team.project.foodsparks.model.Role;
 import team.project.foodsparks.model.User;

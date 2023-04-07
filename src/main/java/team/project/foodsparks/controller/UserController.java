@@ -6,22 +6,18 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team.project.foodsparks.dto.request.UserRequestDto;
 import team.project.foodsparks.dto.response.UserResponseDto;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.GenderService;
 import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
+import javax.transaction.Transactional;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
     private final ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper;
@@ -71,9 +67,19 @@ public class UserController {
         return userResponseDtoMapper.mapToDto(user);
     }
 
-    @DeleteMapping("/delete")
-    @ApiOperation(value = "Delete User By Id")
-    void delete(@PathVariable Long id) {
+    @DeleteMapping("/delete-by-id")
+    @ApiOperation(value = "Delete User By Id for Admin Role")
+    @Transactional
+    public void deleteById(@PathVariable Long id) {
         userService.deleteUserById(id);
+    }
+
+    @DeleteMapping("/delete-by-login")
+    @ApiOperation(value = "Delete User by email for User Role")
+    @Transactional
+    public void deleteByEmail(Authentication auth) {
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
+        userService.deleteByEmail(email);
     }
 }

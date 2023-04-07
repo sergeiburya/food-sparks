@@ -50,18 +50,18 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         user.setEmail(email);
         user.setPassword(passwordEncoder.encode(password));
         user.setRoles(Set.of(role));
-        /*user.setEmailConfirmed(true);*/
+        user.setEmailConfirmed(true);
         userService.add(user);
         shoppingCartService.registerNewShoppingCart(user);
-        VerificationToken verificationToken
-                = VerificationTokenGenerator.createVerificationToken();
-        verificationToken.setUser(user);
-        verificationTokenService.add(verificationToken);
-        emailService.sendSimpleMessage(user.getEmail(), "Registration confirmation",
-                "Account with email: " + user.getEmail() + " has been successfully registered. "
-                        + "For confirm you registration use the link: "
-                        + "http://foodsparks.eu-central-1.elasticbeanstalk.com/verify?token="
-                        + verificationToken.getToken());
+//        VerificationToken verificationToken
+//                = VerificationTokenGenerator.createVerificationToken();
+//        verificationToken.setUser(user);
+//        verificationTokenService.add(verificationToken);
+//        emailService.sendSimpleMessage(user.getEmail(), "Registration confirmation",
+//                "Account with email: " + user.getEmail() + " has been successfully registered. "
+//                        + "For confirm you registration use the link: "
+//                        + "http://foodsparks.eu-central-1.elasticbeanstalk.com/verify?token="
+//                        + verificationToken.getToken());
         return user;
     }
 
