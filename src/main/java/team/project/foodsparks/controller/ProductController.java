@@ -2,6 +2,7 @@ package team.project.foodsparks.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 
 @RestController
 @RequestMapping("/products")
+@CrossOrigin(origins = "*")
 public class ProductController {
     private final RequestDtoMapper<ProductRequestDto, Product> requestDtoMapper;
     private final ResponseDtoMapper<ProductResponseDto, Product> responseDtoMapper;

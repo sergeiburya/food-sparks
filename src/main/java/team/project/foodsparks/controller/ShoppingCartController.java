@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,6 +18,7 @@ import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 import team.project.foodsparks.service.mapper.ShoppingCartMapper;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
     private final UserService userService;
@@ -42,6 +44,8 @@ public class ShoppingCartController {
     }
 
     @PutMapping("/add")
+    @ApiOperation(value = "Add product with quantity in to "
+            + "shopping cart of current authenticated user")
     public ShoppingCartResponseDto addProduct(Authentication auth,
                                               @RequestParam Long productId,
                                               @RequestParam Integer quantity) {

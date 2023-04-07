@@ -2,10 +2,13 @@ package team.project.foodsparks.service.mapper;
 
 import java.util.Map;
 import java.util.stream.Collectors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import team.project.foodsparks.dto.request.RecipeRequestDto;
 import team.project.foodsparks.dto.response.RecipeResponseDto;
 import team.project.foodsparks.model.Recipe;
+import team.project.foodsparks.service.CuisineRegionService;
+import team.project.foodsparks.service.DishTypeService;
 import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.util.CookingTimeConverter;
 
@@ -14,15 +17,23 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         ResponseDtoMapper<RecipeResponseDto, Recipe> {
 
     private final ProductService productService;
+    private final CuisineRegionService cuisineRegionService;
+    private final DishTypeService dishTypeService;
 
-    public RecipeMapper(ProductService productService) {
+    @Autowired
+    public RecipeMapper(ProductService productService,
+                        CuisineRegionService cuisineRegionService,
+                        DishTypeService dishTypeService) {
         this.productService = productService;
+        this.cuisineRegionService = cuisineRegionService;
+        this.dishTypeService = dishTypeService;
     }
 
     @Override
     public Recipe mapToModel(RecipeRequestDto dto) {
         Recipe recipe = new Recipe();
-        recipe.setCuisineRegion(dto.getCuisineRegion());
+        recipe.setCuisineRegion(cuisineRegionService.getById(dto.getCuisineRegionId()).get());
+        recipe.setDishType(dishTypeService.getById(dto.getDishTypeId()).get());
         recipe.setDishName(dto.getDishName());
         recipe.setSpiced(dto.isSpiced());
         recipe.setInstructions(dto.getInstructions());
@@ -41,8 +52,9 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         RecipeResponseDto recipeResponseDto = new RecipeResponseDto();
         recipeResponseDto.setId(recipe.getId());
         recipeResponseDto.setDishName(recipe.getDishName());
-        recipeResponseDto.setCuisineRegion(recipe.getCuisineRegion().toString());
-        recipeResponseDto.setDishType(recipe.getDishType().toString());
+        recipeResponseDto.setCuisineRegion(recipe.getCuisineRegion().getCuisineRegionName()
+                .toString());
+        recipeResponseDto.setDishType(recipe.getDishType().getDishTypeName().toString());
         recipeResponseDto.setSpiced(recipe.isSpiced());
         recipeResponseDto.setInstructions(recipe.getInstructions());
         recipeResponseDto.setProductsList(recipe.getProductList());

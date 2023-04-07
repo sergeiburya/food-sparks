@@ -15,6 +15,8 @@ import team.project.foodsparks.model.Gender;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.model.Role;
+import team.project.foodsparks.service.CuisineRegionService;
+import team.project.foodsparks.service.DishTypeService;
 import team.project.foodsparks.service.GenderService;
 import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.service.RecipeService;
@@ -27,16 +29,22 @@ public class DataInitializer {
     private final List<Product> savedProducts;
     private final ProductService productService;
     private final GenderService genderService;
+    private final DishTypeService dishTypeService;
+    private final CuisineRegionService cuisineRegionService;
 
     @Autowired
     public DataInitializer(RoleService roleService,
                            RecipeService recipeService,
                            GenderService genderService,
-                           ProductService productService) {
+                           ProductService productService,
+                           DishTypeService dishTypeService,
+                           CuisineRegionService cuisineRegionService) {
         this.roleService = roleService;
         this.recipeService = recipeService;
         this.productService = productService;
         this.genderService = genderService;
+        this.dishTypeService = dishTypeService;
+        this.cuisineRegionService = cuisineRegionService;
         savedProducts = new ArrayList<>();
     }
 
@@ -141,17 +149,39 @@ public class DataInitializer {
         instructionsList.add(inst4);
 
         List<CuisineRegion> cuisineRegionList = new ArrayList<>();
-        cuisineRegionList.add(CuisineRegion.EAST);
-        cuisineRegionList.add(CuisineRegion.SOUTH);
-        cuisineRegionList.add(CuisineRegion.WEST);
-        cuisineRegionList.add(CuisineRegion.NORTH);
+        List<CuisineRegion.CuisineRegionName> listCuisineRegionNames =
+                List.of(
+                        CuisineRegion.CuisineRegionName.SLOBOZHANSKA,
+                        CuisineRegion.CuisineRegionName.ZAPORIZKA,
+                        CuisineRegion.CuisineRegionName.BYKOVINSKA,
+                        CuisineRegion.CuisineRegionName.GALYCKA,
+                        CuisineRegion.CuisineRegionName.KRYMSKA,
+                        CuisineRegion.CuisineRegionName.ODESKA,
+                        CuisineRegion.CuisineRegionName.NADDNIPRIANSKA,
+                        CuisineRegion.CuisineRegionName.PODILSKA,
+                        CuisineRegion.CuisineRegionName.POLISKA,
+                        CuisineRegion.CuisineRegionName.VOLYNSKA,
+                        CuisineRegion.CuisineRegionName.ZAKARPATSKA);
+        CuisineRegion cuisineRegion;
+        for (CuisineRegion.CuisineRegionName cuisineRegionName : listCuisineRegionNames) {
+            cuisineRegion = new CuisineRegion();
+            cuisineRegion.setCuisineRegionName(cuisineRegionName);
+            cuisineRegionService.add(cuisineRegion);
+            cuisineRegionList.add(cuisineRegion);
+        }
 
         List<DishType> dishTypesList = new ArrayList<>();
-        dishTypesList.add(DishType.PASTRY);
-        dishTypesList.add(DishType.SOUP);
-        dishTypesList.add(DishType.DESSERT);
-        dishTypesList.add(DishType.APPETIZER);
-        dishTypesList.add(DishType.MAIN_DISH);
+        List<DishType.DishTypeName> listDishTypeNames = List.of(
+                DishType.DishTypeName.PASTRY, DishType.DishTypeName.SOUP,
+                DishType.DishTypeName.DESSERT, DishType.DishTypeName.APPETIZER,
+                DishType.DishTypeName.MAIN_DISH);
+        DishType dishType;
+        for (DishType.DishTypeName dishTypeName : listDishTypeNames) {
+            dishType = new DishType();
+            dishType.setDishTypeName(dishTypeName);
+            dishTypeService.add(dishType);
+            dishTypesList.add(dishType);
+        }
 
         List<String> imageUrlList = new ArrayList<>();
         imageUrlList.add("https://i.ibb.co/k0qrd5D/1-2.jpg");

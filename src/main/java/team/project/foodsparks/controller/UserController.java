@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,7 @@ import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*")
 public class UserController {
     private final UserService userService;
     private final ResponseDtoMapper<UserResponseDto, User> userResponseDtoMapper;
@@ -71,7 +73,7 @@ public class UserController {
         return userResponseDtoMapper.mapToDto(user);
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{id}")
     @ApiOperation(value = "Delete User By Id")
     void delete(@PathVariable Long id) {
         userService.deleteUserById(id);

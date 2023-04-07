@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import team.project.foodsparks.service.mapper.ResponseDtoMapper;
 
 @RestController
 @RequestMapping("/gender")
+@CrossOrigin(origins = "*")
 public class GenderController {
     private final GenderService genderService;
     private final ResponseDtoMapper<GenderResponseDto, Gender> genderResponseDtoMapper;
@@ -27,7 +29,7 @@ public class GenderController {
     }
 
     @GetMapping
-    @ApiOperation(value = "")
+    @ApiOperation(value = "Get all Genders")
     public List<GenderResponseDto> getAllGenders() {
         List<Gender> genderServiceAll = genderService.getAll();
         return genderServiceAll

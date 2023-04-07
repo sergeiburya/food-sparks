@@ -5,12 +5,11 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -33,9 +32,9 @@ public class Recipe {
     private Long id;
     @Column(name = "dish_name")
     private String dishName;
-    @Enumerated(EnumType.STRING)
+    @OneToOne
     private CuisineRegion cuisineRegion;
-    @Enumerated(EnumType.STRING)
+    @OneToOne
     private DishType dishType;
     @ElementCollection
     @MapKeyJoinColumn(name = "product_id")
