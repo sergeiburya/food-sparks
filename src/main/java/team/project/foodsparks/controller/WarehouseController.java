@@ -4,7 +4,13 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.response.WarehouseResponseDto;
 import team.project.foodsparks.model.Warehouse;
 import team.project.foodsparks.service.WarehouseService;
@@ -26,6 +32,7 @@ public class WarehouseController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Get all products balances")
     public List<WarehouseResponseDto> getAll() {
         return warehouseService.getAll()
                 .stream()
@@ -34,7 +41,7 @@ public class WarehouseController {
     }
 
     @GetMapping("/{id}")
-    @ApiOperation(value = "Get product amount from warehouse by ingredient id")
+    @ApiOperation(value = "Get product balance from warehouse by product id")
     public WarehouseResponseDto getById(@PathVariable Long id) {
         Warehouse warehouse = warehouseService.getById(id).orElseThrow(
                 () -> new RuntimeException("Warehouse for product id: "
@@ -43,7 +50,7 @@ public class WarehouseController {
     }
 
     @PutMapping("/increase")
-    @ApiOperation(value = "Increase amount of product in warehouse by ingredient id")
+    @ApiOperation(value = "Increase balance of product in warehouse by ingredient id")
     public WarehouseResponseDto increaseAmountOfIngredient(@RequestParam Long productId,
                                                            @RequestParam Integer amount) {
         Warehouse warehouse = warehouseService.increaseAmountOfProduct(productId, amount);
@@ -51,7 +58,7 @@ public class WarehouseController {
     }
 
     @PutMapping("/decrease")
-    @ApiOperation(value = "Decrease amount of product in warehouse by ingredient id")
+    @ApiOperation(value = "Decrease balance of product in warehouse by ingredient id")
     public WarehouseResponseDto decreaseAmountOfIngredient(@RequestParam Long productId,
                                                            @RequestParam Integer amount) {
         Warehouse warehouse = warehouseService.decreaseAmountOfProduct(productId, amount);

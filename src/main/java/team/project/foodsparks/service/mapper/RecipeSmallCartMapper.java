@@ -16,7 +16,7 @@ public class RecipeSmallCartMapper
         dto.setDishName(recipe.getDishName());
         dto.setImageUrl(recipe.getImageUrl());
         dto.setPortions(recipe.getPortions());
-        dto.setDishType(recipe.getDishType().toString());
+        dto.setDishType(recipe.getDishType().getDishTypeName().toString());
         dto.setCookingTime(CookingTimeConverter.convertCookingTime(recipe.getCookingTime()));
         return dto;
     }

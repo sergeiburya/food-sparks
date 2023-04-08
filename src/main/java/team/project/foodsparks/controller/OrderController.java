@@ -4,7 +4,11 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.response.OrderResponseDto;
 import team.project.foodsparks.model.Order;
 import team.project.foodsparks.model.ShoppingCart;
@@ -34,7 +38,9 @@ public class OrderController {
     }
 
     @PostMapping("/complete")
-    @ApiOperation(value = "Complete Order")
+    @ApiOperation(value = "Complete Order. All products with quantity will be moved to order."
+            + " Shopping cart will be cleared."
+    )
     public OrderResponseDto completeOrder(Authentication auth) {
         String email = auth.getName();
         User user = userService.findByEmail(email).orElseThrow(
@@ -44,7 +50,7 @@ public class OrderController {
     }
 
     @GetMapping
-    @ApiOperation(value = "History Orders")
+    @ApiOperation(value = "Get order history of current authenticated user")
     public List<OrderResponseDto> getOrderHistory(Authentication auth) {
         String email = auth.getName();
         User user = userService.findByEmail(email).orElseThrow(

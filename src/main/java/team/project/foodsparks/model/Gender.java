@@ -27,7 +27,20 @@ public class Gender {
     private GenderName genderName;
 
     public enum GenderName {
-        MALE, FEMALE, OTHER
+        MALE("Чоловіча"),
+        FEMALE("Жіноча"),
+        OTHER("Інше");
+
+        private final String value;
+
+        GenderName(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
     }
 
     @Override

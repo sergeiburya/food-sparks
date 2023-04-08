@@ -29,7 +29,7 @@ public class GenderController {
     }
 
     @GetMapping
-    @ApiOperation(value = "")
+    @ApiOperation(value = "Get all Genders")
     public List<GenderResponseDto> getAllGenders() {
         List<Gender> genderServiceAll = genderService.getAll();
         return genderServiceAll

@@ -5,8 +5,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import team.project.foodsparks.model.CuisineRegion;
-import team.project.foodsparks.model.DishType;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.repository.RecipeRepository;
 import team.project.foodsparks.service.RecipeService;
@@ -36,8 +34,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> getRecipeByCuisineRegion(CuisineRegion cuisineRegion) {
-        return recipeRepository.findRecipeByCuisineRegion(cuisineRegion);
+    public List<Recipe> findRecipeByCuisineRegionId(Long cuisineRegionId) {
+        return recipeRepository.findRecipeByCuisineRegionId(cuisineRegionId);
     }
 
     @Override
@@ -46,7 +44,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> findRecipeByDishType(DishType dishType) {
-        return recipeRepository.findRecipeByDishType(dishType);
+    public List<Recipe> findRecipeByDishTypeId(Long dishTypeId) {
+        return recipeRepository.findRecipeByDishTypeId(dishTypeId);
     }
 }

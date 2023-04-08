@@ -15,7 +15,8 @@ public class UserServiceImpl implements UserService {
     private final ShoppingCartRepository shoppingCartRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, ShoppingCartRepository shoppingCartRepository) {
+    public UserServiceImpl(UserRepository userRepository,
+                           ShoppingCartRepository shoppingCartRepository) {
         this.userRepository = userRepository;
         this.shoppingCartRepository = shoppingCartRepository;
     }

@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.RecipeRequestDto;
 import team.project.foodsparks.dto.response.RecipeResponseDto;
 import team.project.foodsparks.dto.response.RecipeSmallCartResponseDto;
-import team.project.foodsparks.model.CuisineRegion;
-import team.project.foodsparks.model.DishType;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.service.RecipeService;
 import team.project.foodsparks.service.mapper.RequestDtoMapper;
@@ -87,21 +85,18 @@ public class RecipeController {
     }
 
     @GetMapping("/byRegions")
-    @ApiOperation(value = "Get recipes by cuisine region; "
-            + "(At this time there are 4 regions: EAST, WEST, SOUTH, NORTH")
-    public List<RecipeResponseDto> getDishesByCuisineRegion(@RequestParam String cuisineRegion) {
-        return recipeService.getRecipeByCuisineRegion(CuisineRegion
-                        .valueOf(cuisineRegion.toUpperCase()))
+    @ApiOperation(value = "Get recipes by cuisine region ID")
+    public List<RecipeSmallCartResponseDto> getDishesByCuisineRegion(@RequestParam Long id) {
+        return recipeService.findRecipeByCuisineRegionId(id)
                 .stream()
-                .map(recipeResponseMapper::mapToDto)
+                .map(recipeSmallResponseMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/byDishType")
-    @ApiOperation(value = "Get recipes by cuisine region. "
-            + "There are possible values:  DESSERT, SOUPS, MAIN_DISH, PASTRY, APPETIZER")
-    public List<RecipeSmallCartResponseDto> getDishesByDishType(@RequestParam String dishType) {
-        return recipeService.findRecipeByDishType(DishType.valueOf(dishType.toUpperCase()))
+    @ApiOperation(value = "Get recipes by dish type ID.")
+    public List<RecipeSmallCartResponseDto> getDishesByDishTypeId(@RequestParam Long id) {
+        return recipeService.findRecipeByDishTypeId(id)
                 .stream()
                 .map(recipeSmallResponseMapper::mapToDto)
                 .collect(Collectors.toList());
