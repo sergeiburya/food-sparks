@@ -34,7 +34,8 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         Recipe recipe = new Recipe();
         recipe.setCuisineRegion(cuisineRegionService.getById(dto.getCuisineRegionId()).get());
         recipe.setDishType(dishTypeService.getById(dto.getDishTypeId()).get());
-        recipe.setDishName(dto.getDishName());
+        recipe.setTitle(dto.getTitle());
+        recipe.setSubtitle(dto.getSubtitle());
         recipe.setSpiced(dto.isSpiced());
         recipe.setInstructions(dto.getInstructions());
         recipe.setProductList(dto.getProductList().entrySet()
@@ -51,7 +52,7 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
     public RecipeResponseDto mapToDto(Recipe recipe) {
         RecipeResponseDto recipeResponseDto = new RecipeResponseDto();
         recipeResponseDto.setId(recipe.getId());
-        recipeResponseDto.setDishName(recipe.getDishName());
+        recipeResponseDto.setTitle(recipe.getTitle());
         recipeResponseDto.setCuisineRegion(recipe.getCuisineRegion().getCuisineRegionName()
                 .toString());
         recipeResponseDto.setDishType(recipe.getDishType().getDishTypeName().toString());
@@ -62,6 +63,8 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         recipeResponseDto.setCookingTime(CookingTimeConverter
                 .convertCookingTime(recipe.getCookingTime()));
         recipeResponseDto.setImageUrl(recipe.getImageUrl());
+        recipeResponseDto.setSubtitle(recipe.getSubtitle());
+        recipeResponseDto.setComplexity(recipe.getComplexity().toString());
         return recipeResponseDto;
     }
 }

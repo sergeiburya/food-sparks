@@ -12,7 +12,8 @@ import team.project.foodsparks.model.Product;
 @Setter
 public class RecipeResponseDto {
     private Long id;
-    private String dishName;
+    private String title;
+    private String subtitle;
     private String cuisineRegion;
     private String dishType;
     @JsonSerialize(using = RecipeProductListSerializer.class)
@@ -22,4 +23,5 @@ public class RecipeResponseDto {
     private String cookingTime;
     private Integer portions;
     private String imageUrl;
+    private String complexity;
 }

@@ -20,6 +20,7 @@ public class CuisineRegion {
     private Long id;
     @Enumerated(value = EnumType.STRING)
     private CuisineRegionName cuisineRegionName;
+    private String imageUrl;
 
     public enum CuisineRegionName {
         GALYCKA("Галицька"),

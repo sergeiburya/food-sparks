@@ -8,7 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class RecipeRequestDto {
-    private String dishName;
+    private String title;
+    private String subtitle;
     private Long cuisineRegionId;
     private Long dishTypeId;
     private Map<Long, Double> productList;

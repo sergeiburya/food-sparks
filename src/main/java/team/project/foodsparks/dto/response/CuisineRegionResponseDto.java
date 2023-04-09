@@ -8,4 +8,5 @@ import lombok.Setter;
 public class CuisineRegionResponseDto {
     private Long id;
     private String name;
+    private String imageUrl;
 }

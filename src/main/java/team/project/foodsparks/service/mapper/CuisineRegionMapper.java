@@ -12,6 +12,7 @@ public class CuisineRegionMapper
         CuisineRegionResponseDto dto = new CuisineRegionResponseDto();
         dto.setName(cuisineRegion.getCuisineRegionName().toString());
         dto.setId(cuisineRegion.getId());
+        dto.setImageUrl(cuisineRegion.getImageUrl());
         return dto;
     }
 }

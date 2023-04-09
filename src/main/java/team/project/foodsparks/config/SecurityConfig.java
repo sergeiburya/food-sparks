@@ -13,22 +13,6 @@ import team.project.foodsparks.security.JwtTokenProvider;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private static final String[] AUTH_WHITELIST = {
-            "/swagger",
-            "/swagger/*",
-            "/swagger/index.html",
-            // for Swagger UI v2
-            "/v2/api-docs",
-            "/swagger-ui.html",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/webjars/**",
-            // for Swagger UI v3 (OpenAPI)
-            "/v3/api-docs/**",
-            "/swagger-ui/**"
-    };
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
@@ -56,21 +40,35 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/register", "/login", "/inject", "/verify", "/swager/*")
+                .antMatchers("/swagger-resources/**", "/v3/api-docs/**", "/swagger-ui/**")
                 .permitAll()
-                .antMatchers("/ingredients","/recipes","/recipes/*","/recipes/quantity/{id}")
+                .antMatchers("/register", "/login", "/verify")
                 .permitAll()
-                .antMatchers(HttpMethod.DELETE,"/products/{id}", "/users/{id}").hasRole("ADMIN")
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(HttpMethod.OPTIONS,"/recipes","/recipes/*","/recipes/quantity/{id}")
+                .antMatchers("/recipes", "/recipes/{id}",
+                        "/recipes/byRegions", "/recipes/byDishType")
                 .permitAll()
-                .antMatchers(HttpMethod.GET, "/user/by-email","/address/by-user")
+                .antMatchers("/products", "/products/{id}")
+                .permitAll()
+                .antMatchers("/gender")
+                .permitAll()
+                .antMatchers("/dish-types")
+                .permitAll()
+                .antMatchers("/cuisine-regions")
+                .permitAll()
+                .antMatchers("/cuisine-regions")
+                .permitAll()
+                .antMatchers(HttpMethod.DELETE, "/products/{id}", "/users/{id}")
+                .hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/user/by-email", "/address/by-user")
                 .hasAnyRole("ADMIN, USER")
-                .antMatchers(HttpMethod.GET, "/user/all").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/address/add").hasAnyRole("ADMIN, USER")
+                .antMatchers(HttpMethod.GET, "/user/all")
+                .hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/address/add")
+                .hasAnyRole("ADMIN, USER")
                 .antMatchers(HttpMethod.PUT, "user/update", "/udate-address-user")
                 .hasAnyRole("ADMIN, USER")
-                .antMatchers(HttpMethod.DELETE, "/user/{id}").hasRole("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/user/{id}")
+                .hasRole("ADMIN")
                 .antMatchers(HttpMethod.DELETE, "user/delete", "/address/delete")
                 .hasAnyRole("ADMIN, USER")
                 .anyRequest()

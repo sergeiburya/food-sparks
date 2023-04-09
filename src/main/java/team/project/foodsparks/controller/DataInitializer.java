@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -162,10 +163,24 @@ public class DataInitializer {
                         CuisineRegion.CuisineRegionName.POLISKA,
                         CuisineRegion.CuisineRegionName.VOLYNSKA,
                         CuisineRegion.CuisineRegionName.ZAKARPATSKA);
+        List<String> cuisineRegionsImages = new ArrayList<>(List.of(
+                "https://i.ibb.co/hf7qPd9/1.jpg",
+                "https://i.ibb.co/KrMnwx7/2.jpg",
+                "https://i.ibb.co/MVc7Y5C/3.jpg",
+                "https://i.ibb.co/rHjN7g7/4.jpg",
+                "https://i.ibb.co/WH2KKMP/5.jpg",
+                "https://i.ibb.co/dkfSBfG/6.jpg",
+                "https://i.ibb.co/BTMC09m/7.jpg",
+                "https://i.ibb.co/71r8hZB/8.jpg",
+                "https://i.ibb.co/26J0S1N/9.jpg",
+                "https://i.ibb.co/zQS83wP/10.jpg",
+                "https://i.ibb.co/52ZbXBQ/11.jpg"));
         CuisineRegion cuisineRegion;
         for (CuisineRegion.CuisineRegionName cuisineRegionName : listCuisineRegionNames) {
             cuisineRegion = new CuisineRegion();
             cuisineRegion.setCuisineRegionName(cuisineRegionName);
+            cuisineRegion.setImageUrl(cuisineRegionsImages.get(0));
+            cuisineRegionsImages.remove(0);
             cuisineRegionService.add(cuisineRegion);
             cuisineRegionList.add(cuisineRegion);
         }
@@ -210,7 +225,7 @@ public class DataInitializer {
         Recipe newRec;
         for (String recipeName : recipeNames) {
             newRec = new Recipe();
-            newRec.setDishName(recipeName);
+            newRec.setTitle(recipeName);
             Map<Product, Double> productList = new HashMap<>();
             for (int i = 0; i <= random.nextInt(5) + 2; i++) {
                 productList.put(savedProducts.get(random.nextInt(savedProducts.size())),
@@ -225,6 +240,11 @@ public class DataInitializer {
             newRec.setCookingTime(random.nextInt(180) + 5);
             newRec.setPortions(random.nextInt(6) + 2);
             newRec.setImageUrl(imageUrlList.get(random.nextInt(imageUrlList.size())));
+            String ingredientListSubTitle = newRec.getProductList().entrySet()
+                    .stream()
+                    .map(m -> m.getKey().getName())
+                    .collect(Collectors.joining(", "));
+            newRec.setSubtitle("Як приготувати " + recipeName + " з " + ingredientListSubTitle);
             recipeService.save(newRec);
         }
     }

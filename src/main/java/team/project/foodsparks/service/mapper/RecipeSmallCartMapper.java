@@ -13,7 +13,7 @@ public class RecipeSmallCartMapper
     public RecipeSmallCartResponseDto mapToDto(Recipe recipe) {
         RecipeSmallCartResponseDto dto = new RecipeSmallCartResponseDto();
         dto.setId(recipe.getId());
-        dto.setDishName(recipe.getDishName());
+        dto.setDishName(recipe.getTitle());
         dto.setImageUrl(recipe.getImageUrl());
         dto.setPortions(recipe.getPortions());
         dto.setDishType(recipe.getDishType().getDishTypeName().toString());

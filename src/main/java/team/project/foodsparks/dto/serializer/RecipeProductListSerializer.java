@@ -15,6 +15,7 @@ public class RecipeProductListSerializer extends JsonSerializer<Map<Product, Dou
         gen.writeStartArray(value);
         for (Map.Entry<Product, Double> entry : value.entrySet()) {
             gen.writeStartObject();
+            gen.writeNumberField("productId", entry.getKey().getId());
             gen.writeStringField("name", entry.getKey().getName());
             gen.writeNumberField("amount", entry.getValue());
             gen.writeEndObject();
