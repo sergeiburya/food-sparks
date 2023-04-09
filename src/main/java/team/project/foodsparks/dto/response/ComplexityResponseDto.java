@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CuisineRegionResponseDto {
+public class ComplexityResponseDto {
     private Long id;
-    private String cuisineRegionName;
-    private String imageUrl;
+    private String complexityName;
 }

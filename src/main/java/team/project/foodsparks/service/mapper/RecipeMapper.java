@@ -64,7 +64,7 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
                 .convertCookingTime(recipe.getCookingTime()));
         recipeResponseDto.setImageUrl(recipe.getImageUrl());
         recipeResponseDto.setSubtitle(recipe.getSubtitle());
-        recipeResponseDto.setComplexity(recipe.getComplexity().toString());
+        recipeResponseDto.setComplexity(recipe.getComplexity().getComplexityName().toString());
         return recipeResponseDto;
     }
 }

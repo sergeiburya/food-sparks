@@ -22,11 +22,11 @@ public class DishType {
     private DishTypeName dishTypeName;
 
     public enum DishTypeName {
-        DESSERT("Десерт"),
+        DESSERT("Десерти"),
         SOUP("Перші страви"),
-        MAIN_DISH("Основна страва"),
+        MAIN_DISH("Основні страви"),
         PASTRY("Випічка"),
-        APPETIZER("Закуска");
+        APPETIZER("Закуски");
 
         private final String value;
 

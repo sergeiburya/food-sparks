@@ -7,25 +7,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import team.project.foodsparks.model.Complexity;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.repository.RecipeRepository;
 import team.project.foodsparks.repository.specification.SpecificationManager;
+import team.project.foodsparks.service.ComplexityService;
 import team.project.foodsparks.service.RecipeService;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
+    private final ComplexityService complexityService;
     private final SpecificationManager<Recipe> recipeSpecificationManager;
 
     @Autowired
     public RecipeServiceImpl(RecipeRepository recipeRepository,
+                             ComplexityService complexityService,
                              SpecificationManager<Recipe> recipeSpecificationManager) {
         this.recipeRepository = recipeRepository;
+        this.complexityService = complexityService;
         this.recipeSpecificationManager = recipeSpecificationManager;
     }
 
     @Override
     public Recipe save(Recipe recipe) {
+        Integer cookingTime = recipe.getCookingTime();
+        Complexity.ComplexityName complexityName = cookingTime > 60
+                ? Complexity.ComplexityName.HARD : cookingTime > 30
+                ? Complexity.ComplexityName.MEDIUM : Complexity.ComplexityName.EASY;
+        Complexity complexity = complexityService.getByName(complexityName).get();
+        recipe.setComplexity(complexity);
         return recipeRepository.save(recipe);
     }
 

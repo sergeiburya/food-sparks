@@ -5,8 +5,6 @@ import java.util.Map;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,12 +47,6 @@ public class Recipe {
     private Integer cookingTime;
     private Integer portions;
     private String imageUrl;
-    @Enumerated(value = EnumType.STRING)
+    @ManyToOne
     private Complexity complexity;
-
-    public void setCookingTime(Integer cookingTime) {
-        this.cookingTime = cookingTime;
-        this.complexity = cookingTime > 60
-                ? Complexity.HARD : cookingTime > 30 ? Complexity.MEDIUM : Complexity.EASY;
-    }
 }

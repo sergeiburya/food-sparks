@@ -10,12 +10,14 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import team.project.foodsparks.model.Complexity;
 import team.project.foodsparks.model.CuisineRegion;
 import team.project.foodsparks.model.DishType;
 import team.project.foodsparks.model.Gender;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.model.Role;
+import team.project.foodsparks.service.ComplexityService;
 import team.project.foodsparks.service.CuisineRegionService;
 import team.project.foodsparks.service.DishTypeService;
 import team.project.foodsparks.service.GenderService;
@@ -32,6 +34,7 @@ public class DataInitializer {
     private final GenderService genderService;
     private final DishTypeService dishTypeService;
     private final CuisineRegionService cuisineRegionService;
+    private final ComplexityService complexityService;
 
     @Autowired
     public DataInitializer(RoleService roleService,
@@ -39,13 +42,15 @@ public class DataInitializer {
                            GenderService genderService,
                            ProductService productService,
                            DishTypeService dishTypeService,
-                           CuisineRegionService cuisineRegionService) {
+                           CuisineRegionService cuisineRegionService,
+                           ComplexityService complexityService) {
         this.roleService = roleService;
         this.recipeService = recipeService;
         this.productService = productService;
         this.genderService = genderService;
         this.dishTypeService = dishTypeService;
         this.cuisineRegionService = cuisineRegionService;
+        this.complexityService = complexityService;
         savedProducts = new ArrayList<>();
     }
 
@@ -66,6 +71,16 @@ public class DataInitializer {
         genderService.add(genderFemale);
         genderService.add(genderMale);
         genderService.add(genderOther);
+
+        Complexity easyComplexity = new Complexity();
+        easyComplexity.setComplexityName(Complexity.ComplexityName.EASY);
+        Complexity mediumComplexity = new Complexity();
+        mediumComplexity.setComplexityName(Complexity.ComplexityName.MEDIUM);
+        Complexity hardComplexity = new Complexity();
+        hardComplexity.setComplexityName(Complexity.ComplexityName.HARD);
+        complexityService.add(easyComplexity);
+        complexityService.add(mediumComplexity);
+        complexityService.add(hardComplexity);
 
         List<String> productNames = List.of(
                 "Картопля", "Цибуля", "Морква", "Перець", "Томат", "Капуста", "Буряк", "Яйце",

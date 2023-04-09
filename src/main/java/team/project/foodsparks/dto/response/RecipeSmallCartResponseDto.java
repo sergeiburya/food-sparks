@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class RecipeSmallCartResponseDto {
     private Long id;
-    private String dishName;
+    private String title;
     private String imageUrl;
     private String cookingTime;
     private Integer portions;

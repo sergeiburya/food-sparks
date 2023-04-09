@@ -15,9 +15,9 @@ public class RecipeComplexityInSpecification
     @Override
     public Specification<Recipe> getSpecification(String[] complexities) {
         return (root, query, cb) -> {
-            CriteriaBuilder.In<String> predicate = cb.in(root.get(FIELD_NAME));
+            CriteriaBuilder.In<Long> predicate = cb.in(root.get(FIELD_NAME));
             for (String value : complexities) {
-                predicate.value(value);
+                predicate.value(Long.valueOf(value));
             }
             return cb.and(predicate, predicate);
         };

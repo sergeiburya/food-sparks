@@ -1,11 +1,13 @@
 package team.project.foodsparks.controller;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,7 @@ import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.service.RecipeService;
 import team.project.foodsparks.service.mapper.RequestDtoMapper;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
+import team.project.foodsparks.util.SortOrderParser;
 
 @RestController
 @RequestMapping("/recipes")
@@ -51,27 +54,44 @@ public class RecipeController {
     }
 
     @GetMapping
-    @ApiOperation(value = "Get all recipes")
-    public List<RecipeSmallCartResponseDto> getAll(@RequestParam(defaultValue = "9999999")
+    @ApiOperation(value = "Get all recipes with possibilities to filter, sort and pagination")
+    public List<RecipeSmallCartResponseDto> getAll(@ApiParam(value = "If this parameter is defined"
+            + " in request, then count of recipes in response will be equals to value. As default"
+            + " value is 9999999 that's why if parameter isn't defined in response there will be"
+            + " all recipes in single page")
+                                                   @RequestParam(defaultValue = "9999999")
                                                    Integer count,
-                                                   @RequestParam(defaultValue = "0")
-                                                   Integer page,
+                                                   @ApiParam(value = "This parameter point on to"
+            + " the specific page in response ( for example if we have at all 100 recipes and"
+            + " specify the count param as 10, then in every page we will be getting part of "
+            + "10 recipes.)")
+                                                   @RequestParam(defaultValue = "0") Integer page,
+                                                   @ApiParam(value = "If this parameter isn't"
+            + " defined in request, then all recipes in response will be sorted by id on ascending"
+            + " order as default. You may specify by which field you want to sort and in which"
+            + " order (ASC for ascending and DESC for descending) you want to get the response"
+            + " (for example : /recipes?sortBy=title:DESC or /recipes?sortBy=title:ASC and also"
+            + " you may specify the multiple sorting parameters like a"
+            + " /recipes?sortBy=title:ASC;cookingTime:DESC)")
+                                                   @RequestParam(defaultValue = "id") String sortBy,
+                                                   @ApiParam(value = "If this parameter is"
+            + " defined in request, then all recipes in response will be filtered by specified"
+            + " filters. At this time there are 5 filters ( \n 1. recipes?complexityIn="
+            + "{id (or id's separated by commas) of complexity}, \n 2. recipes?cuisineRegionIn="
+            + "{id (or id's separated by commas) of cuisine region}, \n 3. recipes?dishTypeIn="
+            + "{id (or id's separated by commas) of dish type}, \n 4. recipes?productListIn="
+            + "{id (or id's separated by commas) of products}, \n 5. recipes?spicedIn="
+            + "{true or false}. \n - For example your request may contain filtering, sorting, "
+            + "ordering, pagination and counting together, and looks like: \n  \n"
+            + "- - recipes?cuisineRegionIn=1,2&complexityIn=1&sortBy=title:DESC&count=2&page=0")
                                                    @RequestParam Map<String, String> params) {
-        PageRequest pageRequest = PageRequest.of(page, count);
         params.remove("count");
         params.remove("page");
+        params.remove("sortBy");
+        List<Sort.Order> orders = SortOrderParser.getOrders(sortBy);
+        Sort sort = Sort.by(orders);
+        PageRequest pageRequest = PageRequest.of(page, count, sort);
         return recipeService.findAll(params, pageRequest)
-                .stream()
-                .map(recipeSmallResponseMapper::mapToDto)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/quantity/{count}")
-    @ApiOperation(value = "This endpoint for test purpose. "
-            + "Get quantity of recipes that specified in param {count}")
-    public List<RecipeSmallCartResponseDto> getSpecifiedQuantityOfRecipes(
-            @PathVariable Long count) {
-        return recipeService.getByIdLessThan(count)
                 .stream()
                 .map(recipeSmallResponseMapper::mapToDto)
                 .collect(Collectors.toList());
@@ -84,23 +104,5 @@ public class RecipeController {
                 () -> new RuntimeException("Recipe by id: " + id + " doesn't exist.")
         );
         return recipeResponseMapper.mapToDto(recipe);
-    }
-
-    @GetMapping("/byRegions")
-    @ApiOperation(value = "Get recipes by cuisine region ID")
-    public List<RecipeSmallCartResponseDto> getDishesByCuisineRegion(@RequestParam Long id) {
-        return recipeService.findRecipeByCuisineRegionId(id)
-                .stream()
-                .map(recipeSmallResponseMapper::mapToDto)
-                .collect(Collectors.toList());
-    }
-
-    @GetMapping("/byDishType")
-    @ApiOperation(value = "Get recipes by dish type ID.")
-    public List<RecipeSmallCartResponseDto> getDishesByDishTypeId(@RequestParam Long id) {
-        return recipeService.findRecipeByDishTypeId(id)
-                .stream()
-                .map(recipeSmallResponseMapper::mapToDto)
-                .collect(Collectors.toList());
     }
 }

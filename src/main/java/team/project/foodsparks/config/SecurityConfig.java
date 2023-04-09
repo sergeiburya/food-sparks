@@ -53,6 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/dish-types")
                 .permitAll()
+                .antMatchers("/complexities")
+                .permitAll()
                 .antMatchers("/cuisine-regions")
                 .permitAll()
                 .antMatchers("/cuisine-regions")
