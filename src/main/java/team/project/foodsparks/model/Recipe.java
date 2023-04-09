@@ -10,8 +10,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,9 +35,9 @@ public class Recipe {
     @Column(name = "dish_name")
     private String title;
     private String subtitle;
-    @OneToOne
+    @ManyToOne
     private CuisineRegion cuisineRegion;
-    @OneToOne
+    @ManyToOne
     private DishType dishType;
     @ElementCollection
     @MapKeyJoinColumn(name = "product_id")

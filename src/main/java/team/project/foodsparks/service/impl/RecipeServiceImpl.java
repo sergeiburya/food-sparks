@@ -1,21 +1,27 @@
 package team.project.foodsparks.service.impl;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.repository.RecipeRepository;
+import team.project.foodsparks.repository.specification.SpecificationManager;
 import team.project.foodsparks.service.RecipeService;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
     private final RecipeRepository recipeRepository;
+    private final SpecificationManager<Recipe> recipeSpecificationManager;
 
     @Autowired
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository,
+                             SpecificationManager<Recipe> recipeSpecificationManager) {
         this.recipeRepository = recipeRepository;
+        this.recipeSpecificationManager = recipeSpecificationManager;
     }
 
     @Override
@@ -24,8 +30,16 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> getAll(PageRequest pageRequest) {
-        return recipeRepository.findAll(pageRequest).toList();
+    public List<Recipe> findAll(Map<String, String> params,
+                                PageRequest pageRequest) {
+        Specification<Recipe> specification = null;
+        for (Map.Entry<String,String> entry : params.entrySet()) {
+            Specification<Recipe> sp = recipeSpecificationManager.get(entry.getKey(),
+                    entry.getValue().split(","));
+            specification = specification == null
+                    ? Specification.where(sp) : specification.and(sp);
+        }
+        return recipeRepository.findAll(specification, pageRequest).toList();
     }
 
     @Override

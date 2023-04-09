@@ -1,8 +1,8 @@
 package team.project.foodsparks.controller;
 
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -52,13 +52,15 @@ public class RecipeController {
 
     @GetMapping
     @ApiOperation(value = "Get all recipes")
-    public List<RecipeSmallCartResponseDto> getAll(@ApiParam(value = "default value is 20")
-                                                   @RequestParam(defaultValue = "9999999")
+    public List<RecipeSmallCartResponseDto> getAll(@RequestParam(defaultValue = "9999999")
                                                    Integer count,
                                                    @RequestParam(defaultValue = "0")
-                                                   Integer page) {
+                                                   Integer page,
+                                                   @RequestParam Map<String, String> params) {
         PageRequest pageRequest = PageRequest.of(page, count);
-        return recipeService.getAll(pageRequest)
+        params.remove("count");
+        params.remove("page");
+        return recipeService.findAll(params, pageRequest)
                 .stream()
                 .map(recipeSmallResponseMapper::mapToDto)
                 .collect(Collectors.toList());
