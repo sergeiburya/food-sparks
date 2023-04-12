@@ -58,7 +58,7 @@ public class AddressController {
         return addressResponseDtoMapper.mapToDto(address);
     }
 
-    @PutMapping("/udate-address-user")
+    @PutMapping("/update-address-user")
     @ApiOperation(value = "Update Address User has user Role ")
     public AddressResponseDto updateAddress(Authentication auth,
                                          @RequestBody AddressRequestDto addressRequestDto) {
