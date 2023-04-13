@@ -4,14 +4,9 @@ import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import team.project.foodsparks.model.Address;
-import team.project.foodsparks.model.Order;
-import team.project.foodsparks.model.Product;
-import team.project.foodsparks.model.User;
-import team.project.foodsparks.service.AddressService;
-import team.project.foodsparks.service.OrderSendUserEmail;
+import java.io.ByteArrayOutputStream;
+import java.util.Map;
+import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -23,9 +18,14 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-import java.io.ByteArrayOutputStream;
-import java.util.Map;
-import java.util.Properties;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import team.project.foodsparks.model.Address;
+import team.project.foodsparks.model.Order;
+import team.project.foodsparks.model.Product;
+import team.project.foodsparks.model.User;
+import team.project.foodsparks.service.AddressService;
+import team.project.foodsparks.service.OrderSendUserEmail;
 
 @Service
 public class OrderSendUserEmailImpl implements OrderSendUserEmail {
@@ -36,30 +36,29 @@ public class OrderSendUserEmailImpl implements OrderSendUserEmail {
         this.addressService = addressService;
     }
 
-
     @Override
     public void sendOrderEmail(Order order) throws DocumentException {
         User user = order.getUser();
         String userEmail = order.getUser().getEmail();
-        Address userAddress = addressService.findByUser(user).orElseThrow(
-                () -> new RuntimeException("Address with user " + user + "not found"));
-        Map<Product, Integer> productAmount = order.getProductAmount();
-
         Document document = new Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter.getInstance(document, baos);
+        Address userAddress = addressService.findByUser(user).orElseThrow(
+                () -> new RuntimeException("Address with user " + user + "not found"));
         document.open();
-        document.add(new Paragraph("Order Number: " + order.getId()));
-        document.add(new Paragraph("Order Time: " + order.getOrderTime()));
-        document.add(new Paragraph("User Name: " + user.getFirstName() + user.getLastName()));
-        document.add(new Paragraph("User Phone: " + user.getPhone()));
         document.add(new Paragraph("User Region: " + userAddress.getRegion()));
         document.add(new Paragraph("User Town: " + userAddress.getTown()));
         document.add(new Paragraph("User Street: " + userAddress.getStreet()));
         document.add(new Paragraph("User Build: " + userAddress.getBuild()));
         document.add(new Paragraph("User Apartment: " + userAddress.getApartment()));
+        document.add(new Paragraph("Order Number: " + order.getId()));
+        document.add(new Paragraph("Order Time: " + order.getOrderTime()));
+        document.add(new Paragraph("User Name: " + user.getFirstName() + user.getLastName()));
+        document.add(new Paragraph("User Phone: " + user.getPhone()));
+
         document.add(new Paragraph("Order Items:"));
 
+        Map<Product, Integer> productAmount = order.getProductAmount();
         for (Map.Entry<Product, Integer> entry : productAmount.entrySet()) {
             document.add(new Paragraph(entry.getKey().getName() + " - " + entry.getValue()));
         }
@@ -80,7 +79,8 @@ public class OrderSendUserEmailImpl implements OrderSendUserEmail {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication("foodsparksmail@gmail.com", "avcayxyeboohjvad");
-            }});
+            }
+        });
 
         Message message = new MimeMessage(session);
         try {
