@@ -1,5 +1,6 @@
 package team.project.foodsparks.controller;
 
+import com.lowagie.text.DocumentException;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class OrderController {
     @ApiOperation(value = "Complete Order. All products with quantity will be moved to order."
             + " Shopping cart will be cleared."
     )
-    public OrderResponseDto completeOrder(Authentication auth) {
+    public OrderResponseDto completeOrder(Authentication auth) throws DocumentException {
         String email = auth.getName();
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));

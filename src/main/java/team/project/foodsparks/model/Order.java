@@ -1,5 +1,6 @@
 package team.project.foodsparks.model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
 import java.util.Objects;
@@ -37,6 +38,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    private BigDecimal sum;
 
     @Override
     public boolean equals(Object obj) {
