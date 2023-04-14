@@ -46,7 +46,6 @@ public class ShoppingCartController {
         return shoppingCartMapper.mapToDto(shoppingCartService.getByUser(user));
     }
 
-
     @PutMapping("/increase")
     @ApiOperation(value = "Increase product quantity in to "
             + "shopping cart of current authenticated user")
@@ -56,7 +55,7 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("User with email " + email + " not found"));
         return shoppingCartMapper
                 .mapToDto(shoppingCartService.increaseProductAmount(productId, user));
     }
@@ -70,7 +69,7 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("User with email " + email + " not found"));
         return shoppingCartMapper
                 .mapToDto(shoppingCartService.decreaseProductAmount(productId, user));
     }
@@ -82,7 +81,7 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("User with email " + email + " not found"));
         return shoppingCartMapper
                 .mapToDto(shoppingCartService.removeProductFromCart(productId, user));
 

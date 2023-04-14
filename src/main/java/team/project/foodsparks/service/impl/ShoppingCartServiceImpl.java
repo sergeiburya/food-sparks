@@ -41,12 +41,46 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart addProduct(Long productId, Integer amount, User user) {
+    public ShoppingCart increaseProductAmount(Long productId, User user) {
         ShoppingCart shoppingCart = getByUser(user);
         Product product = productService.getById(productId).get();
         Map<Product, Integer> productAmount = shoppingCart.getProductAmount();
-        productAmount.put(product, amount);
+        if (productAmount.containsKey(product)) {
+            productAmount.put(product, productAmount.get(product) + 1);
+        } else {
+            productAmount.put(product, 1);
+        }
         shoppingCartRepository.save(shoppingCart);
+        return shoppingCart;
+    }
+
+    @Override
+    public ShoppingCart decreaseProductAmount(Long productId, User user) {
+        ShoppingCart shoppingCart = getByUser(user);
+        Product product = productService.getById(productId).get();
+        Map<Product, Integer> productAmount = shoppingCart.getProductAmount();
+        Integer currentProductAmount;
+        if (productAmount.containsKey(product)) {
+            currentProductAmount = productAmount.get(product);
+            if (currentProductAmount <= 1) {
+                productAmount.remove(product);
+            } else {
+                productAmount.put(product, productAmount.get(product) - 1);
+            }
+            shoppingCartRepository.save(shoppingCart);
+        }
+        return shoppingCart;
+    }
+
+    @Override
+    public ShoppingCart removeProductFromCart(Long productId, User user) {
+        ShoppingCart shoppingCart = getByUser(user);
+        Product product = productService.getById(productId).get();
+        Map<Product, Integer> productAmount = shoppingCart.getProductAmount();
+        if (productAmount.containsKey(product)) {
+            productAmount.remove(product);
+            shoppingCartRepository.save(shoppingCart);
+        }
         return shoppingCart;
     }
 }

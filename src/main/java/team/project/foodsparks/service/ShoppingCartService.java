@@ -11,5 +11,9 @@ public interface ShoppingCartService {
 
     void clear(ShoppingCart shoppingCart);
 
-    ShoppingCart addProduct(Long productId, Integer amount, User user);
+    ShoppingCart increaseProductAmount(Long productId, User user);
+
+    ShoppingCart decreaseProductAmount(Long productId, User user);
+
+    ShoppingCart removeProductFromCart(Long productId, User user);
 }
