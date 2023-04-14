@@ -5,19 +5,21 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.util.Map;
-import team.project.foodsparks.model.Product;
+import team.project.foodsparks.dto.response.ProductResponseDto;
+import team.project.foodsparks.util.ProductAmountConverter;
 
-public class RecipeProductListSerializer extends JsonSerializer<Map<Product, Double>> {
+public class RecipeProductMapSerializer extends JsonSerializer<Map<ProductResponseDto, Integer>> {
     @Override
-    public void serialize(Map<Product, Double> value,
+    public void serialize(Map<ProductResponseDto, Integer> value,
                           JsonGenerator gen,
                           SerializerProvider serializers) throws IOException {
         gen.writeStartArray(value);
-        for (Map.Entry<Product, Double> entry : value.entrySet()) {
+        for (Map.Entry<ProductResponseDto, Integer> entry : value.entrySet()) {
             gen.writeStartObject();
             gen.writeNumberField("productId", entry.getKey().getId());
             gen.writeStringField("name", entry.getKey().getName());
-            gen.writeNumberField("amount", entry.getValue());
+            gen.writeStringField("amount", ProductAmountConverter
+                    .convertProductAmount(entry.getValue()));
             gen.writeEndObject();
         }
         gen.writeEndArray();

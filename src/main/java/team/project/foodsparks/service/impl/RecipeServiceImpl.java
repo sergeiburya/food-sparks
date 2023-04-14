@@ -1,9 +1,9 @@
 package team.project.foodsparks.service.impl;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> findAll(Map<String, String> params,
+    public Page<Recipe> findAll(Map<String, String> params,
                                 PageRequest pageRequest) {
         Specification<Recipe> specification = null;
         for (Map.Entry<String,String> entry : params.entrySet()) {
@@ -50,26 +50,11 @@ public class RecipeServiceImpl implements RecipeService {
             specification = specification == null
                     ? Specification.where(sp) : specification.and(sp);
         }
-        return recipeRepository.findAll(specification, pageRequest).toList();
+        return recipeRepository.findAll(specification, pageRequest);
     }
 
     @Override
     public Optional<Recipe> getById(Long id) {
         return recipeRepository.findById(id);
-    }
-
-    @Override
-    public List<Recipe> findRecipeByCuisineRegionId(Long cuisineRegionId) {
-        return recipeRepository.findRecipeByCuisineRegionId(cuisineRegionId);
-    }
-
-    @Override
-    public List<Recipe> getByIdLessThan(Long idLimit) {
-        return recipeRepository.getByIdLessThanEqual(idLimit);
-    }
-
-    @Override
-    public List<Recipe> findRecipeByDishTypeId(Long dishTypeId) {
-        return recipeRepository.findRecipeByDishTypeId(dishTypeId);
     }
 }

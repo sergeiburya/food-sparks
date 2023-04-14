@@ -4,12 +4,19 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
+import team.project.foodsparks.dto.response.ProductResponseDto;
 import team.project.foodsparks.dto.response.ShoppingCartResponseDto;
+import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.ShoppingCart;
 
 @Component
 public class ShoppingCartMapper implements
         ResponseDtoMapper<ShoppingCartResponseDto, ShoppingCart> {
+    private final ResponseDtoMapper<ProductResponseDto, Product> productMapper;
+
+    public ShoppingCartMapper(ResponseDtoMapper<ProductResponseDto, Product> productMapper) {
+        this.productMapper = productMapper;
+    }
 
     @Override
     public ShoppingCartResponseDto mapToDto(ShoppingCart shoppingCart) {
@@ -18,7 +25,8 @@ public class ShoppingCartMapper implements
         responseDto.setProductAmount(shoppingCart.getProductAmount()
                 .entrySet()
                 .stream()
-                .collect(Collectors.toMap(m -> m.getKey().getName(), Map.Entry::getValue)));
+                .collect(Collectors.toMap(m
+                        -> productMapper.mapToDto(m.getKey()), Map.Entry::getValue)));
         responseDto.setSum(shoppingCart.getProductAmount()
                 .entrySet()
                 .stream()

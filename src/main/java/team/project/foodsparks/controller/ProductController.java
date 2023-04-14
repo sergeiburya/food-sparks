@@ -7,10 +7,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.ProductRequestDto;
 import team.project.foodsparks.dto.response.ProductResponseDto;
+import team.project.foodsparks.exeption.DataProcessingException;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.service.mapper.RequestDtoMapper;
@@ -34,8 +36,9 @@ public class ProductController {
 
     @PostMapping
     @ApiOperation(value = "Create a new product")
-    public ProductResponseDto save(ProductRequestDto productRequestDto) {
+    public ProductResponseDto save(@RequestBody ProductRequestDto productRequestDto) {
         Product product = requestDtoMapper.mapToModel(productRequestDto);
+        System.out.println(product.toString());
         return responseDtoMapper.mapToDto(productService.add(product));
     }
 
@@ -52,7 +55,7 @@ public class ProductController {
     @ApiOperation(value = "Get product by id")
     public ProductResponseDto getById(@PathVariable Long id) {
         Product product = productService.getById(id).orElseThrow(
-                () -> new RuntimeException("Product with id: " + id + " not found."));
+                () -> new DataProcessingException("Product with id: " + id + " not found."));
         return responseDtoMapper.mapToDto(product);
     }
 }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.response.ShoppingCartResponseDto;
+import team.project.foodsparks.exeption.DataProcessingException;
 import team.project.foodsparks.model.ShoppingCart;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.ShoppingCartService;
@@ -55,7 +56,7 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("User with email " + email + " not found"));
         return shoppingCartMapper
                 .mapToDto(shoppingCartService.addProduct(productId, quantity, user));
     }

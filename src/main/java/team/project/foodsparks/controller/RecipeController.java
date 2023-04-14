@@ -4,8 +4,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.RecipeRequestDto;
 import team.project.foodsparks.dto.response.RecipeResponseDto;
 import team.project.foodsparks.dto.response.RecipeSmallCartResponseDto;
+import team.project.foodsparks.exeption.DataProcessingException;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.service.RecipeService;
 import team.project.foodsparks.service.mapper.RequestDtoMapper;
@@ -55,7 +56,7 @@ public class RecipeController {
 
     @GetMapping
     @ApiOperation(value = "Get all recipes with possibilities to filter, sort and pagination")
-    public List<RecipeSmallCartResponseDto> getAll(@ApiParam(value = "If this parameter is defined"
+    public Page<RecipeSmallCartResponseDto> getAll(@ApiParam(value = "If this parameter is defined"
             + " in request, then count of recipes in response will be equals to value. As default"
             + " value is 9999999 that's why if parameter isn't defined in response there will be"
             + " all recipes in single page")
@@ -91,17 +92,15 @@ public class RecipeController {
         List<Sort.Order> orders = SortOrderParser.getOrders(sortBy);
         Sort sort = Sort.by(orders);
         PageRequest pageRequest = PageRequest.of(page, count, sort);
-        return recipeService.findAll(params, pageRequest)
-                .stream()
-                .map(recipeSmallResponseMapper::mapToDto)
-                .collect(Collectors.toList());
+        Page<Recipe> recipePages = recipeService.findAll(params, pageRequest);
+        return recipePages.map(recipeSmallResponseMapper::mapToDto);
     }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Get recipe by ID")
     public RecipeResponseDto getById(@PathVariable Long id) {
         Recipe recipe = recipeService.getById(id).orElseThrow(
-                () -> new RuntimeException("Recipe by id: " + id + " doesn't exist.")
+                () -> new DataProcessingException("Recipe by id: " + id + " doesn't exist.")
         );
         return recipeResponseMapper.mapToDto(recipe);
     }

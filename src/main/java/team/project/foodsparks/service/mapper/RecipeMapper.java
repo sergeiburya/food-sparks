@@ -5,7 +5,9 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import team.project.foodsparks.dto.request.RecipeRequestDto;
+import team.project.foodsparks.dto.response.ProductResponseDto;
 import team.project.foodsparks.dto.response.RecipeResponseDto;
+import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.service.CuisineRegionService;
 import team.project.foodsparks.service.DishTypeService;
@@ -19,14 +21,17 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
     private final ProductService productService;
     private final CuisineRegionService cuisineRegionService;
     private final DishTypeService dishTypeService;
+    private final ResponseDtoMapper<ProductResponseDto, Product> productMapper;
 
     @Autowired
     public RecipeMapper(ProductService productService,
                         CuisineRegionService cuisineRegionService,
-                        DishTypeService dishTypeService) {
+                        DishTypeService dishTypeService,
+                        ResponseDtoMapper<ProductResponseDto, Product> productMapper) {
         this.productService = productService;
         this.cuisineRegionService = cuisineRegionService;
         this.dishTypeService = dishTypeService;
+        this.productMapper = productMapper;
     }
 
     @Override
@@ -58,7 +63,10 @@ public class RecipeMapper implements RequestDtoMapper<RecipeRequestDto, Recipe>,
         recipeResponseDto.setDishType(recipe.getDishType().getDishTypeName().toString());
         recipeResponseDto.setSpiced(recipe.isSpiced());
         recipeResponseDto.setInstructions(recipe.getInstructions());
-        recipeResponseDto.setProductsList(recipe.getProductList());
+        recipeResponseDto.setProductsList(recipe.getProductList().entrySet()
+                .stream()
+                .collect(Collectors.toMap(e
+                        -> productMapper.mapToDto(e.getKey()), Map.Entry::getValue)));
         recipeResponseDto.setPortions(recipe.getPortions());
         recipeResponseDto.setCookingTime(CookingTimeConverter
                 .convertCookingTime(recipe.getCookingTime()));

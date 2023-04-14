@@ -63,6 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/cuisine-regions")
                 .permitAll()
+                .antMatchers("/coupons/new")
+                .permitAll()
                 .antMatchers(HttpMethod.DELETE, "/products/{id}", "/users/{id}")
                 .hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/user/by-email", "/address/by-user")

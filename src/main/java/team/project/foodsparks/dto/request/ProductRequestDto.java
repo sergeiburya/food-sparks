@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 public class ProductRequestDto {
     private String name;
-    private String manufacturer;
     private BigDecimal price;
     private Integer amountInPackage;
 }

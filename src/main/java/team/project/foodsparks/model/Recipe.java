@@ -40,7 +40,7 @@ public class Recipe {
     @ElementCollection
     @MapKeyJoinColumn(name = "product_id")
     @Column(name = "amount")
-    private Map<Product, Double> productList;
+    private Map<Product, Integer> productList;
     private boolean spiced;
     @ElementCollection
     private List<String> instructions;
