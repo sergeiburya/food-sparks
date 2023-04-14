@@ -46,18 +46,45 @@ public class ShoppingCartController {
         return shoppingCartMapper.mapToDto(shoppingCartService.getByUser(user));
     }
 
-    @PutMapping("/add")
-    @ApiOperation(value = "Add product with quantity in to "
+
+    @PutMapping("/increase")
+    @ApiOperation(value = "Increase product quantity in to "
             + "shopping cart of current authenticated user")
-    public ShoppingCartResponseDto addProduct(Authentication auth,
-                                              @RequestParam Long productId,
-                                              @RequestParam Integer quantity) {
+    public ShoppingCartResponseDto increaseProductAmount(Authentication auth,
+                                                         @RequestParam Long productId) {
 
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new DataProcessingException("User with email " + email + " not found"));
+                () -> new RuntimeException("User with email " + email + " not found"));
         return shoppingCartMapper
-                .mapToDto(shoppingCartService.addProduct(productId, quantity, user));
+                .mapToDto(shoppingCartService.increaseProductAmount(productId, user));
+    }
+
+    @PutMapping("/decrease")
+    @ApiOperation(value = "Decrease product quantity in to "
+            + "shopping cart of current authenticated user")
+    public ShoppingCartResponseDto decreaseProductAmount(Authentication auth,
+                                                         @RequestParam Long productId) {
+
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
+        User user = userService.findByEmail(email).orElseThrow(
+                () -> new RuntimeException("User with email " + email + " not found"));
+        return shoppingCartMapper
+                .mapToDto(shoppingCartService.decreaseProductAmount(productId, user));
+    }
+
+    @PutMapping("/remove")
+    @ApiOperation(value = "Remove product from shopping cart of current authenticated user")
+    public ShoppingCartResponseDto removeProduct(Authentication auth,
+                                                 @RequestParam Long productId) {
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
+        User user = userService.findByEmail(email).orElseThrow(
+                () -> new RuntimeException("User with email " + email + " not found"));
+        return shoppingCartMapper
+                .mapToDto(shoppingCartService.removeProductFromCart(productId, user));
+
     }
 }
