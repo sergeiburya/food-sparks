@@ -11,6 +11,7 @@ public class ProductMapper implements RequestDtoMapper<ProductRequestDto, Produc
 
     @Override
     public Product mapToModel(ProductRequestDto dto) {
+        System.out.println(dto.toString());
         Product product = new Product();
         product.setName(dto.getName());
         product.setPrice(dto.getPrice());

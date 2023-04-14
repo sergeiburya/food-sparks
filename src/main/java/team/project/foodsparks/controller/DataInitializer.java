@@ -214,10 +214,14 @@ public class DataInitializer {
         }
 
         List<String> imageUrlList = new ArrayList<>();
-        imageUrlList.add("https://i.ibb.co/k0qrd5D/1-2.jpg");
-        imageUrlList.add("https://i.ibb.co/HdzhjV0/2.jpg");
-        imageUrlList.add("https://i.ibb.co/VJJqdvy/1.jpg");
-        imageUrlList.add("https://i.ibb.co/mqq9Sj2/1-1.jpg");
+        imageUrlList.add("https://i.ibb.co/K9WDtQB/1.jpg");
+        imageUrlList.add("https://i.ibb.co/jyWFMg5/2.jpg");
+        imageUrlList.add("https://i.ibb.co/w6WctMN/3.jpg");
+        imageUrlList.add("https://i.ibb.co/wpfJ0L0/4.jpg");
+        imageUrlList.add("https://i.ibb.co/0QKzrZ9/5.jpg");
+        imageUrlList.add("https://i.ibb.co/Ns0Ff3s/6.jpg");
+        imageUrlList.add("https://i.ibb.co/QNGLqmp/7.jpg");
+        imageUrlList.add("https://i.ibb.co/DM5m2N7/8.jpg");
 
         List<String> recipeNames = List.of(
                 "Борщ", "Вареники", "Голубці", "Сало", "Сирники", "Деруни", "Ковбаса", "Картопляк",
@@ -241,10 +245,10 @@ public class DataInitializer {
         for (String recipeName : recipeNames) {
             newRec = new Recipe();
             newRec.setTitle(recipeName);
-            Map<Product, Double> productList = new HashMap<>();
+            Map<Product, Integer> productList = new HashMap<>();
             for (int i = 0; i <= random.nextInt(5) + 2; i++) {
                 productList.put(savedProducts.get(random.nextInt(savedProducts.size())),
-                        truncateTo(random.nextDouble() + 0.3d, 2));
+                        random.nextInt(990) + 150);
             }
             newRec.setProductList(productList);
             newRec.setSpiced(random.nextBoolean());
@@ -255,18 +259,12 @@ public class DataInitializer {
             newRec.setCookingTime(random.nextInt(180) + 5);
             newRec.setPortions(random.nextInt(6) + 2);
             newRec.setImageUrl(imageUrlList.get(random.nextInt(imageUrlList.size())));
-            String ingredientListSubTitle = newRec.getProductList().entrySet()
+            String ingredientListSubTitle = newRec.getProductList().keySet()
                     .stream()
-                    .map(m -> m.getKey().getName())
+                    .map(Product::getName)
                     .collect(Collectors.joining(", "));
             newRec.setSubtitle("Як приготувати " + recipeName + " з " + ingredientListSubTitle);
             recipeService.save(newRec);
         }
-    }
-
-    static double truncateTo(double unroundedNumber, int decimalPlaces) {
-        int truncatedNumberInt = (int) (unroundedNumber * Math.pow(10, decimalPlaces));
-        double truncatedNumber = (double) (truncatedNumberInt / Math.pow(10, decimalPlaces));
-        return truncatedNumber;
     }
 }

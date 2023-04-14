@@ -12,7 +12,7 @@ public class RecipeRequestDto {
     private String subtitle;
     private Long cuisineRegionId;
     private Long dishTypeId;
-    private Map<Long, Double> productList;
+    private Map<Long, Integer> productList;
     private boolean spiced;
     private List<String> instructions;
     private Integer cookingTime;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.response.WarehouseResponseDto;
+import team.project.foodsparks.exeption.DataProcessingException;
 import team.project.foodsparks.model.Warehouse;
 import team.project.foodsparks.service.WarehouseService;
 import team.project.foodsparks.service.mapper.ResponseDtoMapper;
@@ -44,7 +45,7 @@ public class WarehouseController {
     @ApiOperation(value = "Get product balance from warehouse by product id")
     public WarehouseResponseDto getById(@PathVariable Long id) {
         Warehouse warehouse = warehouseService.getById(id).orElseThrow(
-                () -> new RuntimeException("Warehouse for product id: "
+                () -> new DataProcessingException("Warehouse for product id: "
                         + id + "doesn't exist."));
         return warehouseResponseDtoMapper.mapToDto(warehouse);
     }
