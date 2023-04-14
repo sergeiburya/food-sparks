@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         try {
             createAndSendPdfOrderForUser(order);
         } catch (DocumentException e) {
-            throw new DataProcessingException("A message with an order cant be sent.",e);
+            throw new DataProcessingException("A message with an order cant be sent.");
         }
         shoppingCartService.clear(shoppingCart);
         return order;

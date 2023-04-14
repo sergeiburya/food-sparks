@@ -61,7 +61,7 @@ public class EmailServiceImpl implements EmailService {
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(userEmail));
             message.setSubject("Your order details");
         } catch (MessagingException e) {
-            throw new DataProcessingException("A message with an order cant be sent.",e);
+            throw new DataProcessingException("A message with an order cant be sent.");
         }
 
         Multipart multipart = new MimeMultipart();
@@ -73,7 +73,7 @@ public class EmailServiceImpl implements EmailService {
             message.setContent(multipart);
             Transport.send(message);
         } catch (MessagingException e) {
-            throw new DataProcessingException("A message with an order cant be sent.",e);
+            throw new DataProcessingException("A message with an order cant be sent.");
         }
     }
 }
