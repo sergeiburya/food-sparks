@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-dish_types
+      author: Serhii Buria
+      changes:
+        - insert:
+            tableName: dish_type
+            columns:
+              - column:
+                  name: dish_type_name
+                  value: APPETIZER
+        - insert:
+            tableName: dish_type
+            columns:
+              - column:
+                  name: dish_type_name
+                  value: DESSERT
+        - insert:
+            tableName: dish_type
+            columns:
+              - column:
+                  name: dish_type_name
+                  value: MAIN_DISH
+        - insert:
+            tableName: dish_type
+            columns:
+              - column:
+                  name: dish_type_name
+                  value: PASTRY
+        - insert:
+            tableName: dish_type
+            columns:
+              - column:
+                  name: dish_type_name
+                  value: SOUP

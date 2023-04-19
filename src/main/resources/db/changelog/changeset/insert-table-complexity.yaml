@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-complexity
+      author: Serhii Buria
+      changes:
+        - insert:
+            tableName: complexity
+            columns:
+              - column:
+                  name: complexity_name
+                  value: EASY
+        - insert:
+            tableName: complexity
+            columns:
+              - column:
+                  name: complexity_name
+                  value: HARD
+        - insert:
+            tableName: complexity
+            columns:
+              - column:
+                  name: complexity_name
+                  value: MEDIUM

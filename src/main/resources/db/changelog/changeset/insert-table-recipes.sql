@@ -1,0 +1,2 @@
+insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
+values (1, 30, 10, 3, 'https://ibb.co/zQnyZzg', 4, 1, 'Кремзлики, гуглі, деруни. Опановуємо й далі закарпатський діалект та готуємо локальну їжу.', 'Кремзлики')

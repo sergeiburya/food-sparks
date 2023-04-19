@@ -1,0 +1,113 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-recipes_product_list
+      author: Serhii Buria
+      changes:
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 1
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 2
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 3
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 4
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 5
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 6
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 7
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 8
+        - insert:
+            tableName: recipe_product_list
+            columns:
+              - column:
+                  name: recipe_id
+                  value: 1
+              - column:
+                  name: amount
+                  value: 400
+              - column:
+                  name: product_id
+                  value: 9

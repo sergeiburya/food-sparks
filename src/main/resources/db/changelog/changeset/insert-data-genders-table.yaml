@@ -1,0 +1,23 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-data-genders-table
+      author: Serhii Buria
+      changes:
+        - insert:
+            tableName: genders
+            columns:
+              - column:
+                  name: gender_name
+                  value: MALE
+        - insert:
+            tableName: genders
+            columns:
+              - column:
+                  name: gender_name
+                  value: FEMALE
+        - insert:
+            tableName: genders
+            columns:
+              - column:
+                  name: gender_name
+                  value: OTHER

@@ -1,0 +1,104 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-cuisine_region
+      author: Serhii Buria
+      changes:
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: BYKOVINSKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/MVc7Y5C/3.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: GALYCKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/rHjN7g7/4.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: KRYMSKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/WH2KKMP/5.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: NADDNIPRIANSKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/BTMC09m/7.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: ODESKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/dkfSBfG/6.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: PODILSKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/71r8hZB/8.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: POLISKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/26J0S1N/9.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: SLOBOZHANSKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/hf7qPd9/1.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: VOLYNSKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/zQS83wP/10.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: ZAKARPATSKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/52ZbXBQ/11.jpg
+        - insert:
+            tableName: cuisine_region
+            columns:
+              - column:
+                  name: cuisine_region_name
+                  value: ZAPORIZKA
+              - column:
+                  name: image_url
+                  value: https://i.ibb.co/KrMnwx7/2.jpg

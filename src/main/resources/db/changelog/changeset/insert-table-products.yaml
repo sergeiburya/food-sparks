@@ -1,0 +1,114 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-table-products
+      author: Serhii Buria
+      changes:
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Картопля
+              - column:
+                  name: amount_in_package
+                  value: 1000
+              - column:
+                  name: price
+                  value: 5
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Борошно пшеничне
+              - column:
+                  name: amount_in_package
+                  value: 1000
+              - column:
+                  name: price
+                  value: 24
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Часник
+              - column:
+                  name: amount_in_package
+                  value: 90
+              - column:
+                  name: price
+                  value: 20
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Яйце куряче
+              - column:
+                  name: amount_in_package
+                  value: 10
+              - column:
+                  name: price
+                  value: 64
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Олія соняшникова
+              - column:
+                  name: amount_in_package
+                  value: 850
+              - column:
+                  name: price
+                  value: 65
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Перець чорний
+              - column:
+                  name: amount_in_package
+                  value: 20
+              - column:
+                  name: price
+                  value: 14
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Сіль
+              - column:
+                  name: amount_in_package
+                  value: 1000
+              - column:
+                  name: price
+                  value: 18
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Сметана
+              - column:
+                  name: amount_in_package
+                  value: 350
+              - column:
+                  name: price
+                  value: 34
+        - insert:
+            tableName: products
+            columns:
+              - column:
+                  name: product_name
+                  value: Цибуля
+              - column:
+                  name: amount_in_package
+                  value: 500
+              - column:
+                  name: price
+                  value: 25
+
