@@ -1,7 +1,6 @@
 package team.project.foodsparks.service;
 
 import com.lowagie.text.DocumentException;
-
 import java.io.IOException;
 import java.util.List;
 import team.project.foodsparks.model.Order;
@@ -9,7 +8,7 @@ import team.project.foodsparks.model.ShoppingCart;
 import team.project.foodsparks.model.User;
 
 public interface OrderService {
-    Order completeOrder(ShoppingCart shoppingCart);
+    Order completeOrder(ShoppingCart shoppingCart, Order order);
 
     List<Order> getOrders(User user);
 

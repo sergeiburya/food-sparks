@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import team.project.foodsparks.service.ComplexityService;
 import team.project.foodsparks.service.mapper.ComplexityMapper;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/complexities")
 public class ComplexityController {
     private final ComplexityService complexityService;

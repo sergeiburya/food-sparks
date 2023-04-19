@@ -1,5 +1,6 @@
 package team.project.foodsparks.service;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -15,4 +16,6 @@ public interface RecipeService {
                          PageRequest pageRequest);
 
     Optional<Recipe> getById(Long id);
+
+    List<Recipe> findByNameContains(String letters);
 }

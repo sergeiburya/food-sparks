@@ -86,4 +86,26 @@ public class ShoppingCartController {
                 .mapToDto(shoppingCartService.removeProductFromCart(productId, user));
 
     }
+
+    @PutMapping("/clear")
+    @ApiOperation(value = "Remove product from shopping cart of current authenticated user")
+    public ShoppingCartResponseDto removeProduct(Authentication auth) {
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
+        User user = userService.findByEmail(email).orElseThrow(
+                () -> new DataProcessingException("User with email " + email + " not found"));
+        return shoppingCartMapper
+                .mapToDto(shoppingCartService.removeAllProductsFromCart(user));
+
+    }
+
+    @PutMapping("/addCoupon")
+    public ShoppingCartResponseDto addCoupon(Authentication auth,
+                                             @RequestParam String couponValue) {
+        UserDetails details = (UserDetails) auth.getPrincipal();
+        String email = details.getUsername();
+        User user = userService.findByEmail(email).orElseThrow(
+                () -> new DataProcessingException("User with email " + email + " not found"));
+        return shoppingCartMapper.mapToDto(shoppingCartService.setCoupon(user, couponValue));
+    }
 }

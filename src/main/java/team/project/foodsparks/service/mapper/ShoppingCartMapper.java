@@ -31,7 +31,10 @@ public class ShoppingCartMapper implements
                 .entrySet()
                 .stream()
                 .map(e -> e.getKey().getPrice().multiply(BigDecimal.valueOf(e.getValue())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                        .divide(BigDecimal.valueOf(100))
+                .multiply(BigDecimal.valueOf(shoppingCart.getCoupon() != null
+                        ? 100 - shoppingCart.getCoupon().getDiscountSize() : 100)));
         return responseDto;
     }
 }

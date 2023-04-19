@@ -16,6 +16,7 @@ public class ProductMapper implements RequestDtoMapper<ProductRequestDto, Produc
         product.setName(dto.getName());
         product.setPrice(dto.getPrice());
         product.setAmountInPackage(dto.getAmountInPackage());
+        product.setImageUrl(dto.getImageUrl());
         return product;
     }
 
@@ -26,6 +27,7 @@ public class ProductMapper implements RequestDtoMapper<ProductRequestDto, Produc
         dto.setName(product.getName());
         dto.setPrice(product.getPrice());
         dto.setAmountInPackage(product.getAmountInPackage());
+        dto.setImageUrl(product.getImageUrl());
         return dto;
     }
 }

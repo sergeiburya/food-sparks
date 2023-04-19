@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,35 +38,14 @@ public class AddressController {
         this.addressResponseDtoMapper = addressResponseDtoMapper;
     }
 
-    @PostMapping("/add")
+    @PutMapping("/add")
     @ApiOperation(value = "Add new Address has user Role")
     public AddressResponseDto addAddress(Authentication auth,
                                          @RequestBody AddressRequestDto addressRequestDto) {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
-        User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
-        Address address = new Address();
-        address.setRegion(addressRequestDto.getRegion());
-        address.setTown(addressRequestDto.getTown());
-        address.setStreet(addressRequestDto.getStreet());
-        address.setBuild(addressRequestDto.getBuild());
-        address.setApartment(addressRequestDto.getApartment());
-        address.setUser(user);
-        addressService.add(address);
-        return addressResponseDtoMapper.mapToDto(address);
-    }
-
-    @PutMapping("/update-address-user")
-    @ApiOperation(value = "Update Address User has user Role ")
-    public AddressResponseDto updateAddress(Authentication auth,
-                                         @RequestBody AddressRequestDto addressRequestDto) {
-        UserDetails details = (UserDetails) auth.getPrincipal();
-        String email = details.getUsername();
-        User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
-        Address address = addressService.findByUser(user).orElseThrow(
-                () -> new DataProcessingException("Address with " + user + " not found."));
+        User user = userService.findByEmail(email).get();
+        Address address = addressService.findByUser(user).orElse(new Address());
         address.setRegion(addressRequestDto.getRegion());
         address.setTown(addressRequestDto.getTown());
         address.setStreet(addressRequestDto.getStreet());

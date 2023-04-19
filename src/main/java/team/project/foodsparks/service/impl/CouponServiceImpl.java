@@ -1,5 +1,6 @@
 package team.project.foodsparks.service.impl;
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.model.Coupon;
@@ -33,5 +34,10 @@ public class CouponServiceImpl implements CouponService {
                         + "\n If you are not registered yet, then you need to register with"
                         + " this email: " + userEmail + " before use your coupon.");
         return savedCoupon;
+    }
+
+    @Override
+    public Optional<Coupon> getByValue(String couponValue) {
+        return couponRepository.findCouponByCouponValue(couponValue);
     }
 }

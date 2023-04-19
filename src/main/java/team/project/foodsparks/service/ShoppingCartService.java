@@ -9,11 +9,15 @@ public interface ShoppingCartService {
 
     void registerNewShoppingCart(User user);
 
-    void clear(ShoppingCart shoppingCart);
+    ShoppingCart clear(ShoppingCart shoppingCart);
 
     ShoppingCart increaseProductAmount(Long productId, User user);
 
     ShoppingCart decreaseProductAmount(Long productId, User user);
 
     ShoppingCart removeProductFromCart(Long productId, User user);
+
+    ShoppingCart removeAllProductsFromCart(User user);
+
+    ShoppingCart setCoupon(User user, String couponValue);
 }

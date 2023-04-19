@@ -9,9 +9,5 @@ import team.project.foodsparks.model.Recipe;
 @Repository
 public interface RecipeRepository extends JpaRepository<Recipe, Long>,
         JpaSpecificationExecutor<Recipe> {
-    List<Recipe> findRecipeByCuisineRegionId(Long cuisineRegionId);
-
-    List<Recipe> findRecipeByDishTypeId(Long dishTypeId);
-
-    List<Recipe> getByIdLessThanEqual(Long idLimit);
+    List<Recipe> findRecipeByTitleContainsIgnoreCase(String letters);
 }

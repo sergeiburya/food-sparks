@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -103,5 +104,14 @@ public class RecipeController {
                 () -> new DataProcessingException("Recipe by id: " + id + " doesn't exist.")
         );
         return recipeResponseMapper.mapToDto(recipe);
+    }
+
+    @GetMapping("/search")
+    @ApiOperation(value = "Find recipes by letters contains in title")
+    public List<RecipeSmallCartResponseDto> getByNameContains(@RequestParam String letters) {
+        return recipeService.findByNameContains(letters)
+                .stream()
+                .map(recipeSmallResponseMapper::mapToDto)
+                .collect(Collectors.toList());
     }
 }

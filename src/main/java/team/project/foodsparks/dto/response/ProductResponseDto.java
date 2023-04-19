@@ -11,4 +11,5 @@ public class ProductResponseDto {
     private String name;
     private BigDecimal price;
     private Integer amountInPackage;
+    private String imageUrl;
 }

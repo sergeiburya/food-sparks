@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,7 +20,8 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "coupons")
+@Table(name = "coupons",
+        uniqueConstraints = @UniqueConstraint(columnNames = "userEmail"))
 public class Coupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
