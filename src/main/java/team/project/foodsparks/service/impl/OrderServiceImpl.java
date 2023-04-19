@@ -46,8 +46,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order completeOrder(ShoppingCart shoppingCart) {
-        Order order = new Order();
+    public Order completeOrder(ShoppingCart shoppingCart, Order order) {
         order.setOrderTime(LocalDateTime.now());
         order.setProductAmount(new HashMap<>(shoppingCart.getProductAmount()));
         order.setUser(shoppingCart.getUser());
@@ -56,7 +55,10 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(e -> e.getKey().getPrice()
                         .multiply(BigDecimal.valueOf(e.getValue())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
+                .reduce(BigDecimal.ZERO, BigDecimal::add)
+                .divide(BigDecimal.valueOf(100))
+                .multiply(BigDecimal.valueOf(shoppingCart.getCoupon() != null
+                        ? 100 - shoppingCart.getCoupon().getDiscountSize() : 100)));
         orderRepository.save(order);
         try {
             createAndSendPdfOrderForUser(order);

@@ -34,4 +34,6 @@ public class ShoppingCart {
     @OneToOne
     @JoinColumn(name = "id")
     private User user;
+    @OneToOne
+    private Coupon coupon;
 }

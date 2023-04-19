@@ -20,6 +20,7 @@ public class RecipeProductMapSerializer extends JsonSerializer<Map<ProductRespon
             gen.writeStringField("name", entry.getKey().getName());
             gen.writeStringField("amount", ProductAmountConverter
                     .convertProductAmount(entry.getValue()));
+            gen.writeNumberField("price", entry.getKey().getPrice());
             gen.writeEndObject();
         }
         gen.writeEndArray();

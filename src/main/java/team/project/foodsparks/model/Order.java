@@ -38,6 +38,9 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+    private String comment;
+    private String dayOfDelivery;
+    private String timeOfDelivery;
     private BigDecimal sum;
 
     @Override

@@ -17,6 +17,7 @@ import team.project.foodsparks.model.Gender;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.model.Role;
+import team.project.foodsparks.model.Warehouse;
 import team.project.foodsparks.service.ComplexityService;
 import team.project.foodsparks.service.CuisineRegionService;
 import team.project.foodsparks.service.DishTypeService;
@@ -24,6 +25,7 @@ import team.project.foodsparks.service.GenderService;
 import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.service.RecipeService;
 import team.project.foodsparks.service.RoleService;
+import team.project.foodsparks.service.WarehouseService;
 
 @Component
 public class DataInitializer {
@@ -35,6 +37,7 @@ public class DataInitializer {
     private final DishTypeService dishTypeService;
     private final CuisineRegionService cuisineRegionService;
     private final ComplexityService complexityService;
+    private final WarehouseService warehouseService;
 
     @Autowired
     public DataInitializer(RoleService roleService,
@@ -43,7 +46,8 @@ public class DataInitializer {
                            ProductService productService,
                            DishTypeService dishTypeService,
                            CuisineRegionService cuisineRegionService,
-                           ComplexityService complexityService) {
+                           ComplexityService complexityService,
+                           WarehouseService warehouseService) {
         this.roleService = roleService;
         this.recipeService = recipeService;
         this.productService = productService;
@@ -51,6 +55,7 @@ public class DataInitializer {
         this.dishTypeService = dishTypeService;
         this.cuisineRegionService = cuisineRegionService;
         this.complexityService = complexityService;
+        this.warehouseService = warehouseService;
         savedProducts = new ArrayList<>();
     }
 
@@ -101,6 +106,7 @@ public class DataInitializer {
             newProduct.setName(product);
             newProduct.setPrice(BigDecimal.valueOf(random.nextInt(150) + 20));
             newProduct.setAmountInPackage(random.nextInt(999));
+            newProduct.setImageUrl("https://i.ibb.co/4T609Bn/Rectangle-89.png");
             productService.add(newProduct);
             savedProducts.add(newProduct);
         }
@@ -266,5 +272,8 @@ public class DataInitializer {
             newRec.setSubtitle("Як приготувати " + recipeName + " з " + ingredientListSubTitle);
             recipeService.save(newRec);
         }
+        List<Warehouse> all = warehouseService.getAll();
+        all.forEach(w -> w.setAmount(5));
+        all.forEach(warehouseService::add);
     }
 }

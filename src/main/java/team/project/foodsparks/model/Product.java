@@ -1,7 +1,6 @@
 package team.project.foodsparks.model;
 
 import java.math.BigDecimal;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,35 +28,5 @@ public class Product {
     private String name;
     private BigDecimal price;
     private Integer amountInPackage;
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        Product product = (Product) obj;
-        return getId() != null
-                && Objects.equals(getId(), product.getId())
-                && Objects.equals(getName(), product.getName())
-                && Objects.equals(getPrice(), product.getPrice())
-                && Objects.equals(getAmountInPackage(), product.getAmountInPackage());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, price, amountInPackage);
-    }
-
-    @Override
-    public String toString() {
-        return "Product{"
-                + "id=" + id
-                + ", name='" + name + '\''
-                + ", price=" + price
-                + ", amountInPackage=" + amountInPackage
-                + '}';
-    }
+    private String imageUrl;
 }

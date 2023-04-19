@@ -1,5 +1,6 @@
 package team.project.foodsparks.service.impl;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,10 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public Optional<Recipe> getById(Long id) {
         return recipeRepository.findById(id);
+    }
+
+    @Override
+    public List<Recipe> findByNameContains(String letters) {
+        return recipeRepository.findRecipeByTitleContainsIgnoreCase(letters);
     }
 }

@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
 import team.project.foodsparks.dto.response.ProductResponseDto;
+import team.project.foodsparks.util.ProductAmountConverter;
 
 public class ShoppingCartProductMapSerializer
         extends JsonSerializer<Map<ProductResponseDto, Integer>> {
@@ -20,8 +21,12 @@ public class ShoppingCartProductMapSerializer
             gen.writeNumberField("productId", entry.getKey().getId());
             gen.writeStringField("name", entry.getKey().getName());
             gen.writeNumberField("quantity", entry.getValue());
+            gen.writeStringField("quantityInPackages",
+                    ProductAmountConverter.convertProductAmount(entry.getValue()
+                            * entry.getKey().getAmountInPackage()));
             gen.writeNumberField("productSum", entry.getKey().getPrice()
                     .multiply(BigDecimal.valueOf(entry.getValue())));
+            gen.writeStringField("imageUrl", entry.getKey().getImageUrl());
             gen.writeEndObject();
         }
         gen.writeEndArray();
