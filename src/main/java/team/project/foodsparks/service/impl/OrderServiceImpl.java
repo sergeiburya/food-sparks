@@ -1,13 +1,12 @@
 package team.project.foodsparks.service.impl;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.DocumentException;
-import com.lowagie.text.Element;
-import com.lowagie.text.FontFactory;
-import com.lowagie.text.Paragraph;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -29,6 +28,7 @@ import team.project.foodsparks.service.ShoppingCartService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    private static final String FONT_PATH = "src/main/resources/fonts/arialuni.ttf";
     private final OrderRepository orderRepository;
     private final ShoppingCartService shoppingCartService;
     private final EmailService emailService;
@@ -62,6 +62,8 @@ public class OrderServiceImpl implements OrderService {
             createAndSendPdfOrderForUser(order);
         } catch (DocumentException e) {
             throw new DataProcessingException("A message with an order cant be sent.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         shoppingCartService.clear(shoppingCart);
         return order;
@@ -73,10 +75,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createAndSendPdfOrderForUser(Order order) throws DocumentException {
+    public void createAndSendPdfOrderForUser(Order order) throws DocumentException, IOException {
         Document document = new Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        PdfWriter.getInstance(document, baos);
+        PdfWriter writer = PdfWriter.getInstance(document, baos);
+        writer.setPdfVersion(PdfWriter.VERSION_1_7);
+        document.open();
+        BaseFont bf = BaseFont.createFont(FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        Font arialFont = new Font(bf, 12);
 
         document.open();
         document.setMargins(72, 36, 36, 36);
@@ -127,8 +133,8 @@ public class OrderServiceImpl implements OrderService {
         Map<Product, Integer> productAmount = order.getProductAmount();
         for (Map.Entry<Product, Integer> entry : productAmount.entrySet()) {
             Paragraph itemParagraph = new Paragraph("Product Name: "
-                    + entry.getKey().getName().toUpperCase()
-                    + " - " + entry.getValue());
+                    + entry.getKey().getName()
+                    + " - " + entry.getValue(), arialFont);
             itemParagraph.setLeading(30f);
             itemParagraph.setAlignment(Element.ALIGN_LEFT);
             document.add(itemParagraph);
