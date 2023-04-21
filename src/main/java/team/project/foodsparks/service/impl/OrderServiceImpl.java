@@ -145,6 +145,12 @@ public class OrderServiceImpl implements OrderService {
         phoneParagraph.setLeading(30f);
         phoneParagraph.setAlignment(Element.ALIGN_LEFT);
         document.add(phoneParagraph);
+        Paragraph deliveryTimeParagraf = new Paragraph();
+        deliveryTimeParagraf.setLeading(30f);
+        document.add(deliveryTimeParagraf);
+        Paragraph deliveryDayParagraf = new Paragraph();
+        deliveryDayParagraf.setLeading(30f);
+        document.add(deliveryDayParagraf);
         Paragraph orderParagraph = new Paragraph("Order Items:",
                 FontFactory.getFont(FontFactory.HELVETICA));
         orderParagraph.setAlignment(Element.ALIGN_LEFT);

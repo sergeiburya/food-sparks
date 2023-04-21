@@ -23,7 +23,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: amount
-                  value: 400
+                  value: 10
               - column:
                   name: product_id
                   value: 2
@@ -35,7 +35,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: amount
-                  value: 400
+                  value: 30
               - column:
                   name: product_id
                   value: 3
@@ -47,7 +47,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: amount
-                  value: 400
+                  value: 1
               - column:
                   name: product_id
                   value: 4
@@ -59,7 +59,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: amount
-                  value: 400
+                  value: 20
               - column:
                   name: product_id
                   value: 5
@@ -71,7 +71,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: amount
-                  value: 400
+                  value: 5
               - column:
                   name: product_id
                   value: 6
@@ -83,7 +83,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: amount
-                  value: 400
+                  value: 5
               - column:
                   name: product_id
                   value: 7
@@ -95,7 +95,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: amount
-                  value: 400
+                  value: 20
               - column:
                   name: product_id
                   value: 8
@@ -107,7 +107,7 @@ databaseChangeLog:
                   value: 1
               - column:
                   name: amount
-                  value: 400
+                  value: 120
               - column:
                   name: product_id
                   value: 9
