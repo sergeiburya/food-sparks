@@ -19,38 +19,49 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.exeption.DataProcessingException;
-import team.project.foodsparks.model.Address;
+import team.project.foodsparks.model.Coupon;
+import team.project.foodsparks.model.DeliveryInformation;
 import team.project.foodsparks.model.Order;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.ShoppingCart;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.repository.OrderRepository;
-import team.project.foodsparks.service.AddressService;
+import team.project.foodsparks.service.CouponService;
+import team.project.foodsparks.service.DeliveryInformationService;
 import team.project.foodsparks.service.EmailService;
 import team.project.foodsparks.service.OrderService;
 import team.project.foodsparks.service.ShoppingCartService;
+import team.project.foodsparks.util.ProductAmountConverter;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    private static final String FONT_PATH = "src/main/resources/fonts/arialuni.ttf";
+    private static final String FONT_PATH = "/fonts/arialuni.ttf";
     private final OrderRepository orderRepository;
     private final ShoppingCartService shoppingCartService;
     private final EmailService emailService;
-    private final AddressService addressService;
+    private final CouponService couponService;
+    private final DeliveryInformationService deliveryInformationService;
 
     @Autowired
     public OrderServiceImpl(OrderRepository orderRepository,
                             ShoppingCartService shoppingCartService,
                             EmailService emailService,
-                            AddressService addressService) {
+                            CouponService couponService,
+                            DeliveryInformationService deliveryInformationService) {
         this.orderRepository = orderRepository;
         this.shoppingCartService = shoppingCartService;
         this.emailService = emailService;
-        this.addressService = addressService;
+        this.couponService = couponService;
+        this.deliveryInformationService = deliveryInformationService;
     }
 
     @Override
-    public Order completeOrder(ShoppingCart shoppingCart, Order order) {
+    public Order completeOrder(ShoppingCart shoppingCart,
+                               DeliveryInformation deliveryInformation) {
+        DeliveryInformation savedDeliveryInformation
+                = deliveryInformationService.add(deliveryInformation);
+        Order order = new Order();
+        order.setDeliveryInformation(savedDeliveryInformation);
         order.setOrderTime(LocalDateTime.now());
         order.setProductAmount(new HashMap<>(shoppingCart.getProductAmount()));
         order.setUser(shoppingCart.getUser());
@@ -64,12 +75,17 @@ public class OrderServiceImpl implements OrderService {
                 .multiply(BigDecimal.valueOf(shoppingCart.getCoupon() != null
                         ? 100 - shoppingCart.getCoupon().getDiscountSize() : 100)));
         orderRepository.save(order);
+        Coupon coupon = shoppingCart.getCoupon();
+        if (coupon != null) {
+            coupon.setExpired(true);
+            couponService.update(coupon);
+        }
         try {
             createAndSendPdfOrderForUser(order);
         } catch (DocumentException e) {
             throw new DataProcessingException("A message with an order cant be sent.");
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new DataProcessingException("IO exception happened");
         }
         shoppingCartService.clear(shoppingCart);
         return order;
@@ -109,24 +125,22 @@ public class OrderServiceImpl implements OrderService {
         dateParagraph.setAlignment(Element.ALIGN_RIGHT);
         dateParagraph.setLeading(30f);
         document.add(dateParagraph);
-        User user = order.getUser();
-        Address userAddress = addressService.findByUser(user).orElseThrow(
-                () -> new RuntimeException("Address with user " + user + "not found"));
+        DeliveryInformation deliveryInformation = order.getDeliveryInformation();
         Paragraph adrressParagraph = new Paragraph("Delivery addresses: "
-                + userAddress.getRegion() + ", "
-                + userAddress.getTown() + ", "
-                + userAddress.getStreet() + ", "
-                + userAddress.getBuild() + ", "
-                + userAddress.getApartment(), FontFactory.getFont(FontFactory.TIMES_ROMAN));
+                + deliveryInformation.getTown() + ", "
+                + deliveryInformation.getStreet() + ", "
+                + deliveryInformation.getBuild() + ", "
+                + deliveryInformation.getApartment(), FontFactory.getFont(FontFactory.TIMES_ROMAN));
         adrressParagraph.setAlignment(Element.ALIGN_LEFT);
         adrressParagraph.setLeading(30f);
         document.add(adrressParagraph);
-        Paragraph userParagraph = new Paragraph("Users Name: " + user.getFirstName()
-                + " " + user.getLastName(), FontFactory.getFont(FontFactory.TIMES_ROMAN));
+        Paragraph userParagraph = new Paragraph("Users Name: " + deliveryInformation.getFirstName()
+                + " " + deliveryInformation.getLastName(),
+                FontFactory.getFont(FontFactory.TIMES_ROMAN));
         userParagraph.setAlignment(Element.ALIGN_LEFT);
         userParagraph.setLeading(30f);
         document.add(userParagraph);
-        Paragraph phoneParagraph = new Paragraph("Users Phone: " + user.getPhone(),
+        Paragraph phoneParagraph = new Paragraph("Users Phone: " + deliveryInformation.getPhone(),
                 FontFactory.getFont(FontFactory.TIMES_ROMAN));
         phoneParagraph.setLeading(30f);
         phoneParagraph.setAlignment(Element.ALIGN_LEFT);
@@ -140,7 +154,8 @@ public class OrderServiceImpl implements OrderService {
         for (Map.Entry<Product, Integer> entry : productAmount.entrySet()) {
             Paragraph itemParagraph = new Paragraph("Product Name: "
                     + entry.getKey().getName()
-                    + " - " + entry.getValue(), arialFont);
+                    + " - " + entry.getValue() + " - "
+                    + ProductAmountConverter.convertProductAmount(entry.getKey().getAmountInPackage()), arialFont);
             itemParagraph.setLeading(30f);
             itemParagraph.setAlignment(Element.ALIGN_LEFT);
             document.add(itemParagraph);

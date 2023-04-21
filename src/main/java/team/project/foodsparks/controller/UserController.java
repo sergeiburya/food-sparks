@@ -47,7 +47,7 @@ public class UserController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/by-email")
+    @GetMapping()
     @ApiOperation(value = "Get user by email")
     public UserResponseDto findByEmail(Authentication auth) {
         UserDetails details = (UserDetails) auth.getPrincipal();

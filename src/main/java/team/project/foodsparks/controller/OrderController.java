@@ -1,6 +1,5 @@
 package team.project.foodsparks.controller;
 
-import com.lowagie.text.DocumentException;
 import io.swagger.annotations.ApiOperation;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,8 +10,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import team.project.foodsparks.dto.request.OrderRequestDto;
+import team.project.foodsparks.dto.request.DeliveryInformationRequestDto;
 import team.project.foodsparks.dto.response.OrderResponseDto;
+import team.project.foodsparks.model.DeliveryInformation;
 import team.project.foodsparks.model.Order;
 import team.project.foodsparks.model.ShoppingCart;
 import team.project.foodsparks.model.User;
@@ -30,18 +30,20 @@ public class OrderController {
     private final OrderService orderService;
     private final UserService userService;
     private final ResponseDtoMapper<OrderResponseDto, Order> orderResponseDtoMapper;
-    private final RequestDtoMapper<OrderRequestDto, Order> orderRequestDtoMapper;
+    private final RequestDtoMapper<DeliveryInformationRequestDto, DeliveryInformation>
+            deliveryInformationRequestDtoMapper;
 
     public OrderController(ShoppingCartService shoppingCartService,
                            OrderService orderService,
                            UserService userService,
                            ResponseDtoMapper<OrderResponseDto, Order> orderResponseDtoMapper,
-                           RequestDtoMapper<OrderRequestDto, Order> orderRequestDtoMapper) {
+                           RequestDtoMapper<DeliveryInformationRequestDto, DeliveryInformation>
+                                   deliveryInformationMapper) {
         this.shoppingCartService = shoppingCartService;
         this.orderService = orderService;
         this.userService = userService;
         this.orderResponseDtoMapper = orderResponseDtoMapper;
-        this.orderRequestDtoMapper = orderRequestDtoMapper;
+        this.deliveryInformationRequestDtoMapper = deliveryInformationMapper;
     }
 
     @PostMapping("/complete")
@@ -49,14 +51,15 @@ public class OrderController {
             + " Shopping cart will be cleared."
     )
     public OrderResponseDto completeOrder(Authentication auth,
-                                          @RequestBody OrderRequestDto orderRequestDto)
-            throws DocumentException {
+                                          @RequestBody DeliveryInformationRequestDto dto) {
         String email = auth.getName();
         User user = userService.findByEmail(email).orElseThrow(
                 () -> new RuntimeException("User with email " + email + " not found"));
         ShoppingCart cart = shoppingCartService.getByUser(user);
-        Order order = orderRequestDtoMapper.mapToModel(orderRequestDto);
-        return orderResponseDtoMapper.mapToDto(orderService.completeOrder(cart, order));
+        DeliveryInformation deliveryInformation
+                = deliveryInformationRequestDtoMapper.mapToModel(dto);
+        return orderResponseDtoMapper.mapToDto(orderService
+                .completeOrder(cart, deliveryInformation));
     }
 
     @GetMapping

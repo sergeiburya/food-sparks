@@ -37,6 +37,11 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
+    public Coupon update(Coupon coupon) {
+        return couponRepository.save(coupon);
+    }
+
+    @Override
     public Optional<Coupon> getByValue(String couponValue) {
         return couponRepository.findCouponByCouponValue(couponValue);
     }

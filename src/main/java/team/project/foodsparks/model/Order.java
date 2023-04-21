@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,14 +34,13 @@ public class Order {
     @MapKeyJoinColumn(name = "product_id")
     @Column(name = "amount")
     private Map<Product, Integer> productAmount;
+    @OneToOne
+    private DeliveryInformation deliveryInformation;
     @Column(name = "order_time")
     private LocalDateTime orderTime;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    private String comment;
-    private String dayOfDelivery;
-    private String timeOfDelivery;
     private BigDecimal sum;
 
     @Override

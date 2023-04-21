@@ -1,5 +1,6 @@
 package team.project.foodsparks.dto.response;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Map;
 import lombok.AllArgsConstructor;
@@ -14,6 +15,8 @@ import lombok.Setter;
 public class OrderResponseDto {
     private Long id;
     private Map<String, Integer> productAmount;
+    private DeliveryInformationResponseDto deliveryInformationResponseDto;
     private Long userId;
     private LocalDateTime orderTime;
+    private BigDecimal sum;
 }

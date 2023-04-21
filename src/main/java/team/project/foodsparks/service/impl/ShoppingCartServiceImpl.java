@@ -49,6 +49,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart clear(ShoppingCart shoppingCart) {
         shoppingCart.getProductAmount().clear();
+        shoppingCart.setCoupon(null);
         return shoppingCartRepository.save(shoppingCart);
     }
 
