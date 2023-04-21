@@ -15,6 +15,9 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 5
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/3cJYfzz
         - insert:
             tableName: products
             columns:
@@ -27,6 +30,9 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 24
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/LJthjBX
         - insert:
             tableName: products
             columns:
@@ -39,6 +45,9 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 20
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/HGS7S1N
         - insert:
             tableName: products
             columns:
@@ -51,6 +60,9 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 64
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/ZdSRQ8T
         - insert:
             tableName: products
             columns:
@@ -63,6 +75,9 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 65
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/yNMkcZc
         - insert:
             tableName: products
             columns:
@@ -75,6 +90,9 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 14
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/1fwQfyn
         - insert:
             tableName: products
             columns:
@@ -87,6 +105,9 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 18
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/xqTdS1z
         - insert:
             tableName: products
             columns:
@@ -99,6 +120,9 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 34
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/CVfyvvd
         - insert:
             tableName: products
             columns:
@@ -111,4 +135,7 @@ databaseChangeLog:
               - column:
                   name: price
                   value: 25
+              - column:
+                  name: image_Url
+                  value: https://ibb.co/Kb8nGq8
 

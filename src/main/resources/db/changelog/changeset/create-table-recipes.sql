@@ -4,7 +4,7 @@ CREATE TABLE `recipes` (
   `image_url` varchar(255) DEFAULT NULL,
   `portions` int DEFAULT NULL,
   `spiced` BIT(1) DEFAULT NULL ,
-  `subtitle` varchar(255) DEFAULT NULL,
+  `subtitle` varchar(500) DEFAULT NULL,
   `dish_name` varchar(255) DEFAULT NULL,
   `complexity_id` bigint DEFAULT NULL,
   `cuisine_region_id` bigint DEFAULT NULL,

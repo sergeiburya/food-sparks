@@ -1,6 +1,8 @@
 CREATE TABLE `orders` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `order_time` datetime(6) DEFAULT NULL,
+  `dayOfDelivery` varchar(256) DEFAULT NULL,
+  `timeOfDelivery` varchar(256) DEFAULT NULL,
   `sum` decimal(19,2) DEFAULT NULL,
   `user_id` bigint DEFAULT NULL,
   PRIMARY KEY (`id`),

@@ -55,5 +55,10 @@ databaseChangeLog:
       file: /db/changelog/changeset/insert-table-recipes_instructions.sql
   - include:
       file: /db/changelog/changeset/insert-table-recipes_product_list.yaml
+  - include:
+      file: /db/changelog/changeset/insert-table2-products.sql
+  - include:
+      file: /db/changelog/changeset/insert-table2-recipes_product_list.sql
+
 
 
