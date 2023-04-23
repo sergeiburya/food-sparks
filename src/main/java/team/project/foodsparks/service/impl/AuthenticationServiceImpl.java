@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.event.UserRegistrationEventPublisher;
-import team.project.foodsparks.exeption.AuthenticationException;
+import team.project.foodsparks.exception.AuthenticationException;
 import team.project.foodsparks.model.Role;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.model.VerificationToken;
@@ -37,7 +37,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public User register(String email, String password, String firstName, String lastName) {
+    public User register(String email, String password, String firstName, String lastName)
+            throws AuthenticationException {
+        if (userService.findByEmail(email).isPresent()) {
+            throw new AuthenticationException("Користувач з таким імейлом вже існує.");
+        }
         Role role = roleService.getByName(Role.RoleName.USER.name());
         User user = new User();
         user.setFirstName(firstName);
@@ -54,12 +58,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public User login(String login, String password) throws AuthenticationException {
         Optional<User> user = userService.findByEmail(login);
         if (user.isEmpty() || !passwordEncoder.matches(password, user.get().getPassword())) {
-            throw new AuthenticationException("Incorrect username or password!");
+            throw new AuthenticationException("Неправильний логін або пароль.");
         }
         User currentUser = user.get();
         if (!currentUser.isEmailConfirmed()) {
-            throw new AuthenticationException("Email isn't confirmed. "
-                    + "Check your email for confirmation link.");
+            throw new AuthenticationException("Вам потрібно підвердити свій імейл. "
+                    + "Інформація у листі на вашій пошті.");
         }
         return currentUser;
     }
@@ -67,12 +71,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public String verifyEmail(String tokenValue) {
         VerificationToken verificationToken = verificationTokenService
                 .findTokenByValue(tokenValue).orElseThrow(
-                        () -> new RuntimeException("Token isn't valid"));
+                        () -> new RuntimeException("Неправильний токен"));
         User user = userService.findByEmail(verificationToken.getUser().getEmail()).get();
         user.setEmailConfirmed(true);
         userService.add(user);
         verificationTokenService.delete(verificationToken);
-        return "Email confirmed!";
+        return "Імейл підтверджено";
     }
 
 }

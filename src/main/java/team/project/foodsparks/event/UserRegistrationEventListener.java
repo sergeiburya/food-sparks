@@ -1,8 +1,10 @@
 package team.project.foodsparks.event;
 
+import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.Address;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.model.VerificationToken;
@@ -50,5 +52,11 @@ public class UserRegistrationEventListener implements ApplicationListener<UserRe
                         + "For confirm you registration use the link: "
                         + "http://foodsparks.eu-central-1.elasticbeanstalk.com/verify?token="
                         + verificationToken.getToken());
+        try {
+            emailService.sendHtmlPage(user.getEmail(),"Registration confirmation",
+                    verificationToken.getToken());
+        } catch (MessagingException e) {
+            throw new DataProcessingException("Can't send html page");
+        }
     }
 }

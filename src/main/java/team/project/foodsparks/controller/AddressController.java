@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.AddressRequestDto;
 import team.project.foodsparks.dto.response.AddressResponseDto;
-import team.project.foodsparks.exeption.DataProcessingException;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.Address;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.AddressService;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.response.ShoppingCartResponseDto;
-import team.project.foodsparks.exeption.DataProcessingException;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.ShoppingCart;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.ShoppingCartService;
@@ -42,7 +42,8 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Користувача з імейлом: "
+                        + email + " не існує."));
         return shoppingCartMapper.mapToDto(shoppingCartService.getByUser(user));
     }
 
@@ -55,7 +56,8 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new DataProcessingException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Користувача з імейлом: "
+                        + email + " не існує."));
         return shoppingCartMapper
                 .mapToDto(shoppingCartService.increaseProductAmount(productId, user));
     }
@@ -69,7 +71,8 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new DataProcessingException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Користувача з імейлом: "
+                        + email + " не існує."));
         return shoppingCartMapper
                 .mapToDto(shoppingCartService.decreaseProductAmount(productId, user));
     }
@@ -81,7 +84,8 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new DataProcessingException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Користувача з імейлом: "
+                        + email + " не існує."));
         return shoppingCartMapper
                 .mapToDto(shoppingCartService.removeProductFromCart(productId, user));
 
@@ -93,7 +97,8 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new DataProcessingException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Користувача з імейлом: "
+                        + email + " не існує."));
         return shoppingCartMapper
                 .mapToDto(shoppingCartService.removeAllProductsFromCart(user));
 
@@ -105,7 +110,8 @@ public class ShoppingCartController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new DataProcessingException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Користувача з імейлом: "
+                        + email + " не існує."));
         return shoppingCartMapper.mapToDto(shoppingCartService.setCoupon(user, couponValue));
     }
 }

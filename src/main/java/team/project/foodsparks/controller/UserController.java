@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.UserRequestDto;
 import team.project.foodsparks.dto.response.UserResponseDto;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.service.GenderService;
 import team.project.foodsparks.service.UserService;
@@ -53,7 +54,8 @@ public class UserController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Користувача з імейлом: "
+                        + email + " не існує."));
         return userResponseDtoMapper.mapToDto(user);
     }
 
@@ -64,7 +66,8 @@ public class UserController {
         UserDetails details = (UserDetails) auth.getPrincipal();
         String email = details.getUsername();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Користувача з імейлом: "
+                        + email + " не існує."));
         user.setFirstName(userRequestDto.getFirstName());
         user.setLastName(userRequestDto.getLastName());
         user.setPhone(userRequestDto.getPhone());

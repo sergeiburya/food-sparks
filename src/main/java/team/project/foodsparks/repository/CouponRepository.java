@@ -8,4 +8,6 @@ import team.project.foodsparks.model.Coupon;
 @Repository
 public interface CouponRepository extends JpaRepository<Coupon, Long> {
     Optional<Coupon> findCouponByCouponValue(String couponValue);
+
+    Optional<Coupon> findCouponByUserEmail(String userMail);
 }

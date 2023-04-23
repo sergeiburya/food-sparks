@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import team.project.foodsparks.exeption.DataProcessingException;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.Coupon;
 import team.project.foodsparks.model.DeliveryInformation;
 import team.project.foodsparks.model.Order;
@@ -84,10 +84,9 @@ public class OrderServiceImpl implements OrderService {
         }
         try {
             createAndSendPdfOrderForUser(order);
-        } catch (DocumentException e) {
-            throw new DataProcessingException("A message with an order cant be sent.");
-        } catch (IOException e) {
-            throw new DataProcessingException("IO exception happened");
+        } catch (DocumentException | IOException e) {
+            throw new DataProcessingException("Лист з підтвердженням замовлення "
+                    + "не вийшло відправити.");
         }
         shoppingCartService.clear(shoppingCart);
         return order;
