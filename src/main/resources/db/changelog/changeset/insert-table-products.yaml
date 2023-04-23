@@ -17,7 +17,7 @@ databaseChangeLog:
                   value: 5
               - column:
                   name: image_Url
-                  value: https://ibb.co/3cJYfzz
+                  value: https://i.ibb.co/PgSzTQQ/Potato.jpg
         - insert:
             tableName: products
             columns:
@@ -32,7 +32,7 @@ databaseChangeLog:
                   value: 24
               - column:
                   name: image_Url
-                  value: https://ibb.co/LJthjBX
+                  value: https://i.ibb.co/cCFXfRS/Wheat-flour.jpg
         - insert:
             tableName: products
             columns:
@@ -47,7 +47,7 @@ databaseChangeLog:
                   value: 20
               - column:
                   name: image_Url
-                  value: https://ibb.co/HGS7S1N
+                  value: https://i.ibb.co/p4727GW/Garlic.jpg
         - insert:
             tableName: products
             columns:
@@ -62,7 +62,7 @@ databaseChangeLog:
                   value: 64
               - column:
                   name: image_Url
-                  value: https://ibb.co/ZdSRQ8T
+                  value: https://i.ibb.co/H7CLczg/eggs.jpg
         - insert:
             tableName: products
             columns:
@@ -77,7 +77,7 @@ databaseChangeLog:
                   value: 65
               - column:
                   name: image_Url
-                  value: https://ibb.co/yNMkcZc
+                  value: https://i.ibb.co/NFkNdJd/Oil.jpg
         - insert:
             tableName: products
             columns:
@@ -92,7 +92,7 @@ databaseChangeLog:
                   value: 14
               - column:
                   name: image_Url
-                  value: https://ibb.co/1fwQfyn
+                  value: https://i.ibb.co/TBF2BjT/Black-pepper.jpg
         - insert:
             tableName: products
             columns:
@@ -107,7 +107,7 @@ databaseChangeLog:
                   value: 18
               - column:
                   name: image_Url
-                  value: https://ibb.co/xqTdS1z
+                  value: https://i.ibb.co/8gZtDrP/salt.jpg
         - insert:
             tableName: products
             columns:
@@ -122,7 +122,7 @@ databaseChangeLog:
                   value: 34
               - column:
                   name: image_Url
-                  value: https://ibb.co/CVfyvvd
+                  value: https://i.ibb.co/p4STZZD/Sour-cream.jpg
         - insert:
             tableName: products
             columns:
@@ -137,5 +137,5 @@ databaseChangeLog:
                   value: 25
               - column:
                   name: image_Url
-                  value: https://ibb.co/Kb8nGq8
+                  value: https://i.ibb.co/NtGR3jG/nion.jpg
 
