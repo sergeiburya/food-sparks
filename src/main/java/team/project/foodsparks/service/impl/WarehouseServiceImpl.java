@@ -46,7 +46,7 @@ public class WarehouseServiceImpl implements WarehouseService {
         if (amountOfIngredient >= amount) {
             warehouseById.setAmount(warehouseById.getAmount() - amount);
         } else {
-            throw new RuntimeException("Not enough amount of ingredient: "
+            throw new RuntimeException("Немає достатньої кількості продукту: "
                     + warehouseById.getProduct().getName());
         }
         return warehouseRepository.save(warehouseById);

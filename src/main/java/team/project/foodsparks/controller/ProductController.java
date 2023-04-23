@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.ProductRequestDto;
 import team.project.foodsparks.dto.response.ProductResponseDto;
-import team.project.foodsparks.exeption.DataProcessingException;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.service.mapper.RequestDtoMapper;
@@ -55,7 +55,7 @@ public class ProductController {
     @ApiOperation(value = "Get product by id")
     public ProductResponseDto getById(@PathVariable Long id) {
         Product product = productService.getById(id).orElseThrow(
-                () -> new DataProcessingException("Product with id: " + id + " not found."));
+                () -> new DataProcessingException("Продукт з id: " + id + " не знайдено."));
         return responseDtoMapper.mapToDto(product);
     }
 }

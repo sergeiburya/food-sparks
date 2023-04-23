@@ -1,4 +1,4 @@
-package team.project.foodsparks.exeption;
+package team.project.foodsparks.exception;
 
 public class InvalidJwtAuthenticationException extends RuntimeException {
 

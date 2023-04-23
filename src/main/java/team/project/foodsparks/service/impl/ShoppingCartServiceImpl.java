@@ -4,7 +4,7 @@ import java.util.Map;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import team.project.foodsparks.exeption.DataProcessingException;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.Coupon;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.ShoppingCart;
@@ -59,7 +59,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         Warehouse warehouseProduct = warehouseRepository.getById(productId);
         Integer warehouseProductAmount = warehouseProduct.getAmount();
         if (warehouseProductAmount < 1) {
-            throw new RuntimeException("Not enough amount of product: "
+            throw new RuntimeException("Немає необхідної кількості продукту в наявності : "
                     + warehouseProduct.getProduct().getName());
         }
         warehouseProduct.setAmount(warehouseProductAmount - 1);
@@ -131,10 +131,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart setCoupon(User user, String couponValue) {
         Coupon coupon = couponService.getByValue(couponValue).orElseThrow(
-                () -> new DataProcessingException("Coupon " + couponValue + " doesn't exist.")
+                () -> new DataProcessingException("Купон: " + couponValue + " не існує.")
         );
         if (coupon.isExpired() || !coupon.getUserEmail().equals(user.getEmail())) {
-            throw new DataProcessingException("Coupon isn't valid");
+            throw new DataProcessingException("Недійсний купон");
         }
         ShoppingCart cartByUser = getByUser(user);
         cartByUser.setCoupon(coupon);

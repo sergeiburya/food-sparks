@@ -3,6 +3,7 @@ package team.project.foodsparks.service.impl;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.Coupon;
 import team.project.foodsparks.repository.CouponRepository;
 import team.project.foodsparks.service.CouponService;
@@ -23,6 +24,9 @@ public class CouponServiceImpl implements CouponService {
 
     @Override
     public Coupon add(String userEmail) {
+        if (couponRepository.findCouponByUserEmail(userEmail).isPresent()) {
+            throw new DataProcessingException("Ви вже отримали ваш купон для знижки.");
+        }
         String couponCode = CouponGenerator.createRandomCode();
         Coupon coupon = new Coupon();
         coupon.setCouponValue(couponCode);

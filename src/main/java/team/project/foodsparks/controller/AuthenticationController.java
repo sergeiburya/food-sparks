@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import team.project.foodsparks.dto.UserLoginRequestDto;
 import team.project.foodsparks.dto.UserRegistrationRequestDto;
-import team.project.foodsparks.exeption.AuthenticationException;
+import team.project.foodsparks.exception.AuthenticationException;
 import team.project.foodsparks.model.User;
 import team.project.foodsparks.security.JwtTokenProvider;
 import team.project.foodsparks.service.AuthenticationService;
@@ -37,12 +37,13 @@ public class AuthenticationController {
     @PostMapping("/register")
     @ApiOperation(value = "User registration form")
     public String register(
-            @RequestBody UserRegistrationRequestDto userRequestDto) {
+            @RequestBody UserRegistrationRequestDto userRequestDto)
+            throws AuthenticationException {
         authService.register(userRequestDto.getEmail(),
                 userRequestDto.getPassword(),
                 userRequestDto.getFirstName(),
                 userRequestDto.getLastName());
-        return "Registration is successful. Go to the mail and confirm the registration";
+        return "Ви успішно зареестровані";
     }
 
     @PostMapping("/login")

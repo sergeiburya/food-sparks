@@ -1,4 +1,4 @@
-package team.project.foodsparks.exeption;
+package team.project.foodsparks.exception;
 
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;

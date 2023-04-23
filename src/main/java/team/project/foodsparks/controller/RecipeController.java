@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.RecipeRequestDto;
 import team.project.foodsparks.dto.response.RecipeResponseDto;
 import team.project.foodsparks.dto.response.RecipeSmallCartResponseDto;
-import team.project.foodsparks.exeption.DataProcessingException;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.Recipe;
 import team.project.foodsparks.service.RecipeService;
 import team.project.foodsparks.service.mapper.RequestDtoMapper;
@@ -101,7 +101,7 @@ public class RecipeController {
     @ApiOperation(value = "Get recipe by ID")
     public RecipeResponseDto getById(@PathVariable Long id) {
         Recipe recipe = recipeService.getById(id).orElseThrow(
-                () -> new DataProcessingException("Recipe by id: " + id + " doesn't exist.")
+                () -> new DataProcessingException("Рецепт під id: " + id + " не знайдено.")
         );
         return recipeResponseMapper.mapToDto(recipe);
     }

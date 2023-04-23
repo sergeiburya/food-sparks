@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team.project.foodsparks.dto.request.DeliveryInformationRequestDto;
 import team.project.foodsparks.dto.response.OrderResponseDto;
+import team.project.foodsparks.exception.DataProcessingException;
 import team.project.foodsparks.model.DeliveryInformation;
 import team.project.foodsparks.model.Order;
 import team.project.foodsparks.model.ShoppingCart;
@@ -54,7 +55,7 @@ public class OrderController {
                                           @RequestBody DeliveryInformationRequestDto dto) {
         String email = auth.getName();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Юзера з імейлом: " + email + " не існує."));
         ShoppingCart cart = shoppingCartService.getByUser(user);
         DeliveryInformation deliveryInformation
                 = deliveryInformationRequestDtoMapper.mapToModel(dto);
@@ -67,7 +68,7 @@ public class OrderController {
     public List<OrderResponseDto> getOrderHistory(Authentication auth) {
         String email = auth.getName();
         User user = userService.findByEmail(email).orElseThrow(
-                () -> new RuntimeException("User with email " + email + " not found"));
+                () -> new DataProcessingException("Юзера з імейлом: " + email + " не існує."));
         return orderService.getOrders(user)
                 .stream()
                 .map(orderResponseDtoMapper::mapToDto)

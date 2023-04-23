@@ -16,7 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
-import team.project.foodsparks.exeption.InvalidJwtAuthenticationException;
+import team.project.foodsparks.exception.InvalidJwtAuthenticationException;
 
 @Component
 public class JwtTokenProvider {
