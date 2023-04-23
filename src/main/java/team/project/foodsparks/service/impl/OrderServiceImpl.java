@@ -37,7 +37,7 @@ import team.project.foodsparks.util.ProductAmountConverter;
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final String FONT_PATH = "/fonts/arialuni.ttf";
-    private static final String LOGO_PATH = "src/main/resources/static/img/logo.jpg";
+    private static final String LOGO_PATH = "/static/img/logo.jpg";
     private final OrderRepository orderRepository;
     private final ShoppingCartService shoppingCartService;
     private final EmailService emailService;
@@ -106,8 +106,8 @@ public class OrderServiceImpl implements OrderService {
         writer.setPdfVersion(PdfWriter.VERSION_1_7);
         document.open();
         Image logoImage = Image.getInstance(LOGO_PATH);
-        logoImage.scaleAbsolute(250f, 20f);
-        logoImage.setIndentationLeft(135f);
+        logoImage.scaleAbsolute(200f, 20f);
+        logoImage.setIndentationLeft(160f);
         Paragraph lineSeparator = new Paragraph();
         lineSeparator.add(new LineSeparator());
         lineSeparator.setLeading(10f);
