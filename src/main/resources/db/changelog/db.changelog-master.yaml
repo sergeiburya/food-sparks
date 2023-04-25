@@ -34,7 +34,9 @@ databaseChangeLog:
   - include:
       file: /db/changelog/changeset/create-table-shopping_carts.sql
   - include:
-      file: /db/changelog/changeset/create-table-shopping_cart_product_amount.sql
+      file: /db/changelog/changeset/create-table-cart_item.sql
+  - include:
+      file: /db/changelog/changeset/create-table-shopping_carts_cart_item_list.sql
   - include:
       file: /db/changelog/changeset/create-table-users_roles.sql
   - include:
@@ -63,4 +65,11 @@ databaseChangeLog:
       file: /db/changelog/changeset/insert-table2-recipes_product_list.sql
   - include:
       file: /db/changelog/changeset/insert-table-warehouse.sql
+
+  - include:
+      file: /db/changelog/changeset/insert-table-recipes-borsch-add.sql
+  - include:
+      file: /db/changelog/changeset/insert-table2-recipes_product_list-borsch-add.sql
+  - include:
+      file: /db/changelog/changeset/insert-table-recipes_instructions-borsch-add.sql
 

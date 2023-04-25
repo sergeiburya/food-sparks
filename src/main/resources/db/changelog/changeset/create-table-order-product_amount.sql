@@ -7,3 +7,4 @@ CREATE TABLE `order_product_amount` (
   CONSTRAINT `FKeh76e34svqjvb7m2n31slb15y` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`),
   CONSTRAINT `FKs3uh6chlomuoi7t93a25f10ci` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+

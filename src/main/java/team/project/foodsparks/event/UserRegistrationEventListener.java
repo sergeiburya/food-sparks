@@ -47,11 +47,6 @@ public class UserRegistrationEventListener implements ApplicationListener<UserRe
                 = VerificationTokenGenerator.createVerificationToken();
         verificationToken.setUser(user);
         verificationTokenService.add(verificationToken);
-        emailService.sendSimpleMessage(user.getEmail(), "Registration confirmation",
-                "Account with email: " + user.getEmail() + " has been successfully registered. "
-                        + "For confirm you registration use the link: "
-                        + "http://foodsparks.eu-central-1.elasticbeanstalk.com/verify?token="
-                        + verificationToken.getToken());
         try {
             emailService.sendHtmlPage(user.getEmail(),"Registration confirmation",
                     verificationToken.getToken());

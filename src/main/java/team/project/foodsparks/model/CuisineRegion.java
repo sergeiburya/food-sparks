@@ -23,17 +23,12 @@ public class CuisineRegion {
     private String imageUrl;
 
     public enum CuisineRegionName {
-        GALYCKA("Галицька"),
-        ZAKARPATSKA("Закарпатська"),
         ODESKA("Одеська"),
-        VOLYNSKA("Волинська"),
-        POLISKA("Поліська"),
-        BYKOVINSKA("Буковинська"),
+        GALYCKA("Галицька"),
         KRYMSKA("Кримська"),
-        SLOBOZHANSKA("Слобожанська"),
+        VOLYNSKA("Волинська"),
         PODILSKA("Подільска"),
-        NADDNIPRIANSKA("Наддніпрянська"),
-        ZAPORIZKA("Запорізька");
+        ZAKARPATSKA("Закарпатська");
 
         private final String value;
 

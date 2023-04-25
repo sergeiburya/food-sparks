@@ -2,8 +2,8 @@
 --changeset <Serhii Buria>:<add-data-table-products>
 INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Молоко', 850, 28, 'https://i.ibb.co/TMmdFTh/Milk.jpg');
 INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Мята', 50, 48, 'https://i.ibb.co/h7nWjnH/Mint.jpg');
-INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Олія оливкова', 500, 132, 'https://ibb.co/QYsZyc0');
-INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Зелений горох', 250, 228, 'https://i.ibb.co/8PFJ1Bk/Olive-oil.jpg');
+INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Олія оливкова', 500, 132, 'https://i.ibb.co/8PFJ1Bk/Olive-oil.jpg');
+INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Зелений горох', 250, 228, 'https://i.ibb.co/wLjXmpr/5usjn5us.png');
 INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Базилік', 50, 48, 'https://i.ibb.co/ZMF2cWH/Basil.jpg');
 INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Дріжджі', 22, 21, 'https://i.ibb.co/zm8FF8G/Yeast.jpg');
 INSERT INTO products (product_name, amount_in_package, price, image_Url) VALUES ('Цибуля порей', 100, 18, 'https://i.ibb.co/HBNxWj8/Leeks.jpg');

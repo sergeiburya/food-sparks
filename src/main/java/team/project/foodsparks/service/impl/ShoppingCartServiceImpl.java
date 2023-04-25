@@ -1,10 +1,11 @@
 package team.project.foodsparks.service.impl;
 
-import java.util.Map;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.exception.DataProcessingException;
+import team.project.foodsparks.model.CartItem;
 import team.project.foodsparks.model.Coupon;
 import team.project.foodsparks.model.Product;
 import team.project.foodsparks.model.ShoppingCart;
@@ -12,6 +13,7 @@ import team.project.foodsparks.model.User;
 import team.project.foodsparks.model.Warehouse;
 import team.project.foodsparks.repository.ShoppingCartRepository;
 import team.project.foodsparks.repository.WarehouseRepository;
+import team.project.foodsparks.service.CartItemService;
 import team.project.foodsparks.service.CouponService;
 import team.project.foodsparks.service.ProductService;
 import team.project.foodsparks.service.ShoppingCartService;
@@ -20,16 +22,19 @@ import team.project.foodsparks.service.ShoppingCartService;
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final WarehouseRepository warehouseRepository;
+    private final CartItemService cartItemService;
     private final ProductService productService;
     private final CouponService couponService;
 
     @Autowired
     public ShoppingCartServiceImpl(ShoppingCartRepository shoppingCartRepository,
                                    WarehouseRepository warehouseRepository,
+                                   CartItemService cartItemService,
                                    ProductService productService,
                                    CouponService couponService) {
         this.shoppingCartRepository = shoppingCartRepository;
         this.warehouseRepository = warehouseRepository;
+        this.cartItemService = cartItemService;
         this.productService = productService;
         this.couponService = couponService;
     }
@@ -47,13 +52,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart clear(ShoppingCart shoppingCart) {
-        shoppingCart.getProductAmount().clear();
-        shoppingCart.setCoupon(null);
-        return shoppingCartRepository.save(shoppingCart);
-    }
-
-    @Override
     @Transactional
     public ShoppingCart increaseProductAmount(Long productId, User user) {
         Warehouse warehouseProduct = warehouseRepository.getById(productId);
@@ -66,14 +64,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         warehouseRepository.save(warehouseProduct);
         ShoppingCart shoppingCart = getByUser(user);
         Product product = productService.getById(productId).get();
-        Map<Product, Integer> productAmount = shoppingCart.getProductAmount();
-        if (productAmount.containsKey(product)) {
-            productAmount.put(product, productAmount.get(product) + 1);
-        } else {
-            productAmount.put(product, 1);
+        List<CartItem> cartItemList = shoppingCart.getCartItemList();
+        for (CartItem cartItem : cartItemList) {
+            if (cartItem.getProduct().equals(product)) {
+                cartItem.setQuantity(cartItem.getQuantity() + 1);
+                return shoppingCartRepository.save(shoppingCart);
+            }
         }
-        shoppingCartRepository.save(shoppingCart);
-        return shoppingCart;
+        CartItem newCartItem = new CartItem();
+        newCartItem.setProduct(product);
+        newCartItem.setQuantity(1);
+        cartItemList.add(newCartItem);
+        return shoppingCartRepository.save(shoppingCart);
     }
 
     @Override
@@ -81,21 +83,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCart decreaseProductAmount(Long productId, User user) {
         ShoppingCart shoppingCart = getByUser(user);
         Product product = productService.getById(productId).get();
-        Map<Product, Integer> productAmount = shoppingCart.getProductAmount();
+        List<CartItem> cartItemList = shoppingCart.getCartItemList();
         Integer currentProductAmount;
-        if (productAmount.containsKey(product)) {
-            currentProductAmount = productAmount.get(product);
-            if (currentProductAmount <= 1) {
-                productAmount.remove(product);
-            } else {
-                productAmount.put(product, productAmount.get(product) - 1);
+        for (CartItem cartItem : cartItemList) {
+            if (cartItem.getProduct().equals(product)) {
+                currentProductAmount = cartItem.getQuantity();
+                if (currentProductAmount <= 1) {
+                    cartItemService.delete(cartItem);
+                    cartItemList.remove(cartItem);
+                    break;
+                }
+                cartItem.setQuantity(currentProductAmount - 1);
+                break;
             }
-            shoppingCartRepository.save(shoppingCart);
-            Warehouse warehouseProduct = warehouseRepository.getById(productId);
-            Integer warehouseProductAmount = warehouseProduct.getAmount();
-            warehouseProduct.setAmount(warehouseProductAmount + 1);
-            warehouseRepository.save(warehouseProduct);
         }
+        shoppingCartRepository.save(shoppingCart);
+        Warehouse warehouseProduct = warehouseRepository.getById(productId);
+        Integer warehouseProductAmount = warehouseProduct.getAmount();
+        warehouseProduct.setAmount(warehouseProductAmount + 1);
+        warehouseRepository.save(warehouseProduct);
         return shoppingCart;
     }
 
@@ -104,28 +110,33 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCart removeProductFromCart(Long productId, User user) {
         ShoppingCart shoppingCart = getByUser(user);
         Product product = productService.getById(productId).get();
-        Map<Product, Integer> productAmount = shoppingCart.getProductAmount();
-        if (productAmount.containsKey(product)) {
-            Warehouse warehouseProduct = warehouseRepository.getById(productId);
-            Integer warehouseProductAmount = warehouseProduct.getAmount();
-            warehouseProduct.setAmount(warehouseProductAmount + productAmount.get(product));
-            warehouseRepository.save(warehouseProduct);
-            productAmount.remove(product);
-            shoppingCartRepository.save(shoppingCart);
+        List<CartItem> cartItemList = shoppingCart.getCartItemList();
+        for (CartItem cartItem : cartItemList) {
+            if (cartItem.getProduct().equals(product)) {
+                Warehouse warehouseProduct = warehouseRepository.getById(productId);
+                Integer warehouseProductAmount = warehouseProduct.getAmount();
+                warehouseProduct.setAmount(warehouseProductAmount + cartItem.getQuantity());
+                warehouseRepository.save(warehouseProduct);
+                cartItemService.delete(cartItem);
+                cartItemList.remove(cartItem);
+                break;
+            }
         }
-        return shoppingCart;
+        return shoppingCartRepository.save(shoppingCart);
     }
 
+    @Transactional
     public ShoppingCart removeAllProductsFromCart(User user) {
         ShoppingCart shoppingCart = getByUser(user);
-        Map<Product, Integer> productAmount = shoppingCart.getProductAmount();
-        for (Map.Entry<Product, Integer> productIntegerEntry : productAmount.entrySet()) {
-            Warehouse byProductId
-                    = warehouseRepository.getById(productIntegerEntry.getKey().getId());
-            byProductId.setAmount(byProductId.getAmount() + productIntegerEntry.getValue());
+        List<CartItem> cartItemList = shoppingCart.getCartItemList();
+        for (CartItem cartItem : cartItemList) {
+            Warehouse byProductId = warehouseRepository.getById(cartItem.getProduct().getId());
+            byProductId.setAmount(byProductId.getAmount() + cartItem.getQuantity());
             warehouseRepository.save(byProductId);
+            cartItemService.delete(cartItem);
         }
-        return this.clear(shoppingCart);
+        cartItemList.clear();
+        return shoppingCartRepository.save(shoppingCart);
     }
 
     @Override

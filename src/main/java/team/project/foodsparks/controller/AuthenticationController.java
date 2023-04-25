@@ -62,6 +62,6 @@ public class AuthenticationController {
     @ApiOperation(value = "Verifying user email endpoint")
     public ModelAndView verifyEmail(@RequestParam String token) {
         authService.verifyEmail(token);
-        return new ModelAndView("redirect:https://www.google.com");
+        return new ModelAndView("redirect:https://dev6379.dlymbcthwyxq5.amplifyapp.com/");
     }
 }

@@ -5,28 +5,28 @@ import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Map;
-import team.project.foodsparks.dto.response.ProductResponseDto;
+import java.util.List;
+import team.project.foodsparks.model.CartItem;
 import team.project.foodsparks.util.ProductAmountConverter;
 
 public class ShoppingCartProductMapSerializer
-        extends JsonSerializer<Map<ProductResponseDto, Integer>> {
+        extends JsonSerializer<List<CartItem>> {
     @Override
-    public void serialize(Map<ProductResponseDto, Integer> value,
+    public void serialize(List<CartItem> value,
                           JsonGenerator gen,
                           SerializerProvider serializers) throws IOException {
         gen.writeStartArray(value);
-        for (Map.Entry<ProductResponseDto, Integer> entry : value.entrySet()) {
+        for (CartItem cartItem : value) {
             gen.writeStartObject();
-            gen.writeNumberField("productId", entry.getKey().getId());
-            gen.writeStringField("name", entry.getKey().getName());
-            gen.writeNumberField("quantity", entry.getValue());
+            gen.writeNumberField("productId", cartItem.getProduct().getId());
+            gen.writeStringField("name", cartItem.getProduct().getName());
+            gen.writeNumberField("quantity", cartItem.getQuantity());
             gen.writeStringField("quantityInPackages",
-                    ProductAmountConverter.convertProductAmount(entry.getValue()
-                            * entry.getKey().getAmountInPackage()));
-            gen.writeNumberField("productSum", entry.getKey().getPrice()
-                    .multiply(BigDecimal.valueOf(entry.getValue())));
-            gen.writeStringField("imageUrl", entry.getKey().getImageUrl());
+                    ProductAmountConverter.convertProductAmount(cartItem.getQuantity()
+                            * cartItem.getProduct().getAmountInPackage()));
+            gen.writeNumberField("productSum", cartItem.getProduct().getPrice()
+                    .multiply(BigDecimal.valueOf(cartItem.getQuantity())));
+            gen.writeStringField("imageUrl", cartItem.getProduct().getImageUrl());
             gen.writeEndObject();
         }
         gen.writeEndArray();

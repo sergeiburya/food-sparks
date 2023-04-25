@@ -11,6 +11,7 @@ INSERT INTO warehouse (product_id, amount) VALUES (8, 10000);
 INSERT INTO warehouse (product_id, amount) VALUES (9, 10000);
 INSERT INTO warehouse (product_id, amount) VALUES (10, 10000);
 INSERT INTO warehouse (product_id, amount) VALUES (11, 10000);
+INSERT INTO warehouse (product_id, amount) VALUES (12, 10000);
 INSERT INTO warehouse (product_id, amount) VALUES (13, 10000);
 INSERT INTO warehouse (product_id, amount) VALUES (14, 10000);
 INSERT INTO warehouse (product_id, amount) VALUES (15, 10000);

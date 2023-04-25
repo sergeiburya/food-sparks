@@ -1,13 +1,12 @@
 package team.project.foodsparks.model;
 
-import java.util.Map;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -26,10 +25,8 @@ import lombok.Setter;
 public class ShoppingCart {
     @Id
     private Long id;
-    @ElementCollection
-    @MapKeyJoinColumn(name = "product_id")
-    @Column(name = "product_amount")
-    private Map<Product, Integer> productAmount;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CartItem> cartItemList;
     @MapsId
     @OneToOne
     @JoinColumn(name = "id")

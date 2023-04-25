@@ -1,40 +1,40 @@
 --liquibase formatted sql
 --changeset <Serhii Buria>:<add-data-table-recipes>
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (1, 30, 10, 3, 'https://i.ibb.co/vVw7kSW/kremzlyky.jpg', 4, 1, 'Кремзлики, гуглі, деруни. Опановуємо й далі закарпатський діалект та готуємо локальну їжу.', 'Кремзлики');
+values (1, 30, 6, 3, 'https://i.ibb.co/vVw7kSW/kremzlyky.jpg', 4, 1, 'Кремзлики, гуглі, деруни. Опановуємо й далі закарпатський діалект та готуємо локальну їжу.', 'Кремзлики');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (1, 30, 10, 5, 'https://i.ibb.co/sy1Fx1g/Soupe-cream.jpg', 1, 1, 'Крем-суп з зеленого горошку з м\'ятою: крок за кроком', 'Крем-суп з зеленого горошку з м\'ятою');
+values (1, 30, 6, 5, 'https://i.ibb.co/sy1Fx1g/Soupe-cream.jpg', 1, 1, 'Крем-суп з зеленого горошку з м\'ятою: крок за кроком', 'Крем-суп з зеленого горошку з м\'ятою');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 60, 10, 4, 'https://i.ibb.co/zXtGcDy/pirog.jpg', 8, 0, 'Як приготувати цибульний смачний пиріг зі шпротами: крок за кроком', 'Цибульний пиріг зі шпротами');
+values (3, 60, 6, 4, 'https://i.ibb.co/zXtGcDy/pirog.jpg', 8, 0, 'Як приготувати цибульний смачний пиріг зі шпротами: крок за кроком', 'Цибульний пиріг зі шпротами');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (1, 60, 10, 1, 'https://i.ibb.co/ZzTdtmc/Salad.jpg', 4, 0, 'Як приготувати салат з буряка, чорнослива та горіхів: крок за кроком', 'Салат з чорносливом і буряком пісний');
+values (1, 60, 6, 1, 'https://i.ibb.co/ZzTdtmc/Salad.jpg', 4, 0, 'Як приготувати салат з буряка, чорнослива та горіхів: крок за кроком', 'Салат з чорносливом і буряком пісний');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 45, 10, 3, 'https://i.ibb.co/f24r67h/banosh.jpg', 2, 0, 'Банош – частина гуцульської душі', 'Банош');
+values (3, 45, 6, 3, 'https://i.ibb.co/f24r67h/banosh.jpg', 2, 0, 'Банош – частина гуцульської душі', 'Банош');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 55, 6, 2, 'https://i.ibb.co/71HVQbY/image.jpg', 4, 0, 'В сезон полуниці можна поласувати ароматною свіжою ягідкою, а також приготувати страви з полуницею.', 'Вареники з полуницею');
+values (3, 55, 5, 2, 'https://i.ibb.co/71HVQbY/image.jpg', 4, 0, 'В сезон полуниці можна поласувати ароматною свіжою ягідкою, а також приготувати страви з полуницею.', 'Вареники з полуницею');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (2, 110, 6, 5, 'https://i.ibb.co/ZxhCG1J/image.jpg', 6, 0, 'Давайте приготуємо дуже простий і швидкий, але неймовірно смачний грибний суп з вершками. В цьому рецепті ми використовували шампіньйони, але можна взяти будь-які інші лісові гриби. Від цього смак супу стане ще кращим', 'Грибний суп');
+values (2, 110, 5, 5, 'https://i.ibb.co/ZxhCG1J/image.jpg', 6, 0, 'Давайте приготуємо дуже простий і швидкий, але неймовірно смачний грибний суп з вершками. В цьому рецепті ми використовували шампіньйони, але можна взяти будь-які інші лісові гриби. Від цього смак супу стане ще кращим', 'Грибний суп');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 45, 6, 4, 'https://i.ibb.co/txvgvq0/image.jpg', 8, 0, 'Швидкий пиріг з чорницею справді дуже смачний! Він виходить вологим і чудово ріжеться. Цей простий у приготуванні чорничний пиріг зникає з тарілок в одну мить.', 'Пиріг з чорницею');
+values (3, 45, 5, 4, 'https://i.ibb.co/txvgvq0/image.jpg', 8, 0, 'Швидкий пиріг з чорницею справді дуже смачний! Він виходить вологим і чудово ріжеться. Цей простий у приготуванні чорничний пиріг зникає з тарілок в одну мить.', 'Пиріг з чорницею');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 50, 6, 3, 'https://i.ibb.co/hDBchS7/image.jpg', 12, 1, 'Сьогодні будемо готувати надзвичайно смачні та апетитні фаршировані перці з м’ясом та рисом. Така страва буде ідеальним варіантом вечері, її обожнюють як дорослі так і діти. Готувати такі фаршировані перці зовсім нескладно.', 'Фарширований перець');
+values (3, 50, 5, 3, 'https://i.ibb.co/hDBchS7/image.jpg', 12, 1, 'Сьогодні будемо готувати надзвичайно смачні та апетитні фаршировані перці з м’ясом та рисом. Така страва буде ідеальним варіантом вечері, її обожнюють як дорослі так і діти. Готувати такі фаршировані перці зовсім нескладно.', 'Фарширований перець');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (2, 90, 6, 1, 'https://i.ibb.co/xJQtTVr/image.jpg', 6, 0, 'Розрепанці – це невеликі картопляні пиріжки, скріплені тільки по краях. Найчастіше їх готували з гороховою чи квасолевою начинкою та подавали з “маштаркою” – соусом з горіхів, гарбузового та лляного насіння та сметани, з яким традиційно подають картопляники.', 'Картопляні пиріжки з горохом, або подільські розрепанці');
+values (2, 90, 5, 1, 'https://i.ibb.co/xJQtTVr/image.jpg', 6, 0, 'Розрепанці – це невеликі картопляні пиріжки, скріплені тільки по краях. Найчастіше їх готували з гороховою чи квасолевою начинкою та подавали з “маштаркою” – соусом з горіхів, гарбузового та лляного насіння та сметани, з яким традиційно подають картопляники.', 'Картопляні пиріжки з горохом, або подільські розрепанці');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (1, 45, 6, 2, 'https://ibb.co/fGBK56N', 1, 0, 'Важко уявити зиму без ароматного малинового варення. Воно смачне та неймовірно корисне, бо полегшує стан здоров’я при сезонній застуді. Ми захотіли урізноманітнити класичний смак малинового варення та додали до нього м’якуш апельсина, адже цитрусові добре поєднуються з ягодами.', 'Варення з малини та апельсина');
+values (1, 45, 5, 2, 'https://i.ibb.co/KzRQk4s/image.jpg', 1, 0, 'Важко уявити зиму без ароматного малинового варення. Воно смачне та неймовірно корисне, бо полегшує стан здоров’я при сезонній застуді. Ми захотіли урізноманітнити класичний смак малинового варення та додали до нього м’якуш апельсина, адже цитрусові добре поєднуються з ягодами.', 'Варення з малини та апельсина');
 
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 60, 9, 3, 'https://i.ibb.co/KzRQk4s/image.jpg', 6, 0, 'Як приготувати капусту по-волинськи з квашеної капусти, свинини, моркви, цибулі', 'Капуста по-волинськи');
+values (3, 60, 4, 3, 'https://i.ibb.co/z8c4sht/image.jpg', 6, 0, 'Як приготувати капусту по-волинськи з квашеної капусти, свинини, моркви, цибулі', 'Капуста по-волинськи');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 40, 9, 2, 'https://i.ibb.co/PQS19N3/1.jpg', 4, 0, 'Як приготувати хамулу з вишні, сметани, цукру, крохмалю', 'Хамула');
+values (3, 40, 4, 2, 'https://i.ibb.co/PQS19N3/1.jpg', 4, 0, 'Як приготувати хамулу з вишні, сметани, цукру, крохмалю', 'Хамула');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 60, 9, 3, 'https://i.ibb.co/9rZf1ms/image.jpg', 6, 0, 'Як приготувати крученики волинські зі свинини, капусти, моркви, цибулі, сметани', 'Крученики волинські');
+values (3, 60, 4, 3, 'https://i.ibb.co/9rZf1ms/image.jpg', 6, 0, 'Як приготувати крученики волинські зі свинини, капусти, моркви, цибулі, сметани', 'Крученики волинські');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 60, 9, 3, 'https://i.ibb.co/7VvR0Gv/golubczi.jpg', 4, 0, 'Як приготувати Волинські голубці з картоплею з картоплі, капусти, часнику, цибулі, томатної пасти', 'Волинські голубці з картоплею');
+values (3, 60, 4, 3, 'https://i.ibb.co/7VvR0Gv/golubczi.jpg', 4, 0, 'Як приготувати Волинські голубці з картоплею з картоплі, капусти, часнику, цибулі, томатної пасти', 'Волинські голубці з картоплею');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 60, 9, 5, 'https://i.ibb.co/PjYHv9G/image.jpg', 6, 0, 'Як приготувати Огірочник з огірків, свинини, цибулі, томатної пасти', 'Огірочник');
+values (3, 60, 4, 5, 'https://i.ibb.co/PjYHv9G/image.jpg', 6, 0, 'Як приготувати Огірочник з огірків, свинини, цибулі, томатної пасти', 'Огірочник');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 45, 9, 3, 'https://i.ibb.co/LnpQYZ4/image.jpg', 3, 0, 'Як приготувати клекуцьоху зі пшона, моркви, цибулі, перцю', 'Клекуцьоха');
+values (3, 45, 4, 3, 'https://i.ibb.co/LnpQYZ4/image.jpg', 3, 0, 'Як приготувати клекуцьоху зі пшона, моркви, цибулі, перцю', 'Клекуцьоха');
 
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
 values (2, 180, 3, 3, 'https://i.ibb.co/9b51NSn/image.jpg', 10, 0, 'Традиційна страва кримськотатарської кухні, яка складається з м\'яса, овочів та тіста, звичайно в формі широких локшино-подібних смужок, варених у бульйоні.', 'Бешбармак');
@@ -61,11 +61,11 @@ insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_i
 values (3, 40, 2, 4, 'https://i.ibb.co/DzFWdDk/image.jpg', 6, 0, 'Львівський сирник - це смачна галицька випічка, яка має круглу форму, золотисту скоринку і м''яку начинку.Вона зроблена з творогу, яєць, манної крупи, цукру та вершків, і має неповторний смак та аромат.', 'Львівський сирник');
 
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 30, 5, 1, 'https://i.ibb.co/7p3d7Y5/image.jpg', 6, 0, 'Форшмак - це традиційна страва єврейської кухні, популярна в Одеському регіоні. Форшмак подається в прохолодному вигляді з чорним хлібом, і має незвичайний, але смачний смак, який відмінно поєднується зі свіжим хлібом.', 'Форшмак');
+values (3, 30, 1, 1, 'https://i.ibb.co/7p3d7Y5/image.jpg', 6, 0, 'Форшмак - це традиційна страва єврейської кухні, популярна в Одеському регіоні. Форшмак подається в прохолодному вигляді з чорним хлібом, і має незвичайний, але смачний смак, який відмінно поєднується зі свіжим хлібом.', 'Форшмак');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (1, 20, 5, 1, 'https://i.ibb.co/nf4rs47/image.jpg', 6, 0, 'Мідії по-одеськи - це одна з найвідоміших страв одеської кухні, яка здивує вас своєю смаковою насиченістю та ароматом. Це дуже простий рецепт, який з легкістю можна приготувати вдома.', 'Мідії по-Одеськи');
+values (1, 20, 1, 1, 'https://i.ibb.co/nf4rs47/image.jpg', 6, 0, 'Мідії по-одеськи - це одна з найвідоміших страв одеської кухні, яка здивує вас своєю смаковою насиченістю та ароматом. Це дуже простий рецепт, який з легкістю можна приготувати вдома.', 'Мідії по-Одеськи');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 30, 5, 5, 'https://i.ibb.co/FxpvtLD/image.jpg', 6, 0, 'Рибна юшка - це смачна страва, приготована на основі риби, овочів та спецій. Її основний інгредієнт - свіжа риба. Це відмінний вибір для тих, хто любить рибні страви та шукає простий та смачний рецепт', 'Рибна юшка');
+values (3, 30, 1, 5, 'https://i.ibb.co/FxpvtLD/image.jpg', 6, 0, 'Рибна юшка - це смачна страва, приготована на основі риби, овочів та спецій. Її основний інгредієнт - свіжа риба. Це відмінний вибір для тих, хто любить рибні страви та шукає простий та смачний рецепт', 'Рибна юшка');
 insert into recipes (complexity_id, cooking_time, cuisine_region_id, dish_type_id, image_url, portions, spiced, subtitle, dish_name)
-values (3, 60, 5, 4, 'https://i.ibb.co/Y7sS2G8/image.jpg', 6, 0, 'Штрудель з яблуками це ніжні шари тоненької тіста, просочені маслом, заповнені солодкими яблуками, горіхами та спеціями.', 'Штрудель з яблуками');
+values (3, 60, 1, 4, 'https://i.ibb.co/Y7sS2G8/image.jpg', 6, 0, 'Штрудель з яблуками це ніжні шари тоненької тіста, просочені маслом, заповнені солодкими яблуками, горіхами та спеціями.', 'Штрудель з яблуками');
 

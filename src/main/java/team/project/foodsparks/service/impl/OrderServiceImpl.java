@@ -14,18 +14,13 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.exception.DataProcessingException;
-import team.project.foodsparks.model.Coupon;
-import team.project.foodsparks.model.DeliveryInformation;
-import team.project.foodsparks.model.Order;
-import team.project.foodsparks.model.Product;
-import team.project.foodsparks.model.ShoppingCart;
-import team.project.foodsparks.model.User;
+import team.project.foodsparks.model.*;
 import team.project.foodsparks.repository.OrderRepository;
 import team.project.foodsparks.service.CouponService;
 import team.project.foodsparks.service.DeliveryInformationService;
@@ -37,7 +32,7 @@ import team.project.foodsparks.util.ProductAmountConverter;
 @Service
 public class OrderServiceImpl implements OrderService {
     private static final String FONT_PATH = "/fonts/arialuni.ttf";
-    private static final String LOGO_PATH = "/static/img/logo.jpg";
+    private static final String LOGO_URL = "https://i.ibb.co/DQztqTZ/MEGALOGO.png";
     private final OrderRepository orderRepository;
     private final ShoppingCartService shoppingCartService;
     private final EmailService emailService;
@@ -65,13 +60,14 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setDeliveryInformation(savedDeliveryInformation);
         order.setOrderTime(LocalDateTime.now());
-        order.setProductAmount(new HashMap<>(shoppingCart.getProductAmount()));
-        order.setUser(shoppingCart.getUser());
-        order.setSum(shoppingCart.getProductAmount()
-                .entrySet()
+        order.setProductAmount(shoppingCart.getCartItemList()
                 .stream()
-                .map(e -> e.getKey().getPrice()
-                        .multiply(BigDecimal.valueOf(e.getValue())))
+                .collect(Collectors.toMap(CartItem::getProduct, CartItem::getQuantity)));
+        order.setUser(shoppingCart.getUser());
+        order.setSum(shoppingCart.getCartItemList()
+                .stream()
+                .map(e -> e.getProduct().getPrice()
+                        .multiply(BigDecimal.valueOf(e.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add)
                 .divide(BigDecimal.valueOf(100))
                 .multiply(BigDecimal.valueOf(shoppingCart.getCoupon() != null
@@ -88,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
             throw new DataProcessingException("Лист з підтвердженням замовлення "
                     + "не вийшло відправити.");
         }
-        shoppingCartService.clear(shoppingCart);
+        shoppingCartService.removeAllProductsFromCart(shoppingCart.getUser());
         return order;
     }
 
@@ -104,8 +100,8 @@ public class OrderServiceImpl implements OrderService {
         PdfWriter writer = PdfWriter.getInstance(document, baos);
         writer.setPdfVersion(PdfWriter.VERSION_1_7);
         document.open();
-        Image logoImage = Image.getInstance(LOGO_PATH);
-        logoImage.scaleAbsolute(200f, 20f);
+        Image logoImage = Image.getInstance(LOGO_URL);
+        logoImage.scaleAbsolute(200f, 24f);
         logoImage.setIndentationLeft(160f);
         Paragraph lineSeparator = new Paragraph();
         lineSeparator.add(new LineSeparator());
