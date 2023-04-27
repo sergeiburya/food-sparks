@@ -17,10 +17,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.exception.DataProcessingException;
-import team.project.foodsparks.model.*;
+import team.project.foodsparks.model.CartItem;
+import team.project.foodsparks.model.Coupon;
+import team.project.foodsparks.model.DeliveryInformation;
+import team.project.foodsparks.model.Order;
+import team.project.foodsparks.model.Product;
+import team.project.foodsparks.model.ShoppingCart;
+import team.project.foodsparks.model.User;
 import team.project.foodsparks.repository.OrderRepository;
 import team.project.foodsparks.service.CouponService;
 import team.project.foodsparks.service.DeliveryInformationService;
@@ -80,7 +87,7 @@ public class OrderServiceImpl implements OrderService {
         }
         try {
             createAndSendPdfOrderForUser(order);
-        } catch (DocumentException | IOException e) {
+        } catch (DocumentException | IOException | MessagingException e) {
             throw new DataProcessingException("Лист з підтвердженням замовлення "
                     + "не вийшло відправити.");
         }
@@ -94,7 +101,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createAndSendPdfOrderForUser(Order order) throws DocumentException, IOException {
+    public void createAndSendPdfOrderForUser(Order order)
+            throws DocumentException, IOException, MessagingException {
         Document document = new Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -167,7 +175,7 @@ public class OrderServiceImpl implements OrderService {
             Paragraph itemParagraph = new Paragraph(numberItems + ". Назва товару: "
                     + entry.getKey().getName() + " - ("
                     + ProductAmountConverter.convertProductAmount(
-                            entry.getKey().getAmountInPackage())
+                    entry.getKey().getAmountInPackage())
                     + "/упак) - " + entry.getValue() + " шт. ", arialFont);
             itemParagraph.setLeading(30f);
             itemParagraph.setAlignment(Element.ALIGN_LEFT);
