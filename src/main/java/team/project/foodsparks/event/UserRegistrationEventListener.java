@@ -1,5 +1,6 @@
 package team.project.foodsparks.event;
 
+import java.io.IOException;
 import javax.mail.MessagingException;
 import javax.transaction.Transactional;
 import org.springframework.context.ApplicationListener;
@@ -14,8 +15,6 @@ import team.project.foodsparks.service.ShoppingCartService;
 import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.VerificationTokenService;
 import team.project.foodsparks.util.VerificationTokenGenerator;
-
-import java.io.IOException;
 
 @Component
 public class UserRegistrationEventListener implements ApplicationListener<UserRegistrationEvent> {

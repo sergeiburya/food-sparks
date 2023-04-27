@@ -60,7 +60,8 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Override
-    public void sendHtmlPage(String to, String subject, String token) throws MessagingException, IOException {
+    public void sendHtmlPage(String to, String subject, String token)
+            throws MessagingException, IOException {
         MimeMessage mimeMessage = emailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "utf-8");
 
@@ -68,7 +69,7 @@ public class EmailServiceImpl implements EmailService {
         String htmlMsg = new String(resource.getInputStream().readAllBytes());
         htmlMsg = htmlMsg.replace("{{token}}", token);
 
-        helper.setText(htmlMsg, true); // Use this or above line.
+        helper.setText(htmlMsg, true);
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setFrom(fromUserEmail);
