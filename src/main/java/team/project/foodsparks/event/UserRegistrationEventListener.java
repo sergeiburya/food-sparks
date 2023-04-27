@@ -15,6 +15,8 @@ import team.project.foodsparks.service.UserService;
 import team.project.foodsparks.service.VerificationTokenService;
 import team.project.foodsparks.util.VerificationTokenGenerator;
 
+import java.io.IOException;
+
 @Component
 public class UserRegistrationEventListener implements ApplicationListener<UserRegistrationEvent> {
     private final UserService userService;
@@ -52,6 +54,8 @@ public class UserRegistrationEventListener implements ApplicationListener<UserRe
                     verificationToken.getToken());
         } catch (MessagingException e) {
             throw new DataProcessingException("Can't send html page");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
