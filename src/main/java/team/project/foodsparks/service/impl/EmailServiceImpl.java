@@ -95,7 +95,7 @@ public class EmailServiceImpl implements EmailService {
         mimeMultipart.addBodyPart(attachment);
         helper.setFrom(fromEmail);
         helper.setTo(userEmail);
-        helper.setSubject("Підтвердження замовлення");
+        helper.setSubject("Order confirmation");
         emailSender.send(message);
     }
 }

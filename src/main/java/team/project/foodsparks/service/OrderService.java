@@ -3,6 +3,7 @@ package team.project.foodsparks.service;
 import com.lowagie.text.DocumentException;
 import java.io.IOException;
 import java.util.List;
+import javax.mail.MessagingException;
 import team.project.foodsparks.model.DeliveryInformation;
 import team.project.foodsparks.model.Order;
 import team.project.foodsparks.model.ShoppingCart;
@@ -13,5 +14,6 @@ public interface OrderService {
 
     List<Order> getOrders(User user);
 
-    void createAndSendPdfOrderForUser(Order order) throws DocumentException, IOException;
+    void createAndSendPdfOrderForUser(Order order)
+            throws DocumentException, IOException, MessagingException;
 }

@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.exception.DataProcessingException;
@@ -86,9 +87,9 @@ public class OrderServiceImpl implements OrderService {
         }
         try {
             createAndSendPdfOrderForUser(order);
-        } catch (DocumentException | IOException e) {
-            throw new DataProcessingException("Лист з підтвердженням замовлення "
-                    + "не вийшло відправити.");
+        } catch (DocumentException | IOException | MessagingException e) {
+            throw new DataProcessingException("Order confirmation letter "
+                    + "failed to send.");
         }
         shoppingCartService.removeAllProductsFromCart(shoppingCart.getUser());
         return order;
@@ -100,7 +101,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void createAndSendPdfOrderForUser(Order order) throws DocumentException, IOException {
+    public void createAndSendPdfOrderForUser(Order order)
+            throws DocumentException, IOException, MessagingException {
         Document document = new Document();
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -116,25 +118,25 @@ public class OrderServiceImpl implements OrderService {
         document.add(logoImage);
         BaseFont bf = BaseFont.createFont(FONT_PATH, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         Font arialFont = new Font(bf, 12);
-        Paragraph titleParagraph = new Paragraph("Дякуємо за Ваше замовлення. "
-                + "Деталі замовлення.", arialFont);
+        Paragraph titleParagraph = new Paragraph("Thank you for your order. "
+                + "Order details.", arialFont);
         titleParagraph.setAlignment(Element.ALIGN_CENTER);
         titleParagraph.setLeading(10f);
         document.add(titleParagraph);
-        Paragraph orderNumParagraph = new Paragraph("Номер замовлення: \n FS000" + order.getId(),
+        Paragraph orderNumParagraph = new Paragraph("Order number: \n FS000" + order.getId(),
                 arialFont);
         orderNumParagraph.setAlignment(Element.ALIGN_CENTER);
         orderNumParagraph.setLeading(30f);
         document.add(orderNumParagraph);
         document.add(lineSeparator);
-        Paragraph dateParagraph = new Paragraph("Дата та час замовлення: " + order.getOrderTime()
+        Paragraph dateParagraph = new Paragraph("Order date and time: " + order.getOrderTime()
                 .format(DateTimeFormatter.ofPattern("dd/MM/yyyy - HH:mm")),
                 arialFont);
         dateParagraph.setAlignment(Element.ALIGN_RIGHT);
         dateParagraph.setLeading(30f);
         document.add(dateParagraph);
         DeliveryInformation deliveryInformation = order.getDeliveryInformation();
-        Paragraph adrressParagraph = new Paragraph("Адреса доставки: "
+        Paragraph adrressParagraph = new Paragraph("Delivery address: "
                 + deliveryInformation.getTown() + ", "
                 + deliveryInformation.getStreet() + ", "
                 + deliveryInformation.getBuild() + ", "
@@ -142,14 +144,14 @@ public class OrderServiceImpl implements OrderService {
         adrressParagraph.setAlignment(Element.ALIGN_LEFT);
         adrressParagraph.setLeading(30f);
         document.add(adrressParagraph);
-        Paragraph userParagraph = new Paragraph("Ім'я користувача: "
+        Paragraph userParagraph = new Paragraph("Name of the customer: "
                 + deliveryInformation.getFirstName()
                 + " " + deliveryInformation.getLastName(),
                 arialFont);
         userParagraph.setAlignment(Element.ALIGN_LEFT);
         userParagraph.setLeading(30f);
         document.add(userParagraph);
-        Paragraph phoneParagraph = new Paragraph("Тел.: "
+        Paragraph phoneParagraph = new Paragraph("Phone.: "
                 + deliveryInformation.getPhone(),
                 arialFont);
         phoneParagraph.setLeading(30f);
@@ -161,7 +163,7 @@ public class OrderServiceImpl implements OrderService {
         Paragraph deliveryDayParagraf = new Paragraph();
         deliveryDayParagraf.setLeading(30f);
         document.add(deliveryDayParagraf);
-        Paragraph orderParagraph = new Paragraph("Список товарів:",
+        Paragraph orderParagraph = new Paragraph("List of products:",
                 arialFont);
         orderParagraph.setAlignment(Element.ALIGN_LEFT);
         orderParagraph.setLeading(40f);
@@ -170,36 +172,36 @@ public class OrderServiceImpl implements OrderService {
         Map<Product, Integer> productAmount = order.getProductAmount();
         int numberItems = 1;
         for (Map.Entry<Product, Integer> entry : productAmount.entrySet()) {
-            Paragraph itemParagraph = new Paragraph(numberItems + ". Назва товару: "
+            Paragraph itemParagraph = new Paragraph(numberItems + ". Product name: "
                     + entry.getKey().getName() + " - ("
                     + ProductAmountConverter.convertProductAmount(
                             entry.getKey().getAmountInPackage())
-                    + "/упак) - " + entry.getValue() + " шт. ", arialFont);
+                    + "/pack) - " + entry.getValue() + " piece. ", arialFont);
             itemParagraph.setLeading(30f);
             itemParagraph.setAlignment(Element.ALIGN_LEFT);
             document.add(itemParagraph);
             numberItems++;
         }
         document.add(lineSeparator);
-        Paragraph totalSumparagraph = new Paragraph("Сумма замовлення: "
+        Paragraph totalSumparagraph = new Paragraph("Order amount: "
                 + order.getSum(), arialFont);
         totalSumparagraph.setLeading(20f);
         totalSumparagraph.setAlignment(Element.ALIGN_RIGHT);
         document.add(totalSumparagraph);
-        Paragraph dateTimeDelivery = new Paragraph("Дата та час доставки: -"
+        Paragraph dateTimeDelivery = new Paragraph("Date and time of delivery: -"
                 + order.getDeliveryInformation().getDayOfDelivery() + " - "
                 + order.getDeliveryInformation().getTimeOfDelivery(), arialFont);
         dateTimeDelivery.setLeading(20f);
         document.add(dateTimeDelivery);
-        Paragraph commentParagraph = new Paragraph("Коментар до замовлення: - "
+        Paragraph commentParagraph = new Paragraph("Comment on the order: - "
                 + order.getDeliveryInformation().getComment(), arialFont);
         commentParagraph.setLeading(20f);
         document.add(commentParagraph);
 
-        Paragraph endParagraph = new Paragraph("Будемо раді знову вітати Вас у нашому магазині. "
-                + "Якщо у вас виникнуть запитання, ви можете зв’язатися з нами за адресою: "
-                + "foodsparksmail@gmail.com",
-                arialFont);
+        Paragraph endParagraph = new Paragraph(
+                "We will be glad to welcome you again in our store.\n"
+                + "If you have any questions, you can contact us at: "
+                + "foodsparksmail@gmail.com", arialFont);
         endParagraph.setSpacingBefore(80f);
         endParagraph.setAlignment(Element.ALIGN_CENTER);
         document.add(endParagraph);
