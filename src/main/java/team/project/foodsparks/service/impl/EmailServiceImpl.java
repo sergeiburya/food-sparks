@@ -32,7 +32,7 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.port}")
     private String port;
     @Value("${spring.mail.username}")
-    private String fromUserEmail;
+    private String fromEmail;
     @Value("${spring.mail.password}")
     private String mailPassword;
     @Value("${spring.mail.properties.mail.smtp.auth}")
@@ -52,7 +52,7 @@ public class EmailServiceImpl implements EmailService {
     public void sendSimpleMessage(
             String to, String subject, String text) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(fromUserEmail);
+        message.setFrom(fromEmail);
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
@@ -68,11 +68,28 @@ public class EmailServiceImpl implements EmailService {
         ClassPathResource resource = new ClassPathResource("static/confirmationLetter.html");
         String htmlMsg = new String(resource.getInputStream().readAllBytes());
         htmlMsg = htmlMsg.replace("{{token}}", token);
-
+        htmlMsg = htmlMsg.replace("{{fromEmail}}", fromEmail);
         helper.setText(htmlMsg, true);
         helper.setTo(to);
         helper.setSubject(subject);
-        helper.setFrom(fromUserEmail);
+        helper.setFrom(fromEmail);
+        emailSender.send(mimeMessage);
+    }
+
+    @Override
+    public void sendHtmlCoupon(String to, String coupon)
+            throws MessagingException, IOException {
+        ClassPathResource resource = new ClassPathResource("static/couponLetter.html");
+        String couponMsg = new String(resource.getInputStream().readAllBytes());
+        couponMsg = couponMsg.replace("{{coupon}}", coupon);
+        couponMsg = couponMsg.replace("{{userEmail}}", to);
+        couponMsg = couponMsg.replace("{{fromEmail}}", fromEmail);
+        MimeMessage mimeMessage = emailSender.createMimeMessage();
+        MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, true, "utf-8");
+        messageHelper.setText(couponMsg, true);
+        messageHelper.setTo(to);
+        messageHelper.setSubject("Your discount coupon.");
+        messageHelper.setFrom(fromEmail);
         emailSender.send(mimeMessage);
     }
 
@@ -89,7 +106,7 @@ public class EmailServiceImpl implements EmailService {
         Session session = Session.getInstance(props, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromUserEmail, mailPassword);
+                return new PasswordAuthentication(fromEmail, mailPassword);
             }
         });
 

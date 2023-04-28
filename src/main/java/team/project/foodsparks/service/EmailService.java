@@ -10,4 +10,6 @@ public interface EmailService {
             throws MessagingException, IOException;
 
     void sendEmailWithDocument(byte[] pdfBytes, String userEmail);
+
+    void sendHtmlCoupon(String to, String token) throws MessagingException, IOException;
 }

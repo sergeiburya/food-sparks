@@ -23,22 +23,22 @@
             height: 88px;
             background-color: black;
             }
-            .hearer__block {
+            .header__block {
                 display: flex;
                 margin: auto;
                 align-items: center;
             }
-            .hearer__title {
+            .header__title {
                 height: 57px;
                 width: 295px;
             }
-            .hearer__logo {
+            .header__logo {
                 display: flex;
-                height: 40px;
-                width: 40px;
+                height: 57px;
+                width: 57px;
             }
            .main {
-                font-family: 'Open Sans';
+                font-family:sans-serif;
                 margin-top: 40px;
                 padding-left: 24px;
                 font-weight: 600;
@@ -51,17 +51,19 @@
                 position: relative;
                 display: flex;
                 justify-content: center;
-                align-items: center;
-                font-family: 'Open Sans';
+                flex-direction: column;
+                font-family: sans-serif;
                 font-style: normal;
-                font-weight: 400;
+                font-weight: bold;
                 font-size: 24px;
-                line-height: 16px;
-                margin: 60px auto 24px;
+                align-items: center;
+                line-height:2.5;
+                padding-left:128px;
+                margin: 24px auto 24px;
                 width: 278px;
                 height: 64px;
                 background: #CB3C2E;
-                border-radius: 12px;
+                border-radius: 8px;
                 color: #FFFFFF;
                 cursor: pointer;
                 text-decoration: none;
@@ -82,7 +84,7 @@
                 margin-top: 40px;
             }
             .footer {
-                font-family: 'Open Sans';
+                font-family: sans-serif;
                 font-weight: 400;
                 font-style: normal;
                 margin-top: 40px;
@@ -96,21 +98,24 @@
     <body>
         <div class="container">
             <div class="header">
-            <div class="hearer__block">
-            <img class="hearer__logo src=https://i.ibb.co/f41vx2Z/Group-115.png\" src="https://i.ibb.co/f41vx2Z/Group-115.png" alt="Group" >
-                <img class="hearer__title src=https://i.ibb.co/TTcPkwh/Mask-group.png" src="https://i.ibb.co/TTcPkwh/Mask-group.png" alt="Mask-group">
+            <div class="header__block">
+                <img class="header__logo" src="https://i.ibb.co/f41vx2Z/Group-115.png" alt="Group" >
+                <img class="header__title" src="https://i.ibb.co/TTcPkwh/Mask-group.png" alt="Mask-group">
             </div>
-              </div>
-        <div class="main">
-            Привіт!<br>
-            Перш ніж ми почнемо, нам потрібно підтвердити, що це саме ви.<br>
-            Натисніть нижче, щоб підтвердити свою електронну адресу:
-        </div>
-            <a href="https://foodsparks.eu-central-1.elasticbeanstalk.com/verify?token={{token}}" class="button">Підтвердити</a>
+            </div>
+            <div class="main">
+                Hello!<br>
+                Before we begin, we need to confirm that it's you.<br>
+                Click below to confirm your email address.
+                <div>
+                    <a class="button"
+                       href="https://www.foodsparks.pp.ua/verify?token={{token}}">Confirm email</a>
+                </div>
+            </div>
             <div class="line"></div>
             <div class="footer">
-                Потрібна допомога? Зверніться до нашої служби підтримки або напишіть нам.<br>
-                Хочете залишити відгук? Повідомте нам, що ви думаєте, на нашому сайті зворотного зв'язку.
+                Need help? Contact our support team or write:  {{fromEmail}} to us.<br>
+                Want to leave a review? Let us know what you think about our feedback site.
             </div>
        </div>
     </body>

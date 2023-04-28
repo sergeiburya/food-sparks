@@ -1,5 +1,7 @@
 package team.project.foodsparks.controller;
 
+import java.io.IOException;
+import javax.mail.MessagingException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +21,8 @@ public class CouponController {
     }
 
     @PutMapping("/new")
-    public Coupon createNewCoupon(@RequestParam String userEmail) {
+    public Coupon createNewCoupon(@RequestParam String userEmail)
+            throws MessagingException, IOException {
         return couponService.add(userEmail);
     }
 }

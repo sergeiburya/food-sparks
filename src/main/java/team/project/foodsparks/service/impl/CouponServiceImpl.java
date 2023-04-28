@@ -1,6 +1,8 @@
 package team.project.foodsparks.service.impl;
 
+import java.io.IOException;
 import java.util.Optional;
+import javax.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import team.project.foodsparks.exception.DataProcessingException;
@@ -23,7 +25,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public Coupon add(String userEmail) {
+    public Coupon add(String userEmail) throws MessagingException, IOException {
         if (couponRepository.findCouponByUserEmail(userEmail).isPresent()) {
             throw new DataProcessingException("Ви вже отримали ваш купон для знижки.");
         }
@@ -33,10 +35,7 @@ public class CouponServiceImpl implements CouponService {
         coupon.setUserEmail(userEmail);
         coupon.setDiscountSize(20);
         Coupon savedCoupon = couponRepository.save(coupon);
-        emailService.sendSimpleMessage(userEmail, "Your discount coupon",
-                "Your coupon with discount 20% on your first order: " + couponCode
-                        + "\n If you are not registered yet, then you need to register with"
-                        + " this email: " + userEmail + " before use your coupon.");
+        emailService.sendHtmlCoupon(userEmail, couponCode);
         return savedCoupon;
     }
 

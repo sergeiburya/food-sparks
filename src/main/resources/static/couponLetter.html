@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang=\"en\">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {box-sizing: border-box;font-family:'Open Sans', sans-serif;color: #000000;}
+        .container {
+            display: block;
+            background: #F8F9FA;
+            width: 854px;
+            height: 480px;
+            margin: 0 auto;
+            padding: 8px;
+        }
+        .header {
+            display: flex;
+            width: 100%;
+            height: 88px;
+            background-color: black;
+        }
+        .header__block {
+            display: flex;
+            margin: auto;
+            align-items: center;
+        }
+        .header__title {
+            height: 57px;
+            width: 295px;
+        }
+        .header__logo {
+            display: flex;
+            height: 57px;
+            width: 57px;
+            align-content: flex-start;
+        }
+        .main {
+            font-family: 'Open Sans';
+            margin-top: 40px;
+            padding-left: 24px;
+            font-weight: 600;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 36px;
+            text-align: center;
+        }
+        .line {
+            width: 818px;
+            height: 1px;
+            margin-left: 24px;
+            background-color: #ADB5BD;
+            margin-top: 40px;
+        }
+        .footer {
+            font-family: 'Open Sans';
+            font-weight: 400;
+            font-style: normal;
+            margin-top: 40px;
+            padding-left: 24px;
+            font-size: 16px;
+            line-height: 24px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="header__block">
+            <img class="header__logo src=https://i.ibb.co/f41vx2Z/Group-115.png\" src="https://i.ibb.co/f41vx2Z/Group-115.png" alt="Group" >
+            <img class="header__title src=https://i.ibb.co/TTcPkwh/Mask-group.png" src="https://i.ibb.co/TTcPkwh/Mask-group.png" alt="Mask-group">
+        </div>
+    </div>
+    <div class="main">
+        Your discount coupon.<br>
+        Your coupon with discount 20% on your first order:<br>
+        <span style="color:blue;font-weight:bold;border:1px dashed blue">{{coupon}}</span><br>
+        <div class="footer">
+            If you are not registered yet, then you need to register with this email: {{userEmail}} before use your coupon.
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="footer">
+        Need help? Contact our support team or write:  {{fromEmail}} to us.<br>
+        Want to leave a review? Let us know what you think about our feedback site.
+    </div>
+</div>
+</body>
+</html>
