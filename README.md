@@ -51,7 +51,7 @@ After launching the application, the database (based on Liquibase scripts) will 
 ![Maven](https://img.shields.io/badge/Maven-F8F8FF?style=flat&logo=apachemaven&logoColor=F4A460)
 ![Apache Tomcat](https://img.shields.io/badge/apache%20tomcat-%23F8DC75.svg?style=apache&logo=apache-tomcat&logoColor=black)
 ![Html](https://img.shields.io/badge/HTML-F8F8FF?style=flat&logo=html5&logoColor=black)
-![Mosquitto](https://img.shields.io/badge/mosquitto-%233C5280.svg?style=badge&logo=eclipsemosquitto&logoColor=white)
+[![Mockito](https://img.shields.io/badge/Mockito-blue.svg)](https://site.mockito.org/)
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=badge&logo=postman&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=badge&logo=amazon-aws&logoColor=white)
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=badge&logo=intellij-idea&logoColor=white)
